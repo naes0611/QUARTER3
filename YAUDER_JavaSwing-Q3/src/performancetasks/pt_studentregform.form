@@ -4,6 +4,8 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -34,28 +36,6 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="studentFirstName" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="studentLastName" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="EmailAddress" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="confEmailAddress" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Password" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="confPassword" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="txtconfPassword" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="txtconfEmailAddress" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtEmailAddress" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtstudentLN" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtstudentFN" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtPassword" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
                           <Component id="DateofBirth" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -76,16 +56,35 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="ifFemale" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                      <Component id="compSciandEngr" min="-2" max="-2" attributes="0"/>
-                                      <Component id="ElectronicsandCommunication" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="ElectronicsandCommunication" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="Year" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="Month" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="Day" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="compSciandEngr" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="studentFirstName" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="studentLastName" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="EmailAddress" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="confEmailAddress" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="Password" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="confPassword" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txtconfPassword" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="txtconfEmailAddress" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtEmailAddress" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtstudentLN" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtstudentFN" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtPassword" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -148,11 +147,11 @@
                           <Component id="txtPassword" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="confPassword" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtconfPassword" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="confPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtconfPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="DateofBirth" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="Year" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -179,11 +178,11 @@
                               <Component id="Department" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="compSciandEngr" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="ElectronicsandCommunication" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="submitBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="clearBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -193,11 +192,11 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="192" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -397,16 +396,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Submit"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submitBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="clearBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Clear"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="cancelBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="Department">
       <Properties>
@@ -415,26 +423,41 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="Civil">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="buttonGroup2"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Civil"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="compSciandEngr">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="buttonGroup2"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Computer Science and Engineer"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="Electrics">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="buttonGroup2"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Electrics"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="ElectronicsandCommunication">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="buttonGroup2"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Electronics and Communication"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="Mechanical">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="buttonGroup2"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Mechanical"/>
       </Properties>
     </Component>
