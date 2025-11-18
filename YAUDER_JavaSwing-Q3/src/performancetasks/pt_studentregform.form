@@ -34,7 +34,7 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="DateofBirth" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
@@ -79,12 +79,16 @@
                               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="txtconfPassword" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="txtconfEmailAddress" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtEmailAddress" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtstudentLN" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtstudentFN" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="txtPassword" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtconfEmailAddress" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtEmailAddress" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtstudentLN" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtstudentFN" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtPassword" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="errorLabel" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -144,7 +148,10 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="Password" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtPassword" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="errorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -491,6 +498,13 @@
           <Font name="Segoe UI" size="18" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="New Student Registration Form"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="errorLabel">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
       </Properties>
     </Component>
   </SubComponents>

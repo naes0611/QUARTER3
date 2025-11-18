@@ -4,6 +4,11 @@
  */
 package performancetasks;
 
+import javax.swing.ButtonModel;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 /**
  *
  * @author ihub27
@@ -15,6 +20,26 @@ public class pt_studentregform extends javax.swing.JFrame {
      */
     public pt_studentregform() {
         initComponents();
+        DocumentListener passwordListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                checkPasswords();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                checkPasswords();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                checkPasswords();
+            }
+        };
+        txtPassword.getDocument().addDocumentListener(passwordListener);
+        txtconfPassword.getDocument().addDocumentListener(passwordListener);
+
+        setVisible(true);
     }
 
     /**
@@ -60,6 +85,7 @@ public class pt_studentregform extends javax.swing.JFrame {
         studentData = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        errorLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Student Registration Form");
@@ -169,6 +195,8 @@ public class pt_studentregform extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("New Student Registration Form");
 
+        errorLabel.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -176,7 +204,7 @@ public class pt_studentregform extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(DateofBirth)
                             .addGroup(layout.createSequentialGroup()
@@ -214,12 +242,15 @@ public class pt_studentregform extends javax.swing.JFrame {
                                 .addGap(36, 36, 36)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtconfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtconfEmailAddress)
-                                        .addComponent(txtEmailAddress)
-                                        .addComponent(txtstudentLN)
-                                        .addComponent(txtstudentFN)
-                                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtconfEmailAddress)
+                                            .addComponent(txtEmailAddress)
+                                            .addComponent(txtstudentLN)
+                                            .addComponent(txtstudentFN)
+                                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(errorLabel)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(86, 86, 86)
@@ -264,7 +295,9 @@ public class pt_studentregform extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Password)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(errorLabel)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(confPassword)
@@ -313,7 +346,18 @@ public class pt_studentregform extends javax.swing.JFrame {
     private void txtstudentFNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstudentFNActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtstudentFNActionPerformed
+    private void checkPasswords() {
+        String password = new String(txtPassword.getPassword());
+        String confirmPassword = new String(txtconfPassword.getPassword());
 
+        if (password.isEmpty() && confirmPassword.isEmpty()) {
+            errorLabel.setText("");
+        } else if (!password.equals(confirmPassword)) {
+            errorLabel.setText("Passwords do not match!");
+        } else {
+            errorLabel.setText("");
+        }
+    }
     private void txtstudentLNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstudentLNActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtstudentLNActionPerformed
@@ -335,6 +379,8 @@ public class pt_studentregform extends javax.swing.JFrame {
         txtPassword.setText("");
         txtconfPassword.setText("");
         studentData.setText("");
+        //emailnotmatch.setVisible(false);
+        //passnotmatch.setVisible(false);
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
@@ -344,12 +390,70 @@ public class pt_studentregform extends javax.swing.JFrame {
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
         // TODO add your handling code here:
-        studentData.append("First Name: "+ txtstudentFN.getText());
+        studentData.setText("");
+        String FN = txtstudentFN.getText();
+        String LN = txtstudentLN.getText();
+        if (FN.isBlank()||LN.isBlank()){
+            JOptionPane.showMessageDialog(
+                        pt_studentregform.this,
+                        "Name field cannot be empty!",
+                        "Input Error",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+        } else {
+            studentData.append("Name: "+FN+" "+LN);
+        }
+        
+        String emailAddress = txtEmailAddress.getText(), confEmailAddress = txtconfEmailAddress.getText();
+        if (emailAddress.isBlank()||confEmailAddress.isBlank()){
+            
+        } else {
+            if (emailAddress.equals(confEmailAddress)){
+                studentData.append("\nEmail: "+ confEmailAddress);
+            } else {
+                //emailnotmatch.setVisible(true);
+                studentData.setText("");
+                JOptionPane.showMessageDialog(pt_studentregform.this,
+                "Email or Password does not match!",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        String password = String.valueOf(txtPassword.getPassword()), confPassword = String.valueOf(txtconfPassword.getPassword());
+        if (password.isBlank() || confPassword.isBlank()){
+            
+        } else {
+            if (password.equals(confPassword)) {
+                studentData.append("\nPassword: "+confPassword);
+            } else {
+                //passnotmatch.setVisible(true);
+                txtPassword.setText("");
+                txtconfPassword.setText("");
+                studentData.setText("");
+                JOptionPane.showMessageDialog(pt_studentregform.this,
+                "Email or Password does not match!",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            }    
+        }
+        int year = Year.getSelectedIndex(), month = Month.getSelectedIndex(), day = Day.getSelectedIndex();
+        if (year == 0 || month == 0 || day == 0) {
+            JOptionPane.showMessageDialog(pt_studentregform.this,
+            "Must Enter a Birth Date!",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        } else {
+            studentData.append("\nBirthday: "+ Month.getSelectedItem().toString() + " " + Day.getSelectedItem().toString() +" " +  Year.getSelectedItem().toString());
+        }
+        
+
     }//GEN-LAST:event_submitBtnActionPerformed
 
     /**
-     * @param args the command line arguments
+     *
+     * @param args
      */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -373,8 +477,9 @@ public class pt_studentregform extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(pt_studentregform.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new pt_studentregform().setVisible(true);
@@ -401,6 +506,7 @@ public class pt_studentregform extends javax.swing.JFrame {
     private javax.swing.JRadioButton compSciandEngr;
     private javax.swing.JLabel confEmailAddress;
     private javax.swing.JLabel confPassword;
+    private javax.swing.JLabel errorLabel;
     private javax.swing.JRadioButton ifFemale;
     private javax.swing.JRadioButton ifMale;
     private javax.swing.JLabel jLabel1;
