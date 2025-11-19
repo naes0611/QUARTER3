@@ -4,17 +4,28 @@
  */
 package javacomponents_part1;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ihub27
  */
 public class StudentForm extends javax.swing.JFrame {
-
+    private final List<javax.swing.JCheckBox> checkboxes;
     /**
      * Creates new form StudentForm
      */
     public StudentForm() {
         initComponents();
+        checkboxes = new ArrayList<>();
+        
+        checkboxes.add(Math); checkboxes.add(English); checkboxes.add(Science);
+        
     }
 
     /**
@@ -27,8 +38,8 @@ public class StudentForm extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        fullNameLabel = new javax.swing.JLabel();
-        txtFirstName = new javax.swing.JTextField();
+        nameLabel = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
         Math = new javax.swing.JCheckBox();
         English = new javax.swing.JCheckBox();
         Science = new javax.swing.JCheckBox();
@@ -41,12 +52,21 @@ public class StudentForm extends javax.swing.JFrame {
         saveBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         studentData = new javax.swing.JTextArea();
+        clearBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Student Form");
         setName("Student Form"); // NOI18N
         setResizable(false);
 
-        fullNameLabel.setText("Full Name");
+        nameLabel.setText("Name");
+
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
 
         Math.setText("Math");
         Math.addActionListener(new java.awt.event.ActionListener() {
@@ -100,46 +120,62 @@ public class StudentForm extends javax.swing.JFrame {
         studentData.setRows(5);
         jScrollPane1.setViewportView(studentData);
 
+        clearBtn.setText("Clear");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
+
+        cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(234, 234, 234)
-                .addComponent(saveBtn)
-                .addGap(234, 234, 234))
-            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(fullNameLabel)
-                        .addGap(52, 52, 52)
-                        .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12))
+                        .addComponent(favoriteSubjectsLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(Math)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(English)
+                        .addGap(12, 12, 12)
+                        .addComponent(Science))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(statusLabel)
+                            .addComponent(nameLabel)
+                            .addComponent(zodiacSignLabel))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(favoriteSubjectsLabel)
-                                .addGap(12, 12, 12)
-                                .addComponent(Math)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(English)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Science))
+                                .addGap(80, 80, 80)
+                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(statusLabel)
-                                .addGap(74, 74, 74)
-                                .addComponent(Enrolled)
-                                .addGap(18, 18, 18)
-                                .addComponent(notEnrolled))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(zodiacSignLabel)
-                                .addGap(44, 44, 44)
-                                .addComponent(zodiacSignComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(13, 13, 13)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(zodiacSignComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(Enrolled)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(notEnrolled)))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(saveBtn)
+                .addGap(18, 18, 18)
+                .addComponent(clearBtn)
+                .addGap(18, 18, 18)
+                .addComponent(cancelBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -149,34 +185,65 @@ public class StudentForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fullNameLabel)
-                            .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)
+                            .addComponent(nameLabel)
+                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Math)
                             .addComponent(favoriteSubjectsLabel)
                             .addComponent(English)
                             .addComponent(Science))
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(statusLabel)
                             .addComponent(Enrolled)
                             .addComponent(notEnrolled))
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(zodiacSignComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(zodiacSignLabel)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(saveBtn)
-                .addGap(25, 25, 25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveBtn)
+                    .addComponent(clearBtn)
+                    .addComponent(cancelBtn))
+                .addGap(45, 45, 45))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+//    private void displaySelectedSubjects() {
+//        StringBuilder selectedText = new StringBuilder("\nFavorite Subject/s: ");
+//        for (javax.swing.JCheckBox checkbox : checkboxes) {
+//            if (checkbox.isSelected()) selectedText.append(checkbox.getText()+" ");
+//        }
+//        studentData.append(selectedText.toString());
+//    }
+    private boolean displaySelectedSubjects() {
+        boolean anySelected = false;
+        for (javax.swing.JCheckBox checkBox : checkboxes) {
+            if (checkBox.isSelected()) {
+                anySelected = true;
+                //selectedSubjects.append(checkBox.getText()).append(" ");
+            }
+        }
+        return anySelected;
+    }
+    public String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
 
+            if (button.isSelected()) {
+                return button.getText();
+            }
+            
+        }
+
+        return null;
+    }
     private void MathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MathActionPerformed
-        studentData.append("Favorite Subjects: ");
+        
     }//GEN-LAST:event_MathActionPerformed
 
     private void zodiacSignComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zodiacSignComboBoxActionPerformed
@@ -187,26 +254,35 @@ public class StudentForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         studentData.setText("");
         
-        studentData.append("Name: "+ txtFirstName.getText());
-        
-        if (Math.isSelected() || English.isSelected()|| Science.isSelected()){
-            studentData.append("\nFavorite Subject\s: ");
-            if (Math.isSelected()){
-                studentData.append(Math.getText()+ "\n");
-            } if (English.isSelected()){
-                studentData.append("\n" + English.getText()+ "\n");
-            } if (Science.isSelected()){
-                studentData.append("\n" + Science.getText()+ "\n");
+        String name = txtName.getText();
+        int sign = zodiacSignComboBox.getSelectedIndex();
+        boolean isChecked = displaySelectedSubjects();
+        System.out.println(isChecked);
+        if (name.isBlank() && isChecked &&
+            buttonGroup1.getSelection() == null && sign == 0){ 
+            studentData.setText("");
+            JOptionPane.showMessageDialog(
+            StudentForm.this,
+            "Please fill in all required fields.",
+            "Input Error!",
+            JOptionPane.ERROR_MESSAGE);
+        } else if (name.isBlank() || !isChecked || buttonGroup1.getSelection() == null || sign == 0) {
+            studentData.setText("");
+            JOptionPane.showMessageDialog(
+            StudentForm.this,
+            "Please fill in all required fields.",
+            "Input Error!",
+            JOptionPane.ERROR_MESSAGE);
+        } else {
+            studentData.append("Name: "+ txtName.getText());
+            studentData.append("\nFavorite Subject/s: ");
+            for (javax.swing.JCheckBox checkbox : checkboxes) {
+                if (checkbox.isSelected())
+                studentData.append(checkbox.getText()+" ");
             }
+            studentData.append("\nStatus: "+getSelectedButtonText(buttonGroup1));
+            studentData.append("\nZodiac Sign: "+zodiacSignComboBox.getSelectedItem().toString());
         }
-        
-        if(Enrolled.isSelected()){
-            studentData.append("\nStatus: " + Enrolled.getText());
-        } if(notEnrolled.isSelected()) {
-            studentData.append("\nStatus: " + notEnrolled.getText());
-        }
-        studentData.append("\nZodiac Sign: " + zodiacSignComboBox.getSelectedItem().toString());
-        
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void EnrolledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnrolledActionPerformed
@@ -216,6 +292,25 @@ public class StudentForm extends javax.swing.JFrame {
     private void EnglishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnglishActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_EnglishActionPerformed
+
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameActionPerformed
+
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        // TODO add your handling code here:
+        txtName.setText("");
+        Math.setSelected(false); English.setSelected(false); Science.setSelected(false);
+        buttonGroup1.clearSelection();
+        zodiacSignComboBox.setSelectedIndex(0);
+        studentData.setText("");
+        
+    }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_cancelBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,14 +353,16 @@ public class StudentForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox Math;
     private javax.swing.JCheckBox Science;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton cancelBtn;
+    private javax.swing.JButton clearBtn;
     private javax.swing.JLabel favoriteSubjectsLabel;
-    private javax.swing.JLabel fullNameLabel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel nameLabel;
     private javax.swing.JRadioButton notEnrolled;
     private javax.swing.JButton saveBtn;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JTextArea studentData;
-    private javax.swing.JTextField txtFirstName;
+    private javax.swing.JTextField txtName;
     private javax.swing.JComboBox<String> zodiacSignComboBox;
     private javax.swing.JLabel zodiacSignLabel;
     // End of variables declaration//GEN-END:variables
