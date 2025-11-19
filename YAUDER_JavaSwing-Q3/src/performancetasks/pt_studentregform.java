@@ -4,7 +4,12 @@
  */
 package performancetasks;
 
-import javax.swing.ButtonModel;
+
+import java.util.Enumeration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -14,7 +19,9 @@ import javax.swing.event.DocumentListener;
  * @author ihub27
  */
 public class pt_studentregform extends javax.swing.JFrame {
-
+    private static final Pattern VALID_EMAIL_ADDRESS = 
+            Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
+                    Pattern.CASE_INSENSITIVE);
     /**
      * Creates new form pt_studentregform
      */
@@ -403,7 +410,21 @@ public class pt_studentregform extends javax.swing.JFrame {
             errorMailLabel.setForeground(new java.awt.Color(0, 255,0));
         }
     }
-    
+    public static boolean isValidEmail(String emailAddress) {
+        Matcher matcher = VALID_EMAIL_ADDRESS.matcher(emailAddress);
+        return matcher.matches();
+    }
+    public String getSelectedButtonText(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
     private void txtstudentLNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstudentLNActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtstudentLNActionPerformed
@@ -425,7 +446,11 @@ public class pt_studentregform extends javax.swing.JFrame {
         txtPassword.setText("");
         txtconfPassword.setText("");
         studentData.setText("");
-        Year.setIndex(0);
+        Year.setSelectedIndex(0);
+        Month.setSelectedIndex(0);
+        Day.setSelectedIndex(0);
+        buttonGroup1.clearSelection();
+        buttonGroup2.clearSelection();
         //emailnotmatch.setVisible(false);
         //passnotmatch.setVisible(false);
     }//GEN-LAST:event_clearBtnActionPerformed
@@ -438,79 +463,78 @@ public class pt_studentregform extends javax.swing.JFrame {
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
         // TODO add your handling code here:
         studentData.setText("");
+        
         String FN = txtstudentFN.getText();
         String LN = txtstudentLN.getText();
-        String emailAddress = txtEmailAddress.getText(), confirmEmailAddress = txtconfEmailAddress.getText();
-        String password = String.valueOf(txtPassword.getPassword()), confirmPassword = String.valueOf(txtconfPassword.getPassword());
+        
+        String emailAddress = txtEmailAddress.getText(), 
+            confirmEmailAddress = txtconfEmailAddress.getText();
+        
+        String password = String.valueOf(txtPassword.getPassword()),
+            confirmPassword = String.valueOf(txtconfPassword.getPassword());
+        
         int year = Year.getSelectedIndex(), month = Month.getSelectedIndex(), day = Day.getSelectedIndex();
         
         if (FN.isBlank() && LN.isBlank() && emailAddress.isBlank() && confirmEmailAddress.isBlank() && password.isBlank() 
             && confirmPassword.isBlank() && year == 0 && month == 0 && day == 0 &&
-                ifMale.isSelected() && ifFemale.isSelected() && Civil.isSelected() 
-            && Electrics.isSelected() && Mechanical.isSelected() && compSciandEngr.isSelected() && 
-            ElectronicsandCommunication.isSelected()) {
+                buttonGroup1.getSelection() == null && buttonGroup2.getSelection() == null) {
             studentData.setText("");
             JOptionPane.showMessageDialog(
             pt_studentregform.this,
-            "Cannot be empty!",
+            "Please fill in all required fields.",
             "Input Error!",
             JOptionPane.ERROR_MESSAGE);
+        } else if (FN.isBlank() || LN.isBlank() || emailAddress.isBlank() || confirmEmailAddress.isBlank() || 
+            password.isBlank() || confirmPassword.isBlank() || year == 0 || month == 0 || day == 0 ||
+            buttonGroup1.getSelection() == null || buttonGroup2.getSelection() == null) {
+            studentData.setText("");
+            JOptionPane.showMessageDialog(
+            pt_studentregform.this,
+            "Please fill in all required fields.",
+            "Input Error!",
+            JOptionPane.ERROR_MESSAGE);    
         } else {
+            
             studentData.append("Name: "+FN+" "+LN);
-            if (emailAddress.equalsIgnoreCase(confirmEmailAddress)){
-                studentData.append("\nEmail: "+ confirmEmailAddress);
-                if (password.equals(confPassword)) {
-                studentData.append("\nPassword: "+confPassword);
+            
+            if (!emailAddress.equalsIgnoreCase(confirmEmailAddress)) {
+                studentData.setText("");
+                JOptionPane.showMessageDialog(
+                pt_studentregform.this,
+                "Email does not match.",
+                "Input Error!",
+                JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (isValidEmail(emailAddress)) {
+                    
+                    studentData.append("\nEmail: "+ EmailAddress);
+                    
+                    if (password.equals(confirmPassword)) {
+                        
+                        studentData.append("\nPassword: "+password);
+                        studentData.append("\nBirthday: "+ Month.getSelectedItem().toString() + " " + Day.getSelectedItem().toString() +" " +  Year.getSelectedItem().toString());
+                        studentData.append("\nSex: "+getSelectedButtonText(buttonGroup1));
+                        studentData.append("\nDepartment: "+getSelectedButtonText(buttonGroup2));
+                        
+                    } else {
+                        studentData.setText("");
+                        JOptionPane.showMessageDialog(
+                        pt_studentregform.this,
+                        "Password does not match.",
+                        "Input Error!",
+                        JOptionPane.ERROR_MESSAGE);
+                    }
+                    
                 } else {
                     studentData.setText("");
                     JOptionPane.showMessageDialog(
                     pt_studentregform.this,
-                    "Password does not match!",
-                    "Wrong Password!",
+                    "The email address you entered is not in a valid format.",
+                    "Input Error!",
                     JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-                studentData.setText("");
-                    JOptionPane.showMessageDialog(
-                    pt_studentregform.this,
-                    "Email does not match!",
-                    "Error!",
-                    JOptionPane.ERROR_MESSAGE);
             }
-            
-        
-        if (year == 0 || month == 0 || day == 0) {
-            txtPassword.setText("");
-            JOptionPane.showMessageDialog(pt_studentregform.this,
-            "Must Enter a Birth Date!",
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
-        } else {
-            studentData.append("\nBirthday: "+ Month.getSelectedItem().toString() + " " + Day.getSelectedItem().toString() +" " +  Year.getSelectedItem().toString());
-        }
-//        String sex = null;
-//        if (ifMale.isSelected()) sex = "Male";
-        if (ifMale.isSelected()) {
-            studentData.append("\nSex: "+ ifMale.getText());
-        } else if (ifFemale.isSelected()) {
-            studentData.append("\nSex: "+ ifFemale.getText());
-        }
-        
-        if (Civil.isSelected()) {
-            studentData.append("\nDepartment: " + Civil.getText());
-        } else if (Electrics.isSelected()) {
-            studentData.append("\nDepartment: " + Electrics.getText());
-        } else if (Mechanical.isSelected()) {
-            studentData.append("\nDepartment: " + Mechanical.getText());
-        } else if (compSciandEngr.isSelected()) {
-            studentData.append("\nDepartment: " + compSciandEngr.getText());
-        } else if (ElectronicsandCommunication.isSelected()) {
-            studentData.append("\nDepartment: " + ElectronicsandCommunication.getText());
-        }
-    } 
-        
-        
-
+        } 
     }//GEN-LAST:event_submitBtnActionPerformed
 
     /**
