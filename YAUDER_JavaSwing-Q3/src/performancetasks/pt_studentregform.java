@@ -507,7 +507,7 @@ public class pt_studentregform extends javax.swing.JFrame {
             } else {
                 if (isValidEmail(emailAddress)) {
                     
-                    studentData.append("\nEmail: "+ EmailAddress);
+                    studentData.append("\nEmail: "+ emailAddress);
                     
                     if (password.equals(confirmPassword)) {
                         
@@ -534,7 +534,7 @@ public class pt_studentregform extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
                 }
             }
-        } 
+        }
     }//GEN-LAST:event_submitBtnActionPerformed
 
     /**
