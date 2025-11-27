@@ -4,7 +4,6 @@
  */
 package performancetasks;
 
-
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -139,10 +138,20 @@ public class pt_studentregform extends javax.swing.JFrame {
                 txtstudentFNActionPerformed(evt);
             }
         });
+        txtstudentFN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtstudentFNKeyTyped(evt);
+            }
+        });
 
         txtstudentLN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtstudentLNActionPerformed(evt);
+            }
+        });
+        txtstudentLN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtstudentLNKeyTyped(evt);
             }
         });
 
@@ -295,7 +304,6 @@ public class pt_studentregform extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cancelBtn)
                                 .addGap(87, 87, 87)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -350,16 +358,13 @@ public class pt_studentregform extends javax.swing.JFrame {
                             .addComponent(ifMale)
                             .addComponent(ifFemale)
                             .addComponent(sex))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(Civil)
-                                    .addComponent(Electrics)
-                                    .addComponent(Mechanical)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Department)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(Civil)
+                                .addComponent(Electrics)
+                                .addComponent(Mechanical))
+                            .addComponent(Department))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(compSciandEngr)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -536,6 +541,18 @@ public class pt_studentregform extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_submitBtnActionPerformed
+
+    private void txtstudentFNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstudentFNKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtstudentFNKeyTyped
+
+    private void txtstudentLNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstudentLNKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtstudentLNKeyTyped
 
     /**
      *

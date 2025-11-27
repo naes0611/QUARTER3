@@ -242,11 +242,13 @@
     <Component class="javax.swing.JTextField" name="txtstudentFN">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtstudentFNActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtstudentFNKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtstudentLN">
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtstudentLNActionPerformed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtstudentLNKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtEmailAddress">
