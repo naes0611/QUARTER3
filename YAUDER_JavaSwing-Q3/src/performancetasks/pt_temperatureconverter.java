@@ -5,7 +5,6 @@
 package performancetasks;
 
 import java.awt.event.KeyEvent;
-import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 
 /**
@@ -137,35 +136,35 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(
                     pt_temperatureconverter.this,
                     "Select conversion type!",
-                    "Temperature Converter",
+                    "Error!",
                 JOptionPane.ERROR_MESSAGE);
             } else if (convertFrom != 0 && convertTo == 0) {
                 JOptionPane.showMessageDialog(
                     pt_temperatureconverter.this,
                     "Select unit to convert to!",
-                    "Temperature Converter",
+                    "Error!",
                 JOptionPane.ERROR_MESSAGE);
             } else if (convertFrom == 0 && convertTo != 0) {
                 JOptionPane.showMessageDialog(
                     pt_temperatureconverter.this,
                     "Select unit to convert from!",
-                    "Temperature Converter",
+                    "Error!",
                 JOptionPane.ERROR_MESSAGE);
             } else {
                 switch(convertFrom) {
                     case 1 -> {
                         if (convertTo != 1) {
-                            convertedTemperature = (convertTo == 2) ? (temperature * 9/5) + 32 : temperature + 273.1;
+                            convertedTemperature = (convertTo == 2) ? (temperature * 9/5) + 32 : temperature + 273.15;
                             JOptionPane.showMessageDialog(
                                 pt_temperatureconverter.this,
                                 unit[j]+" to "+ unit[i] + " = " + convertedTemperature + unitSymbol[i],
                                 "Temperature Converter",
-                            JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(
                                 pt_temperatureconverter.this,
                                 "Temperature cannot be converted to itself!",
-                                "Temperature Converter",
+                                "Error!",
                             JOptionPane.ERROR_MESSAGE);
                         }                    
                     }
@@ -176,12 +175,12 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
                                 pt_temperatureconverter.this,
                                 unit[j]+" to "+ unit[i] + " = " + convertedTemperature + unitSymbol[i],
                                 "Temperature Converter",
-                            JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(
                                 pt_temperatureconverter.this,
                                 "Temperature cannot be converted to itself!",
-                                "Temperature Converter",
+                                "Error!",
                             JOptionPane.ERROR_MESSAGE);
                         }
                     }
@@ -192,12 +191,12 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
                                 pt_temperatureconverter.this,
                                 unit[j]+" to "+ unit[i] + " = " + convertedTemperature + unitSymbol[i],
                                 "Temperature Converter",
-                            JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.INFORMATION_MESSAGE);
                         } else {
                             JOptionPane.showMessageDialog(
                                 pt_temperatureconverter.this,
                                 "Temperature cannot be converted to itself!",
-                                "Temperature Converter",
+                                "Error!",
                             JOptionPane.ERROR_MESSAGE);
                         }
                     }
@@ -207,7 +206,7 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(
                 pt_temperatureconverter.this,
                 "Must enter a number!",
-                "Temperature Converter",
+                "Invalid Input!",
             JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_computeBtnActionPerformed
