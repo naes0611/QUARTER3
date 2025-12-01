@@ -4,8 +4,6 @@
  */
 package performancetasks;
 
-import java.awt.Color;
-import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -35,11 +33,8 @@ public class pt_gradecalculator extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         txtLiterature = new javax.swing.JTextField();
         txtProg = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        computedData = new javax.swing.JTextArea();
         computeBtn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -53,9 +48,9 @@ public class pt_gradecalculator extends javax.swing.JFrame {
         txtSTATS = new javax.swing.JTextField();
         txtFilipino = new javax.swing.JTextField();
         txtRAWS = new javax.swing.JTextField();
-        lblmessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Grade Calculator");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -64,9 +59,6 @@ public class pt_gradecalculator extends javax.swing.JFrame {
         jLabel2.setText("Statistics and Probability Grade");
 
         jLabel3.setText("Physical Science Grade");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel4.setText("Average");
 
         txtLiterature.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -79,12 +71,6 @@ public class pt_gradecalculator extends javax.swing.JFrame {
                 txtProgKeyTyped(evt);
             }
         });
-
-        computedData.setEditable(false);
-        computedData.setColumns(1);
-        computedData.setRows(1);
-        computedData.setTabSize(1);
-        jScrollPane1.setViewportView(computedData);
 
         computeBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         computeBtn.setText("Compute");
@@ -142,9 +128,6 @@ public class pt_gradecalculator extends javax.swing.JFrame {
             }
         });
 
-        lblmessage.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblmessage.setPreferredSize(new java.awt.Dimension(200, 20));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,221 +135,217 @@ public class pt_gradecalculator extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtLiterature, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtProg, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel10))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtRAWS, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(14, 14, 14)
-                        .addComponent(txtSTATS, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(213, 213, 213))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(28, 28, 28)
-                                .addComponent(txtFilipino, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtScience, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
                                     .addComponent(jLabel9)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtPE, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPR, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtRAWS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPE, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGap(177, 177, 177)
-                                    .addComponent(txtPR, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(232, 232, 232)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(16, 16, 16)
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(computeBtn)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(lblmessage, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel3)
+                                    .addGap(69, 69, 69)
+                                    .addComponent(txtScience, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addGap(24, 24, 24)
+                                        .addComponent(txtProg, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addGap(36, 36, 36)
+                                        .addComponent(txtLiterature, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtFilipino, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtSTATS, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(70, 70, 70))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addComponent(computeBtn)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtLiterature, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtProg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtRAWS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtSTATS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(txtPR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFilipino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel9)
-                                .addComponent(txtScience, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtPE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(txtLiterature, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(computeBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtProg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFilipino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
-                .addComponent(lblmessage, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtScience, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtSTATS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtPR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtRAWS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtPE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(computeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private boolean isGradeValid(double grade){
+        return grade>=60 && grade<=100;
+    }
+    
+    private boolean areGradesValid(double[] grades){
+        for (double grade : grades){
+            if (!isGradeValid(grade)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private void errorMessage(String type){
+        String message;
+        switch(type.toLowerCase()){
+            case "input range" -> message = "Please input grades in a range between 60-100!";
+            case "invalid input" -> message = "Invalid Input. Please input a valid number.";
+            default -> message = "An unexpected error occured.";
+        }
+        JOptionPane.showMessageDialog(
+                pt_gradecalculator.this,
+                message,
+                "Invalid Input!",
+        JOptionPane.ERROR_MESSAGE);
+    }
+    
     private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
         try {
+            double[] grades = {
+                   Double.parseDouble(txtLiterature.getText()),
+                   Double.parseDouble(txtProg.getText()),
+                   Double.parseDouble(txtRAWS.getText()),
+                   Double.parseDouble(txtPE.getText()),
+                   Double.parseDouble(txtPR.getText()),
+                   Double.parseDouble(txtSTATS.getText()),
+                   Double.parseDouble(txtScience.getText()),
+                   Double.parseDouble(txtFilipino.getText())
+            };
             
-            double literature = Double.parseDouble(txtLiterature.getText()),
-                   prog = Double.parseDouble(txtProg.getText()),
-                   raws = Double.parseDouble(txtRAWS.getText()),
-                   pe= Double.parseDouble(txtPE.getText()),
-                   pr= Double.parseDouble(txtPR.getText()),
-                   stats= Double.parseDouble(txtSTATS.getText()),
-                   science= Double.parseDouble(txtScience.getText()),
-                   filipino= Double.parseDouble(txtFilipino.getText()),
-                   average;
-            
-            if (stats < 60 || stats > 100 || science < 60 || science > 100 
-                || literature < 60 || literature > 100 || pe < 60 || pe > 100 
-                || pr < 60 || pr > 100 || filipino < 60 || filipino > 100 
-                || raws < 60 || raws > 100 || prog < 60 || prog > 100 ) {
-                JOptionPane.showMessageDialog(
-                    pt_gradecalculator.this,
-                    "Please input grade in a range between 60-100!",
-                    "Invalid Input!",
-                    JOptionPane.ERROR_MESSAGE);
-            } else {
-                average = stats + science + pr + pe + filipino + raws + prog + literature;
-                average = average/8;
-                String message;
-                
-
-                if (average >= 75 && average < 90 ) {
-                    message ="You Passed!";
-                }else if (average >= 90 && average <= 94) {
-                    message ="You Passed! With Honor!";
-                } else if (average > 94 && average <= 97) {
-                    message="You Passed! With High Honor!";
-                } else if (average > 97 ) {
-                    message="You Passed! With Highest Honor!";
-                } else {
-                    message="You Failed!";
-                }
-                JOptionPane.showMessageDialog(
-                    pt_gradecalculator.this,
-                    "Your average is "+average +"\n"+message,
-                    "GRADE CALCULATOR",
-                    JOptionPane.INFORMATION_MESSAGE);
-                String avgString = Double.toString(average);
-                computedData.setText(avgString);
+            if(!areGradesValid(grades)){
+                errorMessage("input range");
+                return;
             }
-        } catch (NumberFormatException e) {
+            
+            double sum = 0;
+            for (double grade : grades) {
+                sum += grade;
+            }
+            double average = sum/grades.length;
+            String message;
+            
+            if (average >= 75 && average < 90 ) {
+                message ="<html><b><font color='green'>You Passed!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
+            }else if (average >= 90 && average <= 94) {
+                message ="<html><b><font color='green'>You Passed! With Honors!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
+            } else if (average >= 95 && average <= 97) {
+                message="<html><b><font color='green'>You Passed! With High Honors!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
+            } else if (average >= 98 ) {
+                message="<html><b><font color='green'>You Passed! With Highest Honors!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";                        
+            } else {
+                message="<html><b><font color='red'>You Failed!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
+            }
+            
             JOptionPane.showMessageDialog(
-                    pt_gradecalculator.this,
-                    "Must input a number",
-                    "Invalid Input!",
-                    JOptionPane.ERROR_MESSAGE);
+                pt_gradecalculator.this,
+                message,
+                "GRADE CALCULATOR",
+            JOptionPane.INFORMATION_MESSAGE);
+            
+        } catch (NumberFormatException e) {
+            errorMessage("invalid input");
         }
     }//GEN-LAST:event_computeBtnActionPerformed
-
-    private void txtLiteratureKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLiteratureKeyTyped
+    
+    private void isValidInput(java.awt.event.KeyEvent evt, javax.swing.JTextField textField){
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c)&& c!=KeyEvent.VK_PERIOD) {
+        String text = textField.getText();
+        if (Character.isDigit(c)) {
+            if (text.length()>5) {
+                evt.consume();
+            }
+            return;
+        }
+        if (c=='.') {
+            if(text.contains(".")){
+                evt.consume();
+            }
+            return;
+        }
         evt.consume();
-        } else if (c==KeyEvent.VK_PERIOD && txtLiterature.getText().contains(".")) {
-            evt.consume();
-        } else if (txtLiterature.getText().length()>=6) {
-            evt.consume();
-        } 
+    }
+    
+    private void txtLiteratureKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLiteratureKeyTyped
+        isValidInput(evt, txtLiterature);
     }//GEN-LAST:event_txtLiteratureKeyTyped
 
     private void txtProgKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProgKeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c)&& c!=KeyEvent.VK_PERIOD) {
-        evt.consume();
-        } else if (c==KeyEvent.VK_PERIOD && txtProg.getText().contains(".")) {
-            evt.consume();
-        } else if (txtProg.getText().length()>=6) {
-            evt.consume();
-        } 
+        isValidInput(evt, txtProg);
     }//GEN-LAST:event_txtProgKeyTyped
 
     private void txtPEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPEKeyTyped
-        // TODO add your handling code here:
+       isValidInput(evt, txtPE);
     }//GEN-LAST:event_txtPEKeyTyped
 
     private void txtScienceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtScienceKeyTyped
-        // TODO add your handling code here:
+        isValidInput(evt, txtScience);
     }//GEN-LAST:event_txtScienceKeyTyped
 
     private void txtPRKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPRKeyTyped
-        // TODO add your handling code here:
+        isValidInput(evt, txtPR);
     }//GEN-LAST:event_txtPRKeyTyped
 
     private void txtSTATSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSTATSKeyTyped
-        // TODO add your handling code here:
+        isValidInput(evt, txtSTATS);
     }//GEN-LAST:event_txtSTATSKeyTyped
 
     private void txtFilipinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilipinoKeyTyped
-        // TODO add your handling code here:
+        isValidInput(evt, txtFilipino);
     }//GEN-LAST:event_txtFilipinoKeyTyped
 
     private void txtRAWSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRAWSKeyTyped
-        // TODO add your handling code here:
+        isValidInput(evt, txtRAWS);
     }//GEN-LAST:event_txtRAWSKeyTyped
 
     /**
@@ -396,19 +375,15 @@ public class pt_gradecalculator extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton computeBtn;
-    private javax.swing.JTextArea computedData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblmessage;
     private javax.swing.JTextField txtFilipino;
     private javax.swing.JTextField txtLiterature;
     private javax.swing.JTextField txtPE;
