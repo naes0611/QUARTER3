@@ -11,8 +11,28 @@ import javax.swing.JOptionPane;
  *
  * @author seanyauder
  */
-public class pt_temperatureconverter extends javax.swing.JFrame {
+enum UnitOfTemperatures {
+    CELSIUS("Celsius", "°C"),
+    FAHRENHEIT("Fahrenheit", "°F"),
+    KELVIN("Kelvin", "K");
     
+    private final String name;
+    private final String symbol;
+    
+    UnitOfTemperatures(String name, String symbol){
+        this.name = name;
+        this.symbol = symbol;
+    }
+    
+    public String getName(){
+        return name;
+    }
+    public String getSymbol(){
+        return symbol;
+    }
+}
+public class pt_temperatureconverter extends javax.swing.JFrame {
+    static double convertedTemperature;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(pt_temperatureconverter.class.getName());
 
     /**
@@ -46,9 +66,9 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("To");
 
-        cbxconvertFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Selected-", "Celsius", "Fahrenheit", "Kelvin" }));
+        cbxconvertFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select Unit-", "Celsius", "Fahrenheit", "Kelvin" }));
 
-        cbxconvertTo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Selected-", "Celsius", "Fahrenheit", "Kelvin" }));
+        cbxconvertTo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select Unit-", "Celsius", "Fahrenheit", "Kelvin" }));
 
         userInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -57,7 +77,7 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         });
 
         computeBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        computeBtn.setText("Compute");
+        computeBtn.setText("Convert");
         computeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 computeBtnActionPerformed(evt);
@@ -73,22 +93,21 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(45, 45, 45))
             .addGroup(layout.createSequentialGroup()
+                .addGap(71, 71, 71)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(cbxconvertFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(cbxconvertTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(computeBtn)))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGap(31, 31, 31)
+                        .addComponent(computeBtn)))
+                .addContainerGap(71, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(cbxconvertFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(cbxconvertTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,102 +131,85 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
 
     private void userInputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userInputKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c)&& c!=KeyEvent.VK_PERIOD) {
+        String text = userInput.getText();
+        if (Character.isDigit(c)) {
+            if (text.length()>=10) {
+                evt.consume();
+            }
+            return;
+        } 
+        if (c=='.') {
+            if(text.contains(".")){
+                evt.consume();
+            }
+            return;
+        } 
+        if (c == '-') {
+            if(text.contains("-")){
             evt.consume();
-        } else if (c==KeyEvent.VK_PERIOD && userInput.getText().contains(".")) {
-            evt.consume();
-        } else if (userInput.getText().length()>=10) {
-            evt.consume();
+            }
+            return;
         }
+        evt.consume();
     }//GEN-LAST:event_userInputKeyTyped
-
-    private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
-        try {
-            String number = userInput.getText();
-            String[] unit = {"", "Celsius", "Fahrenheit", "Kelvin"};
-            String[] unitSymbol = {"", "°C", "°F", "K"};
-            int i = cbxconvertTo.getSelectedIndex(), j = cbxconvertFrom.getSelectedIndex();
-            double temperature = Double.parseDouble(number);
-            double convertedTemperature;
-            int convertFrom = cbxconvertFrom.getSelectedIndex(), 
-                convertTo = cbxconvertTo.getSelectedIndex();
-
-            if (convertFrom == 0 && convertTo == 0) {
-                JOptionPane.showMessageDialog(
+    
+    private void errorMessage(String type){
+        String message;
+        if (type.equalsIgnoreCase("Select conversion type")) {
+            JOptionPane.showMessageDialog(
                     pt_temperatureconverter.this,
                     "Select conversion type!",
                     "Error!",
-                JOptionPane.ERROR_MESSAGE);
-            } else if (convertFrom != 0 && convertTo == 0) {
-                JOptionPane.showMessageDialog(
+            JOptionPane.ERROR_MESSAGE);
+        } else if (type.equalsIgnoreCase("No unit to convert to")) {
+            JOptionPane.showMessageDialog(
                     pt_temperatureconverter.this,
                     "Select unit to convert to!",
                     "Error!",
-                JOptionPane.ERROR_MESSAGE);
-            } else if (convertFrom == 0 && convertTo != 0) {
-                JOptionPane.showMessageDialog(
+            JOptionPane.ERROR_MESSAGE);
+        } else if (type.equalsIgnoreCase("No unit to convert from")){
+            JOptionPane.showMessageDialog(
                     pt_temperatureconverter.this,
                     "Select unit to convert from!",
                     "Error!",
-                JOptionPane.ERROR_MESSAGE);
-            } else {
-                switch(convertFrom) {
-                    case 1 -> {
-                        if (convertTo != 1) {
-                            convertedTemperature = (convertTo == 2) ? (temperature * 9/5) + 32 : temperature + 273.15;
-                            JOptionPane.showMessageDialog(
-                                pt_temperatureconverter.this,
-                                unit[j]+" to "+ unit[i] + " = " + convertedTemperature + unitSymbol[i],
-                                "Temperature Converter",
-                            JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(
-                                pt_temperatureconverter.this,
-                                "Temperature cannot be converted to itself!",
-                                "Error!",
-                            JOptionPane.ERROR_MESSAGE);
-                        }                    
-                    }
-                    case 2 -> {
-                        if (convertTo != 2) {
-                            convertedTemperature = (convertTo == 1) ? (temperature -32) * 5/9  : (temperature -32) * 5/9 + 273.15;
-                            JOptionPane.showMessageDialog(
-                                pt_temperatureconverter.this,
-                                unit[j]+" to "+ unit[i] + " = " + convertedTemperature + unitSymbol[i],
-                                "Temperature Converter",
-                            JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(
-                                pt_temperatureconverter.this,
-                                "Temperature cannot be converted to itself!",
-                                "Error!",
-                            JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                    case 3 -> {
-                        if (convertTo != 3) {
-                            convertedTemperature = (convertTo == 1) ? temperature - 273.15 : (temperature - 273.15) * 9/5 + 32;
-                            JOptionPane.showMessageDialog(
-                                pt_temperatureconverter.this,
-                                unit[j]+" to "+ unit[i] + " = " + convertedTemperature + unitSymbol[i],
-                                "Temperature Converter",
-                            JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                            JOptionPane.showMessageDialog(
-                                pt_temperatureconverter.this,
-                                "Temperature cannot be converted to itself!",
-                                "Error!",
-                            JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                }
-            }
-        } catch (NumberFormatException e) {
+            JOptionPane.ERROR_MESSAGE);
+        } else if (type.equalsIgnoreCase("Temp cannot be converted to itself")) {
+            JOptionPane.showMessageDialog(
+                pt_temperatureconverter.this,
+                "Temperature cannot be converted to itself!",
+                "Error!",
+            JOptionPane.ERROR_MESSAGE);
+        } else if (type.equalsIgnoreCase("Invalid Input")) {
             JOptionPane.showMessageDialog(
                 pt_temperatureconverter.this,
                 "Must enter a number!",
                 "Invalid Input!",
             JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void convertMessage() {
+        String[] unit = {"", "Celsius", "Fahrenheit", "Kelvin"};
+            String[] unitSymbol = {"", "°C", "°F", "K"};
+            int i = cbxconvertTo.getSelectedIndex(), j = cbxconvertFrom.getSelectedIndex();
+            JOptionPane.showMessageDialog(
+                pt_temperatureconverter.this,
+                unit[j]+" to "+ unit[i] + " = " + convertedTemperature + unitSymbol[i],
+                "Temperature Converter",
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+    private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
+        try {
+            String number = userInput.getText();
+            
+            double temperature = Double.parseDouble(number);
+            
+            int convertFrom = cbxconvertFrom.getSelectedIndex(), 
+                convertTo = cbxconvertTo.getSelectedIndex();
+
+            
+        } catch (NumberFormatException e) {
+            errorMessage("Invalid Input");
         }
     }//GEN-LAST:event_computeBtnActionPerformed
 

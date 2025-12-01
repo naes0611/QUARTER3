@@ -4,6 +4,7 @@
  */
 package performancetasks;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
@@ -35,11 +36,24 @@ public class pt_gradecalculator extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtMath = new javax.swing.JTextField();
-        txtScience = new javax.swing.JTextField();
+        txtLiterature = new javax.swing.JTextField();
+        txtProg = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         computedData = new javax.swing.JTextArea();
         computeBtn = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txtPE = new javax.swing.JTextField();
+        txtScience = new javax.swing.JTextField();
+        txtPR = new javax.swing.JTextField();
+        txtSTATS = new javax.swing.JTextField();
+        txtFilipino = new javax.swing.JTextField();
+        txtRAWS = new javax.swing.JTextField();
+        lblmessage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -47,22 +61,22 @@ public class pt_gradecalculator extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Grade Calculator");
 
-        jLabel2.setText("Math Grade");
+        jLabel2.setText("Statistics and Probability Grade");
 
-        jLabel3.setText("Science Grade");
+        jLabel3.setText("Physical Science Grade");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Average");
 
-        txtMath.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtLiterature.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtMathKeyTyped(evt);
+                txtLiteratureKeyTyped(evt);
             }
         });
 
-        txtScience.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtProg.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtScienceKeyTyped(evt);
+                txtProgKeyTyped(evt);
             }
         });
 
@@ -80,32 +94,123 @@ public class pt_gradecalculator extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Pagbasa at Pagsusuri Grade");
+
+        jLabel6.setText("Reading and Writing Skills Grade");
+
+        jLabel7.setText("Computer Programming Grade");
+
+        jLabel8.setText("Practical Research 1 Grade");
+
+        jLabel9.setText("Physical Education Grade");
+
+        jLabel10.setText("21st Century Literature Grade");
+
+        txtPE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPEKeyTyped(evt);
+            }
+        });
+
+        txtScience.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtScienceKeyTyped(evt);
+            }
+        });
+
+        txtPR.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPRKeyTyped(evt);
+            }
+        });
+
+        txtSTATS.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSTATSKeyTyped(evt);
+            }
+        });
+
+        txtFilipino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFilipinoKeyTyped(evt);
+            }
+        });
+
+        txtRAWS.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRAWSKeyTyped(evt);
+            }
+        });
+
+        lblmessage.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblmessage.setPreferredSize(new java.awt.Dimension(200, 20));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtLiterature, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtProg, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtRAWS, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(14, 14, 14)
+                        .addComponent(txtSTATS, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(48, 48, 48))
+                .addGap(213, 213, 213))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(28, 28, 28)
+                                .addComponent(txtFilipino, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtScience, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtMath, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtScience, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel8)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel9)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtPE, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(177, 177, 177)
+                                    .addComponent(txtPR, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(computeBtn)))
+                        .addGap(232, 232, 232)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(16, 16, 16)
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(computeBtn)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(lblmessage, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -113,21 +218,50 @@ public class pt_gradecalculator extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtLiterature, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtProg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtRAWS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtSTATS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtMath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtScience, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(txtPR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFilipino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel9)
+                                .addComponent(txtScience, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addComponent(computeBtn)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblmessage, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,52 +269,105 @@ public class pt_gradecalculator extends javax.swing.JFrame {
 
     private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
         try {
-            double math = Double.parseDouble(txtMath.getText()),
-                   science = Double.parseDouble(txtScience.getText()),
+            
+            double literature = Double.parseDouble(txtLiterature.getText()),
+                   prog = Double.parseDouble(txtProg.getText()),
+                   raws = Double.parseDouble(txtRAWS.getText()),
+                   pe= Double.parseDouble(txtPE.getText()),
+                   pr= Double.parseDouble(txtPR.getText()),
+                   stats= Double.parseDouble(txtSTATS.getText()),
+                   science= Double.parseDouble(txtScience.getText()),
+                   filipino= Double.parseDouble(txtFilipino.getText()),
                    average;
             
-            if (math < 60 || math > 100 || science < 60 || science > 100) {
+            if (stats < 60 || stats > 100 || science < 60 || science > 100 
+                || literature < 60 || literature > 100 || pe < 60 || pe > 100 
+                || pr < 60 || pr > 100 || filipino < 60 || filipino > 100 
+                || raws < 60 || raws > 100 || prog < 60 || prog > 100 ) {
                 JOptionPane.showMessageDialog(
                     pt_gradecalculator.this,
                     "Please input grade in a range between 60-100!",
                     "Invalid Input!",
                     JOptionPane.ERROR_MESSAGE);
             } else {
-                average = math + science;
-                average = average/2;
+                average = stats + science + pr + pe + filipino + raws + prog + literature;
+                average = average/8;
+                String message;
+                
+
+                if (average >= 75 && average < 90 ) {
+                    message ="You Passed!";
+                }else if (average >= 90 && average <= 94) {
+                    message ="You Passed! With Honor!";
+                } else if (average > 94 && average <= 97) {
+                    message="You Passed! With High Honor!";
+                } else if (average > 97 ) {
+                    message="You Passed! With Highest Honor!";
+                } else {
+                    message="You Failed!";
+                }
+                JOptionPane.showMessageDialog(
+                    pt_gradecalculator.this,
+                    "Your average is "+average +"\n"+message,
+                    "GRADE CALCULATOR",
+                    JOptionPane.INFORMATION_MESSAGE);
                 String avgString = Double.toString(average);
                 computedData.setText(avgString);
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(
                     pt_gradecalculator.this,
-                    "Must input a number!",
+                    "Must input a number",
                     "Invalid Input!",
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_computeBtnActionPerformed
 
-    private void txtMathKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMathKeyTyped
+    private void txtLiteratureKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLiteratureKeyTyped
         char c = evt.getKeyChar();
         if (!Character.isDigit(c)&& c!=KeyEvent.VK_PERIOD) {
         evt.consume();
-        } else if (c==KeyEvent.VK_PERIOD && txtMath.getText().contains(".")) {
+        } else if (c==KeyEvent.VK_PERIOD && txtLiterature.getText().contains(".")) {
             evt.consume();
-        } else if (txtMath.getText().length()>=6) {
+        } else if (txtLiterature.getText().length()>=6) {
             evt.consume();
         } 
-    }//GEN-LAST:event_txtMathKeyTyped
+    }//GEN-LAST:event_txtLiteratureKeyTyped
+
+    private void txtProgKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProgKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)&& c!=KeyEvent.VK_PERIOD) {
+        evt.consume();
+        } else if (c==KeyEvent.VK_PERIOD && txtProg.getText().contains(".")) {
+            evt.consume();
+        } else if (txtProg.getText().length()>=6) {
+            evt.consume();
+        } 
+    }//GEN-LAST:event_txtProgKeyTyped
+
+    private void txtPEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPEKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPEKeyTyped
 
     private void txtScienceKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtScienceKeyTyped
-        char c = evt.getKeyChar();
-        if (!Character.isDigit(c)&& c!=KeyEvent.VK_PERIOD) {
-        evt.consume();
-        } else if (c==KeyEvent.VK_PERIOD && txtScience.getText().contains(".")) {
-            evt.consume();
-        } else if (txtScience.getText().length()>=6) {
-            evt.consume();
-        } 
+        // TODO add your handling code here:
     }//GEN-LAST:event_txtScienceKeyTyped
+
+    private void txtPRKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPRKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPRKeyTyped
+
+    private void txtSTATSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSTATSKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSTATSKeyTyped
+
+    private void txtFilipinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFilipinoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFilipinoKeyTyped
+
+    private void txtRAWSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRAWSKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRAWSKeyTyped
 
     /**
      * @param args the command line arguments
@@ -211,11 +398,24 @@ public class pt_gradecalculator extends javax.swing.JFrame {
     private javax.swing.JButton computeBtn;
     private javax.swing.JTextArea computedData;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtMath;
+    private javax.swing.JLabel lblmessage;
+    private javax.swing.JTextField txtFilipino;
+    private javax.swing.JTextField txtLiterature;
+    private javax.swing.JTextField txtPE;
+    private javax.swing.JTextField txtPR;
+    private javax.swing.JTextField txtProg;
+    private javax.swing.JTextField txtRAWS;
+    private javax.swing.JTextField txtSTATS;
     private javax.swing.JTextField txtScience;
     // End of variables declaration//GEN-END:variables
 }
