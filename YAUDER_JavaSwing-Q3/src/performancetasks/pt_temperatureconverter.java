@@ -262,10 +262,10 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
             return;
         }
         
-        {
-             double input = Double.parseDouble(userInput.getText().trim());
-             convertMessage(input, unitFrom, unitTo);
-        }
+        
+        double input = Double.parseDouble(userInput.getText().trim());
+        convertMessage(input, unitFrom, unitTo);
+        
         
     }//GEN-LAST:event_computeBtnActionPerformed
 

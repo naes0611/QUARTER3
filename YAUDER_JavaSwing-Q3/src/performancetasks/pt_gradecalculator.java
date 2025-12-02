@@ -250,6 +250,30 @@ public class pt_gradecalculator extends javax.swing.JFrame {
         JOptionPane.ERROR_MESSAGE);
     }
     
+    private void message(double average){
+        String message;
+            
+            if (average >= 75 && average < 90 ) {
+                message ="<html><b><font color='green'>You Passed!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
+            }else if (average >= 90 && average < 95) {
+                message ="<html><b><font color='green'>You Passed! With Honors!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
+            } else if (average >= 95 && average < 98) {
+                message="<html><b><font color='green'>You Passed! With High Honors!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
+            } else if (average >= 98 ) {
+                message="<html><b><font color='green'>You Passed! With Highest Honors!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";                        
+            } else {
+                message="<html><b><font color='red'>You Failed!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
+            }
+            
+            JOptionPane.showMessageDialog(
+                pt_gradecalculator.this,
+                message,
+                "GRADE CALCULATOR",
+            JOptionPane.INFORMATION_MESSAGE);
+            
+            
+    }
+    
     private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
         try {
             double[] grades = {
@@ -273,25 +297,9 @@ public class pt_gradecalculator extends javax.swing.JFrame {
                 sum += grade;
             }
             double average = sum/grades.length;
-            String message;
             
-            if (average >= 75 && average < 90 ) {
-                message ="<html><b><font color='green'>You Passed!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
-            }else if (average >= 90 && average <= 94) {
-                message ="<html><b><font color='green'>You Passed! With Honors!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
-            } else if (average >= 95 && average <= 97) {
-                message="<html><b><font color='green'>You Passed! With High Honors!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
-            } else if (average >= 98 ) {
-                message="<html><b><font color='green'>You Passed! With Highest Honors!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";                        
-            } else {
-                message="<html><b><font color='red'>You Failed!<br>Average: " +String.format("%.2f", average)+"</font></b></html>";
-            }
+            message(average);
             
-            JOptionPane.showMessageDialog(
-                pt_gradecalculator.this,
-                message,
-                "GRADE CALCULATOR",
-            JOptionPane.INFORMATION_MESSAGE);
             
         } catch (NumberFormatException e) {
             errorMessage("invalid input");
