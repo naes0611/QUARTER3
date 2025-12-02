@@ -11,8 +11,60 @@ import javax.swing.JOptionPane;
  *
  * @author seanyauder
  */
+enum UnitOfTemperatures {
+    CELSIUS("Celsius", "°C") {
+        @Override
+        public double toCelsius(double temp) {
+            return temp;
+        }
+        @Override
+        public double fromCelsius(double celsiusValue) {
+            return celsiusValue;
+        }
+
+    },
+    FAHRENHEIT("Fahrenheit", "°F") {
+        @Override
+        public double toCelsius(double value) {
+            return (value - 32) * 5.0/9.0;
+        }
+        @Override
+        public double fromCelsius(double celsiusValue) {
+            return celsiusValue * 9.0/5.0 + 32;
+        }
+
+    },
+    KELVIN("Kelvin", "K") {
+        @Override
+        public double toCelsius(double value) {
+            return value - 273.15;
+        }
+        @Override
+        public double fromCelsius(double celsiusValue){
+            return celsiusValue + 273.15;
+        }
+    };
+
+    private final String name;
+    private final String symbol;
+    
+    UnitOfTemperatures(String name, String symbol){
+        this.name = name;
+        this.symbol = symbol;
+    }
+
+    public String getName(){
+        return name;
+    }
+    public String getSymbol(){
+        return symbol;
+    }
+
+    public abstract double toCelsius(double value);
+
+    public abstract double fromCelsius(double celsiusValue);
+}
 public class pt_temperatureconverter extends javax.swing.JFrame {
-    static double convertedTemperature;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(pt_temperatureconverter.class.getName());
 
     /**
@@ -39,6 +91,7 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         computeBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Temperature Converter");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Temperature Converter");
@@ -47,6 +100,7 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         jLabel2.setText("To");
 
         cbxconvertFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select Unit-", "Celsius", "Fahrenheit", "Kelvin" }));
+        cbxconvertFrom.setToolTipText("");
 
         cbxconvertTo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select Unit-", "Celsius", "Fahrenheit", "Kelvin" }));
 
@@ -108,115 +162,111 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void userInputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userInputKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c)&& c!=KeyEvent.VK_PERIOD) {
-            evt.consume();
-        } else if (c==KeyEvent.VK_PERIOD && userInput.getText().contains(".")) {
-            evt.consume();
-        } else if (userInput.getText().length()>=10) {
-            evt.consume();
+        String text = userInput.getText();
+        if (Character.isDigit(c)) {
+            if (text.length()>=10) {
+                evt.consume();
+            }
+            return;
         }
+
+        if (c=='.') {
+            if(text.contains(".")){
+                evt.consume();
+            }
+            return;
+        }
+
+        if (c == '-') {
+            if(text.contains("-") || userInput.getCaretPosition() != 0){
+                evt.consume();
+            }
+            return;
+        }
+        evt.consume();
     }//GEN-LAST:event_userInputKeyTyped
-    
+
+    private boolean isValidInput(){
+        String input = userInput.getText().trim();
+        if(input.isBlank()){
+            errorMessage("Invalid Input");
+            return false;
+        }
+        try {
+            Double.valueOf(input);
+            return true;
+        } catch (NumberFormatException e) {
+            errorMessage("Invalid Input");
+            return false;
+        }
+    }
+    private double convert(double value, UnitOfTemperatures unitFrom, UnitOfTemperatures unitTo) {
+        double celsius = unitFrom.toCelsius(value);
+        return unitTo.fromCelsius(celsius);
+    }
+
+    private void convertMessage(double value, UnitOfTemperatures unitFrom, UnitOfTemperatures unitTo){
+        double result = convert(value, unitFrom, unitTo);
+        String message = String.format("%.2f%s to %s is %.2f%s",
+                                value, unitFrom.getSymbol(),
+                                unitTo.getName(),
+                                result, unitTo.getSymbol());
+        JOptionPane.showMessageDialog(
+            pt_temperatureconverter.this,
+            message, 
+            "Temperature Converter",
+        JOptionPane.INFORMATION_MESSAGE);
+    }
     private void errorMessage(String type){
         String message;
-        if (type.equalsIgnoreCase("Select conversion type")) {
-            JOptionPane.showMessageDialog(
-                    pt_temperatureconverter.this,
-                    "Select conversion type!",
-                    "Error!",
-            JOptionPane.ERROR_MESSAGE);
-        } else if (type.equalsIgnoreCase("No unit to convert to")) {
-            JOptionPane.showMessageDialog(
-                    pt_temperatureconverter.this,
-                    "Select unit to convert to!",
-                    "Error!",
-            JOptionPane.ERROR_MESSAGE);
-        } else if (type.equalsIgnoreCase("No unit to convert from")){
-            JOptionPane.showMessageDialog(
-                    pt_temperatureconverter.this,
-                    "Select unit to convert from!",
-                    "Error!",
-            JOptionPane.ERROR_MESSAGE);
-        } else if (type.equalsIgnoreCase("Temp cannot be converted to itself")) {
-            JOptionPane.showMessageDialog(
-                pt_temperatureconverter.this,
-                "Temperature cannot be converted to itself!",
-                "Error!",
-            JOptionPane.ERROR_MESSAGE);
-        } else if (type.equalsIgnoreCase("invalidInput")) {
-            JOptionPane.showMessageDialog(
-                pt_temperatureconverter.this,
-                "Must enter a number!",
-                "Invalid Input!",
-            JOptionPane.ERROR_MESSAGE);
+        switch(type.toLowerCase()){
+            case "select conversion type" -> message = "Select conversion type!";
+            case "no unit to convert to" -> message = "Select unit to convert to!";
+            case "no unit to convert from" -> message = "Select unit to convert from!";
+            case "temperature cannot be converted to itself" -> message = "Temperature cannot be converted to itself!";
+            case "invalid input" -> message = "Invalid Input. Please enter a valid number.";
+            default -> message = "An unexpected error occurred.";
         }
+        JOptionPane.showMessageDialog(
+            pt_temperatureconverter.this,
+            message,
+            "Error",
+        JOptionPane.ERROR_MESSAGE);
     }
-    
-    private void convertMessage() {
-        String[] unit = {"", "Celsius", "Fahrenheit", "Kelvin"};
-            String[] unitSymbol = {"", "°C", "°F", "K"};
-            int i = cbxconvertTo.getSelectedIndex(), j = cbxconvertFrom.getSelectedIndex();
-            JOptionPane.showMessageDialog(
-                pt_temperatureconverter.this,
-                unit[j]+" to "+ unit[i] + " = " + convertedTemperature + unitSymbol[i],
-                "Temperature Converter",
-            JOptionPane.INFORMATION_MESSAGE);
-    }
-    private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
-        try {
-            String number = userInput.getText();
-            
-            double temperature = Double.parseDouble(number);
-            
-            int convertFrom = cbxconvertFrom.getSelectedIndex(), 
-                convertTo = cbxconvertTo.getSelectedIndex();
 
-            if (convertFrom == 0 && convertTo == 0) {
-                errorMessage("Select conversion type");
-            } else if (convertFrom != 0 && convertTo == 0) {
-                errorMessage("No unit to convert to");
-            } else if (convertFrom == 0 && convertTo != 0) {
-                errorMessage("No unit to convert from");
-            } else {
-                switch(convertFrom) {
-                    case 1 -> {
-                        
-                        if (convertTo != 1) {
-                            convertedTemperature = (convertTo == 2) ? (temperature * 9/5) + 32 : temperature + 273.15;
-                            convertMessage();
-                        } else {
-                            errorMessage("Temp cannot be converted to itself");
-                        }          
-                        
-                    }
-                    case 2 -> {
-                        
-                        if (convertTo != 2) {
-                            convertedTemperature = (convertTo == 1) ? (temperature -32) * 5/9  : (temperature -32) * 5/9 + 273.15;
-                            convertMessage();
-                        } else {
-                            errorMessage("Temp cannot be converted to itself");
-                        }
-                        
-                    }
-                    case 3 -> {
-                        
-                        if (convertTo != 3) {
-                            convertedTemperature = (convertTo == 1) ? temperature - 273.15 : (temperature - 273.15) * 9/5 + 32;
-                            convertMessage();
-                        } else {
-                            errorMessage("Temp cannot be converted to itself");
-                        }
-                        
-                    }
-                }
-            }
-        } catch (NumberFormatException e) {
-            errorMessage("invalidInput");
+    private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
+        int from = cbxconvertFrom.getSelectedIndex(), to = cbxconvertTo.getSelectedIndex();
+        if (!isValidInput()){
+          return;
         }
+        if (from == 0 && to == 0){
+            errorMessage("select conversion type");
+            return;
+        }
+        if (from == 0) {
+            errorMessage("no unit to convert from");
+            return;
+        }
+        if (to == 0) {
+            errorMessage("no unit to convert to");
+            return;
+        }
+        
+        UnitOfTemperatures unitFrom = UnitOfTemperatures.values()[from - 1], unitTo = UnitOfTemperatures.values()[to - 1];
+        
+        if (unitFrom == unitTo) {
+            errorMessage("temperature cannot be converted to itself");
+            return;
+        }
+        
+        
+        double input = Double.parseDouble(userInput.getText().trim());
+        convertMessage(input, unitFrom, unitTo);
+        
+        
     }//GEN-LAST:event_computeBtnActionPerformed
 
     /**
@@ -226,7 +276,7 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
