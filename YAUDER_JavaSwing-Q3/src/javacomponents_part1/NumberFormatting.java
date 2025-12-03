@@ -6,8 +6,10 @@ package activities;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import javax.swing.text.NumberFormatter;
+import java.util.Locale;
 import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
+
 /**
  *
  * @author ihub27
@@ -20,13 +22,55 @@ public class NumberFormatting extends javax.swing.JFrame {
      */
     public NumberFormatting() {
         initComponents();
-        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
-        formattedNumberField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(decimalFormat)));
-        formattedNumberField.setValue(0.00); // property change
-        
-        //NumberFormat currencyFormat = new NumberFormat.getCurrencyInstance();
+        setupDecimalField();
+        setupCurrencyField();
     }
-
+    
+    //Method for Decimal Field
+    private void setupDecimalField() {
+        Locale localePH = Locale.forLanguageTag("en-PH");
+        
+        NumberFormat decimalFormat = NumberFormat.getNumberInstance(localePH);
+        
+        decimalFormat.setMinimumFractionDigits(2);
+        decimalFormat.setMaximumFractionDigits(2);
+        
+        NumberFormatter decimalFormatter = new NumberFormatter(decimalFormat);
+        decimalFormatter.setAllowsInvalid(false);
+        decimalFormatter.setOverwriteMode(false);
+        
+        formattedDecimal.setFormatterFactory(new DefaultFormatterFactory(decimalFormatter));
+        formattedDecimal.addPropertyChangeListener("value", evt -> {
+            if(formattedDecimal.getValue() == null) {
+                formattedDecimal.setValue(0.00);
+            }
+        });
+        
+        formattedDecimal.setValue(0.00);
+    }
+    
+    private void setupCurrencyField(){
+        Locale localePH = new Locale("en","PH");
+        
+        NumberFormat currencyFormat = NumberFormat.getNumberInstance(localePH);
+        formattedCurrency.setText(currencyFormat.format(0.00));
+        currencyFormat.setMinimumFractionDigits(2);
+        currencyFormat.setMaximumFractionDigits(2);
+        
+        NumberFormatter currencyFormatter = new NumberFormatter(currencyFormat);
+        currencyFormatter.setAllowsInvalid(false);
+        currencyFormatter.setOverwriteMode(false);
+        
+        formattedCurrency.setFormatterFactory(new DefaultFormatterFactory(currencyFormatter));
+        formattedCurrency.addPropertyChangeListener("value", evt -> {
+            if(formattedCurrency.getValue() == null) {
+                formattedCurrency.setValue(0.00);
+            }
+        });
+        
+        formattedCurrency.setValue(0.00);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,38 +81,60 @@ public class NumberFormatting extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        formattedNumberField = new javax.swing.JFormattedTextField();
+        formatTextField = new javax.swing.JFormattedTextField();
         formatLabel = new javax.swing.JLabel();
         formatButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        formattedDecimal = new javax.swing.JFormattedTextField();
+        jLabel4 = new javax.swing.JLabel();
+        formattedCurrency = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jLabel1.setText("Input Value:");
+        jLabel1.setText("Input Value Decimal:");
 
-        formatLabel.setText("- - -");
+        formatLabel.setText("0.00");
 
         formatButton.setText("Format");
+        formatButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                formatButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Input Value Currency:");
+
+        jLabel3.setText("Format Label:");
+
+        jLabel4.setText("Format Text Field:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(formatButton)
-                        .addContainerGap(88, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(formattedNumberField)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(formatLabel)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(formatTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                            .addComponent(formattedDecimal, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(formattedCurrency, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(formatLabel))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(formatButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -76,16 +142,33 @@ public class NumberFormatting extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(formattedNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(formattedDecimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(formatLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(formattedCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(formatLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(formatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(formatButton)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formatButtonActionPerformed
+        String value = formattedCurrency.getText();
+        formatTextField.setText(value);
+        
+        formatLabel.setText(formattedDecimal.getText());
+    }//GEN-LAST:event_formatButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,7 +208,12 @@ public class NumberFormatting extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton formatButton;
     private javax.swing.JLabel formatLabel;
-    private javax.swing.JFormattedTextField formattedNumberField;
+    private javax.swing.JFormattedTextField formatTextField;
+    private javax.swing.JFormattedTextField formattedCurrency;
+    private javax.swing.JFormattedTextField formattedDecimal;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }
