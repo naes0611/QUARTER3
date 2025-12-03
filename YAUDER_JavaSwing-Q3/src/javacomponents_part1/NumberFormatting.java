@@ -1,8 +1,9 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package activities;
+package javacomponents_part1;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -30,7 +31,7 @@ public class NumberFormatting extends javax.swing.JFrame {
     private void setupDecimalField() {
         Locale localePH = Locale.forLanguageTag("en-PH");
         
-        NumberFormat decimalFormat = NumberFormat.getNumberInstance(localePH);
+        NumberFormat decimalFormat = NumberFormat.getCurrencyInstance(localePH);
         
         decimalFormat.setMinimumFractionDigits(2);
         decimalFormat.setMaximumFractionDigits(2);
@@ -40,6 +41,7 @@ public class NumberFormatting extends javax.swing.JFrame {
         decimalFormatter.setOverwriteMode(false);
         
         formattedDecimal.setFormatterFactory(new DefaultFormatterFactory(decimalFormatter));
+        
         formattedDecimal.addPropertyChangeListener("value", evt -> {
             if(formattedDecimal.getValue() == null) {
                 formattedDecimal.setValue(0.00);
@@ -50,9 +52,9 @@ public class NumberFormatting extends javax.swing.JFrame {
     }
     
     private void setupCurrencyField(){
-        Locale localePH = new Locale("en","PH");
+        Locale localePH = Locale.forLanguageTag("en-PH");
         
-        NumberFormat currencyFormat = NumberFormat.getNumberInstance(localePH);
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(localePH);
         formattedCurrency.setText(currencyFormat.format(0.00));
         currencyFormat.setMinimumFractionDigits(2);
         currencyFormat.setMaximumFractionDigits(2);
@@ -168,6 +170,7 @@ public class NumberFormatting extends javax.swing.JFrame {
         formatTextField.setText(value);
         
         formatLabel.setText(formattedDecimal.getText());
+        System.out.println("Formatter set: " + formattedDecimal.getFormatterFactory());
     }//GEN-LAST:event_formatButtonActionPerformed
 
     /**
