@@ -27,7 +27,6 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         Locale localePH = Locale.forLanguageTag("en-PH");
         
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(localePH);
-        currencyFormat.setGroupingUsed(false);
         
         NumberFormatter currencyFormatter = new NumberFormatter(currencyFormat);
         currencyFormatter.setAllowsInvalid(false);
