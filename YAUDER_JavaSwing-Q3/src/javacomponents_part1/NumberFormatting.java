@@ -1,9 +1,8 @@
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package javacomponents_part1;
+package activities;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -33,20 +32,11 @@ public class NumberFormatting extends javax.swing.JFrame {
         
         NumberFormat decimalFormat = NumberFormat.getCurrencyInstance(localePH);
         
-        decimalFormat.setMinimumFractionDigits(2);
-        decimalFormat.setMaximumFractionDigits(2);
-        
         NumberFormatter decimalFormatter = new NumberFormatter(decimalFormat);
         decimalFormatter.setAllowsInvalid(false);
         decimalFormatter.setOverwriteMode(false);
         
         formattedDecimal.setFormatterFactory(new DefaultFormatterFactory(decimalFormatter));
-        
-        formattedDecimal.addPropertyChangeListener("value", evt -> {
-            if(formattedDecimal.getValue() == null) {
-                formattedDecimal.setValue(0.00);
-            }
-        });
         
         formattedDecimal.setValue(0.00);
     }
@@ -55,21 +45,17 @@ public class NumberFormatting extends javax.swing.JFrame {
         Locale localePH = Locale.forLanguageTag("en-PH");
         
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(localePH);
-        formattedCurrency.setText(currencyFormat.format(0.00));
-        currencyFormat.setMinimumFractionDigits(2);
-        currencyFormat.setMaximumFractionDigits(2);
         
         NumberFormatter currencyFormatter = new NumberFormatter(currencyFormat);
         currencyFormatter.setAllowsInvalid(false);
         currencyFormatter.setOverwriteMode(false);
         
         formattedCurrency.setFormatterFactory(new DefaultFormatterFactory(currencyFormatter));
-        formattedCurrency.addPropertyChangeListener("value", evt -> {
-            if(formattedCurrency.getValue() == null) {
+        formattedCurrency.addPropertyChangeListener("value", evt ->{
+            if(formattedCurrency.getValue() == null){
                 formattedCurrency.setValue(0.00);
             }
         });
-        
         formattedCurrency.setValue(0.00);
     }
     
@@ -96,6 +82,8 @@ public class NumberFormatting extends javax.swing.JFrame {
         setResizable(false);
 
         jLabel1.setText("Input Value Decimal:");
+
+        formatTextField.setEditable(false);
 
         formatLabel.setText("0.00");
 
@@ -170,7 +158,6 @@ public class NumberFormatting extends javax.swing.JFrame {
         formatTextField.setText(value);
         
         formatLabel.setText(formattedDecimal.getText());
-        System.out.println("Formatter set: " + formattedDecimal.getFormatterFactory());
     }//GEN-LAST:event_formatButtonActionPerformed
 
     /**

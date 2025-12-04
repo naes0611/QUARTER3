@@ -91,6 +91,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="formatTextField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="formatLabel">
       <Properties>
