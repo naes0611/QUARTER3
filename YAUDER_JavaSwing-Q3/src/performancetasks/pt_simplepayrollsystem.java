@@ -14,33 +14,108 @@ import javax.swing.text.NumberFormatter;
  * @author ihub27
  */
 public class pt_simplepayrollsystem extends javax.swing.JFrame {
-
+    
+    private NumberFormat currencyFormat;
     /**
      * Creates new form pt_payroll
      */
     public pt_simplepayrollsystem() {
         initComponents();
-        rateperhour();
+        setupCurrencyField();
     }
     
-    private void rateperhour(){
+    private void setupCurrencyField(){
         Locale localePH = Locale.forLanguageTag("en-PH");
         
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(localePH);
-        
+        // need to fix
         NumberFormatter currencyFormatter = new NumberFormatter(currencyFormat);
         currencyFormatter.setAllowsInvalid(false);
         currencyFormatter.setOverwriteMode(false);
         
-        rateperHourField.setFormatterFactory(new DefaultFormatterFactory(currencyFormatter));
-        rateperHourField.addPropertyChangeListener("value", evt ->{
-            if(rateperHourField.getValue() == null){
-                rateperHourField.setValue(0.00);
+        hourlyRateField.setFormatterFactory(new DefaultFormatterFactory(currencyFormatter));
+        hourlyRateField.addPropertyChangeListener("value", evt ->{
+            if(hourlyRateField.getValue() == null){
+                hourlyRateField.setValue(0.00);
             }
         });
-        rateperHourField.setValue(0.00);
+        hourlyRateField.setValue(0.00);
     }
-
+    
+    public class payrollResult{
+        private double totalDeductions;
+        private double netPay;
+        
+        public payrollResult(double totalDeductions, double netPay){
+            this.totalDeductions = totalDeductions;
+            this.netPay = netPay;
+        }
+        
+        
+        public double getTotalDeductions(){
+            return totalDeductions;
+        }
+        
+        public double getNetPay(){
+            return netPay;
+        }
+    }
+    
+    private payrollResult computeDeductions(double grossPay){
+        double SSSDeduction = grossPay * 0.05;
+        double PhilHealthDeduction = grossPay * 0.025;
+        double PagIbigDeduction = grossPay * 0.02;
+        double TaxDeduction = grossPay * 0.2;
+        double[] deductions = { 
+            SSSDeduction, 
+            PhilHealthDeduction, 
+            PagIbigDeduction, 
+            TaxDeduction
+        };
+        double totalDeductions = 0;
+        for (double deduction : deductions) {
+            totalDeductions += deduction;
+        }
+        double netPay = grossPay - totalDeductions;
+        return new payrollResult(totalDeductions, netPay);
+    }
+    
+    private double grossPay(){
+        try {
+            int hrsWorked = Integer.parseInt(hoursWorkedField.getText());
+            double rateperHr = ((Number) 
+                    hourlyRateField.getValue()).doubleValue();
+            double grossPay = hrsWorked * rateperHr;
+            return grossPay;
+        } catch(NumberFormatException e){
+            System.out.println("Error Parsing");
+            return 0;
+        }
+    }
+    
+    private String displayPayrollSummary() {
+        String employeeName = employeeNameField.getText();
+        double grossPay = grossPay();
+        payrollResult result = computeDeductions(grossPay);
+        double totalDeductions = result.totalDeductions;
+        double netPay = result.netPay;
+        double SSSDeduction = grossPay * 0.05;
+        double PhilHealthDeduction = grossPay * 0.025;
+        double PagIbigDeduction = grossPay * 0.02;
+        double TaxDeduction = grossPay * 0.2;
+        
+        String formattedNetPay = currencyFormat.format(netPay);
+        String payrollSummary ="<html>Employee name: " + employeeName +"<br>"
+                                +"Gross Pay: " + grossPay + "<br>" +
+                                "Summary of Deductions:<br>"+
+                                "SSS: " + SSSDeduction + "<br>" +
+                                "Pag-ibig: " + PagIbigDeduction + "<br>" +
+                                "PhilHealth: " + PhilHealthDeduction + "<br>" +
+                                "Tax: " + TaxDeduction + "<br>" +
+                                "Total Deductions: " + totalDeductions + "<br>" +
+                                "Net Pay: " + formattedNetPay + "<html>";
+        return payrollSummary;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,17 +130,20 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         computeBtn = new javax.swing.JButton();
         clearBtn = new javax.swing.JButton();
-        rateperHourField = new javax.swing.JFormattedTextField();
+        hourlyRateField = new javax.swing.JFormattedTextField();
         employeeNameField = new javax.swing.JTextField();
         hoursWorkedField = new javax.swing.JTextField();
+        dataLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Simple Payroll System");
+        setResizable(false);
 
         jLabel1.setText("Employee Name:");
 
         jLabel2.setText("Hours Worked:");
 
-        jLabel3.setText("Rate per hour:");
+        jLabel3.setText("Hourly Rate:");
 
         computeBtn.setText("Compute");
         computeBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -81,9 +159,9 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
             }
         });
 
-        rateperHourField.addActionListener(new java.awt.event.ActionListener() {
+        hourlyRateField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rateperHourFieldActionPerformed(evt);
+                hourlyRateFieldActionPerformed(evt);
             }
         });
 
@@ -125,13 +203,15 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(employeeNameField)
                             .addComponent(hoursWorkedField)
-                            .addComponent(rateperHourField, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)))
+                            .addComponent(hourlyRateField, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                        .addGap(117, 117, 117)
+                        .addComponent(dataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(220, 220, 220)
                         .addComponent(computeBtn)
                         .addGap(18, 18, 18)
                         .addComponent(clearBtn)))
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +219,8 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(employeeNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(employeeNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -147,8 +228,8 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(rateperHourField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
+                    .addComponent(hourlyRateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(computeBtn)
                     .addComponent(clearBtn))
@@ -192,43 +273,19 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_hoursWorkedFieldActionPerformed
 
-    private void rateperHourFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rateperHourFieldActionPerformed
+    private void hourlyRateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hourlyRateFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rateperHourFieldActionPerformed
-    
-    private void deductions(double grossPay){
-        double SSSDeduction = grossPay * 0.05;
-        double PhilHealthDeduction = grossPay * 0.025;
-        double PagIbigDeduction = grossPay * 0.02;
-        double TaxDeduction = grossPay * 0.2;
-        double[] totalDeductions = { SSSDeduction, PhilHealthDeduction, PagIbigDeduction, TaxDeduction};
-        for (double deductions : totalDeductions) {
-            double netPay = grossPay - deductions;
-        }
-        
-    }
-    
-    private double grossPay(){
-        try {
-            double hrsWorked = Double.valueOf(hoursWorkedField.getText());
-            double rateperHr = ((Number) 
-                    rateperHourField.getValue()).doubleValue();
-            double grossPay = hrsWorked * rateperHr;
-            return grossPay;
-        } catch(NumberFormatException e){
-            System.out.println("Error Parsing");
-            return 0;
-        }
-    }
+    }//GEN-LAST:event_hourlyRateFieldActionPerformed
     
     private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
-        deductions(grossPay());
+        dataLabel.setText(displayPayrollSummary());
     }//GEN-LAST:event_computeBtnActionPerformed
     
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         employeeNameField.setText("");
         hoursWorkedField.setText("");
-        rateperHourField.setValue(0.00);
+        hourlyRateField.setValue(0.00);
+        dataLabel.setText("");
     }//GEN-LAST:event_clearBtnActionPerformed
     
     /**
@@ -269,11 +326,12 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearBtn;
     private javax.swing.JButton computeBtn;
+    private javax.swing.JLabel dataLabel;
     private javax.swing.JTextField employeeNameField;
+    private javax.swing.JFormattedTextField hourlyRateField;
     private javax.swing.JTextField hoursWorkedField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JFormattedTextField rateperHourField;
     // End of variables declaration//GEN-END:variables
 }
