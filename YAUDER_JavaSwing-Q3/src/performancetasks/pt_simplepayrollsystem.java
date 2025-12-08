@@ -5,16 +5,36 @@
 package performancetasks;
 
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.Locale;
+import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
 /**
  *
- * @author ihub27
+ * @author Sean Yauder
  */
-public class pt_simplepayrollsystem extends javax.swing.JFrame {
+
+enum DeductionType {
+    SSS_RATE(0.05),
+    PHILHEALTH_RATE(0.025),
+    PAGIBIG_RATE(0.02),
+    TAX_RATE(0.2);
     
+    private final double rate;
+    
+    DeductionType(double rate){
+        this.rate = rate;
+    }
+    
+    public double getRate(){
+        return rate;
+    }
+}
+
+public class pt_simplepayrollsystem extends javax.swing.JFrame {
+    private final HashMap<DeductionType, Double> deductions = new HashMap<>();
     private NumberFormat currencyFormat;
     /**
      * Creates new form pt_payroll
@@ -22,13 +42,28 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
     public pt_simplepayrollsystem() {
         initComponents();
         setupCurrencyField();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                exitApp();
+            }
+        });
+    }
+    
+    private int exitApp(){
+        int result = JOptionPane.showConfirmDialog(pt_simplepayrollsystem.this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+        return result;
     }
     
     private void setupCurrencyField(){
         Locale localePH = Locale.forLanguageTag("en-PH");
         
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(localePH);
-        // need to fix
+        currencyFormat = NumberFormat.getCurrencyInstance(localePH);
+        
         NumberFormatter currencyFormatter = new NumberFormatter(currencyFormat);
         currencyFormatter.setAllowsInvalid(false);
         currencyFormatter.setOverwriteMode(false);
@@ -42,9 +77,9 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         hourlyRateField.setValue(0.00);
     }
     
-    public class payrollResult{
-        private double totalDeductions;
-        private double netPay;
+    public class payrollResult {
+        private final double totalDeductions;
+        private final double netPay;
         
         public payrollResult(double totalDeductions, double netPay){
             this.totalDeductions = totalDeductions;
@@ -59,63 +94,98 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         public double getNetPay(){
             return netPay;
         }
-    }
+    }  
     
     private payrollResult computeDeductions(double grossPay){
-        double SSSDeduction = grossPay * 0.05;
-        double PhilHealthDeduction = grossPay * 0.025;
-        double PagIbigDeduction = grossPay * 0.02;
-        double TaxDeduction = grossPay * 0.2;
-        double[] deductions = { 
-            SSSDeduction, 
-            PhilHealthDeduction, 
-            PagIbigDeduction, 
-            TaxDeduction
-        };
         double totalDeductions = 0;
-        for (double deduction : deductions) {
+        for (DeductionType type : DeductionType.values()) {
+            double deduction = grossPay * type.getRate();
+            deductions.put(type, deduction);
             totalDeductions += deduction;
         }
         double netPay = grossPay - totalDeductions;
         return new payrollResult(totalDeductions, netPay);
     }
     
-    private double grossPay(){
-        try {
-            int hrsWorked = Integer.parseInt(hoursWorkedField.getText());
-            double rateperHr = ((Number) 
-                    hourlyRateField.getValue()).doubleValue();
-            double grossPay = hrsWorked * rateperHr;
-            return grossPay;
-        } catch(NumberFormatException e){
-            System.out.println("Error Parsing");
-            return 0;
-        }
+    public double grossPay() {
+        int hrsWorked = Integer.parseInt(hoursWorkedField.getText());
+        double rateperHr = ((Number) 
+                hourlyRateField.getValue()).doubleValue();
+        double grossPay = hrsWorked * rateperHr;
+        return grossPay;
     }
-    
+
     private String displayPayrollSummary() {
+        payrollResult result = computeDeductions(grossPay());
         String employeeName = employeeNameField.getText();
-        double grossPay = grossPay();
-        payrollResult result = computeDeductions(grossPay);
-        double totalDeductions = result.totalDeductions;
-        double netPay = result.netPay;
-        double SSSDeduction = grossPay * 0.05;
-        double PhilHealthDeduction = grossPay * 0.025;
-        double PagIbigDeduction = grossPay * 0.02;
-        double TaxDeduction = grossPay * 0.2;
-        
-        String formattedNetPay = currencyFormat.format(netPay);
-        String payrollSummary ="<html>Employee name: " + employeeName +"<br>"
-                                +"Gross Pay: " + grossPay + "<br>" +
-                                "Summary of Deductions:<br>"+
-                                "SSS: " + SSSDeduction + "<br>" +
-                                "Pag-ibig: " + PagIbigDeduction + "<br>" +
-                                "PhilHealth: " + PhilHealthDeduction + "<br>" +
-                                "Tax: " + TaxDeduction + "<br>" +
-                                "Total Deductions: " + totalDeductions + "<br>" +
-                                "Net Pay: " + formattedNetPay + "<html>";
+        String grossPay = currencyFormat.format(grossPay());
+        String SSSDeduction = currencyFormat.format(deductions.get(DeductionType.SSS_RATE));
+        String PagIbigDeduction = currencyFormat.format(deductions.get(DeductionType.PAGIBIG_RATE));
+        String PhilHealthDeduction = currencyFormat.format(deductions.get(DeductionType.PHILHEALTH_RATE));
+        String TaxDeduction = currencyFormat.format(deductions.get(DeductionType.TAX_RATE));
+        String totalDeductions = currencyFormat.format(result.totalDeductions);
+        String netPay = currencyFormat.format(result.netPay);
+
+        String payrollSummary ="<html>  Employee name: " + employeeName +"<br>"
+                                +"  Gross Pay: " + grossPay + "<br>" +
+                                "  Summary of Deductions:<br>"+
+                                "  SSS: " + SSSDeduction + "<br>" +
+                                "  Pag-ibig: " + PagIbigDeduction + "<br>" +
+                                "  PhilHealth: " + PhilHealthDeduction + "<br>" +
+                                "  Tax: " + TaxDeduction + "<br>" +
+                                "  Total Deductions: " + totalDeductions + "<br>" +
+                                "  Net Pay: " + netPay + "<html>";
         return payrollSummary;
     }
+    
+    private void errorMessages(String type){
+        String message;
+        switch(type){
+            case "invalid input" -> {
+                message = "Invalid input. Please check your inputs.";
+            }
+            case "employee name empty" -> {
+                message = "Employee Name Field cannot be empty!";
+            }
+            case "hours worked empty" -> {
+                message = "Hours Worked Field cannot be empty!";
+            }
+            case "hourly rate no input" -> {
+                message = "Hourly Rate Field cannot be 0.00";
+            }
+            default -> message = "An unexpected error occurred.";
+        }
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private boolean isValidInput(){
+        String name = employeeNameField.getText();
+        String hrsWorkedStr = hoursWorkedField.getText();
+        double rateperHr = ((Number)hourlyRateField.getValue()).doubleValue();
+        String hourlyRate = String.valueOf(rateperHr);
+        if (name.trim().isEmpty()){
+            errorMessages("employee name empty");
+            return false;
+        }
+        
+        if (hrsWorkedStr.trim().isEmpty()){
+            errorMessages("hours worked empty");
+            return false;
+        }
+        if ("0.0".equals(hourlyRate)){
+            errorMessages("hourly rate no input");
+            return false;
+        }
+        try {
+            int hrsWorked = Integer.parseInt(hoursWorkedField.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            errorMessages("invalid input");
+            return false;
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -128,14 +198,15 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        dataLabel = new javax.swing.JLabel();
         computeBtn = new javax.swing.JButton();
         clearBtn = new javax.swing.JButton();
         hourlyRateField = new javax.swing.JFormattedTextField();
         employeeNameField = new javax.swing.JTextField();
         hoursWorkedField = new javax.swing.JTextField();
-        dataLabel = new javax.swing.JLabel();
+        exitBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Simple Payroll System");
         setResizable(false);
 
@@ -144,6 +215,8 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         jLabel2.setText("Hours Worked:");
 
         jLabel3.setText("Hourly Rate:");
+
+        dataLabel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Payroll Summary", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
 
         computeBtn.setText("Compute");
         computeBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -187,53 +260,68 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
             }
         });
 
+        exitBtn.setText("Exit");
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(employeeNameField)
-                            .addComponent(hoursWorkedField)
-                            .addComponent(hourlyRateField, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
-                        .addGap(117, 117, 117)
-                        .addComponent(dataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel3)
+                        .addGap(43, 43, 43)
+                        .addComponent(hourlyRateField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addComponent(computeBtn)
+                        .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(clearBtn)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addComponent(employeeNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(29, 29, 29)
+                        .addComponent(hoursWorkedField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(computeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(dataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(employeeNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(hoursWorkedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(hourlyRateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(computeBtn)
-                    .addComponent(clearBtn))
-                .addGap(30, 30, 30))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(employeeNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(hoursWorkedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(hourlyRateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(computeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(dataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -241,11 +329,30 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
 
     private void employeeNameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_employeeNameFieldKeyTyped
         char c = evt.getKeyChar();
+        String text = employeeNameField.getText();
+        int spaceCount = 0;
+        for (int i = 0; i < text.length(); i++){
+            if (text.charAt(i) == ' '){
+                spaceCount++;
+            }
+        }
         if(Character.isAlphabetic(c)){
+            if (text.length() > 20){
+                evt.consume();
+            }   
             return;
         }
         if(c == ' '){
             if(employeeNameField.getCaretPosition() == 0){
+                evt.consume();
+            }
+            
+            if (spaceCount >= 2) {
+                evt.consume();
+            }
+            
+            int caretPos = employeeNameField.getCaretPosition();
+            if (caretPos > 0 && text.charAt(caretPos - 1) == ' ') {
                 evt.consume();
             }
             return;
@@ -278,7 +385,11 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
     }//GEN-LAST:event_hourlyRateFieldActionPerformed
     
     private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
+        if(!isValidInput()){
+            return;
+        }
         dataLabel.setText(displayPayrollSummary());
+        //JOptionPane.showMessageDialog(pt_simplepayrollsystem.this, displayPayrollSummary(), "Payroll Summary", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_computeBtnActionPerformed
     
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
@@ -287,6 +398,10 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         hourlyRateField.setValue(0.00);
         dataLabel.setText("");
     }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        exitApp();
+    }//GEN-LAST:event_exitBtnActionPerformed
     
     /**
      * @param args the command line arguments
@@ -328,6 +443,7 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
     private javax.swing.JButton computeBtn;
     private javax.swing.JLabel dataLabel;
     private javax.swing.JTextField employeeNameField;
+    private javax.swing.JButton exitBtn;
     private javax.swing.JFormattedTextField hourlyRateField;
     private javax.swing.JTextField hoursWorkedField;
     private javax.swing.JLabel jLabel1;
