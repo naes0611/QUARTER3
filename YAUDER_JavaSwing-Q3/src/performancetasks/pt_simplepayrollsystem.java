@@ -77,11 +77,11 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         hourlyRateField.setValue(0.00);
     }
     
-    public class payrollResult {
+    public class computationResult {
         private final double totalDeductions;
         private final double netPay;
         
-        public payrollResult(double totalDeductions, double netPay){
+        public computationResult(double totalDeductions, double netPay){
             this.totalDeductions = totalDeductions;
             this.netPay = netPay;
         }
@@ -96,7 +96,7 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         }
     }  
     
-    private payrollResult computeDeductions(double grossPay){
+    private computationResult computeDeductions(double grossPay){
         double totalDeductions = 0;
         for (DeductionType type : DeductionType.values()) {
             double deduction = grossPay * type.getRate();
@@ -104,20 +104,20 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
             totalDeductions += deduction;
         }
         double netPay = grossPay - totalDeductions;
-        return new payrollResult(totalDeductions, netPay);
+        return new computationResult(totalDeductions, netPay);
     }
     
     public double grossPay() {
         int hrsWorked = Integer.parseInt(hoursWorkedField.getText());
-        double rateperHr = ((Number) 
+        double hourlyRate = ((Number) 
                 hourlyRateField.getValue()).doubleValue();
-        double grossPay = hrsWorked * rateperHr;
+        double grossPay = hrsWorked * hourlyRate;
         return grossPay;
     }
 
     private String displayPayrollSummary() {
-        payrollResult result = computeDeductions(grossPay());
-        String employeeName = employeeNameField.getText();
+        computationResult result = computeDeductions(grossPay());
+        String employeeName = employeeNameField.getText().trim();
         String grossPay = currencyFormat.format(grossPay());
         String SSSDeduction = currencyFormat.format(deductions.get(DeductionType.SSS_RATE));
         String PagIbigDeduction = currencyFormat.format(deductions.get(DeductionType.PAGIBIG_RATE));
@@ -125,7 +125,6 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         String TaxDeduction = currencyFormat.format(deductions.get(DeductionType.TAX_RATE));
         String totalDeductions = currencyFormat.format(result.totalDeductions);
         String netPay = currencyFormat.format(result.netPay);
-
         String payrollSummary ="<html>  Employee name: " + employeeName +"<br>"
                                 +"  Gross Pay: " + grossPay + "<br>" +
                                 "  Summary of Deductions:<br>"+
@@ -232,28 +231,12 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
             }
         });
 
-        hourlyRateField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hourlyRateFieldActionPerformed(evt);
-            }
-        });
-
-        employeeNameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                employeeNameFieldActionPerformed(evt);
-            }
-        });
         employeeNameField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 employeeNameFieldKeyTyped(evt);
             }
         });
 
-        hoursWorkedField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hoursWorkedFieldActionPerformed(evt);
-            }
-        });
         hoursWorkedField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 hoursWorkedFieldKeyTyped(evt);
@@ -364,25 +347,13 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         char c = evt.getKeyChar();
         String text = hoursWorkedField.getText();
         if(Character.isDigit(c)){
-            if(text.length()>=3){
+            if(text.length()>=4){
                 evt.consume();
             }
             return;
         }
         evt.consume();
     }//GEN-LAST:event_hoursWorkedFieldKeyTyped
-
-    private void employeeNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeNameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_employeeNameFieldActionPerformed
-
-    private void hoursWorkedFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hoursWorkedFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_hoursWorkedFieldActionPerformed
-
-    private void hourlyRateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hourlyRateFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_hourlyRateFieldActionPerformed
     
     private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
         if(!isValidInput()){
