@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package javacomponents_part1;
+package javacomponents_part1_activities;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -55,10 +55,15 @@ public class StudentForm extends javax.swing.JFrame {
         clearBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Student Form");
         setName("Student Form"); // NOI18N
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         nameLabel.setText("Name");
 
@@ -212,6 +217,7 @@ public class StudentForm extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 //    private void displaySelectedSubjects() {
 //        StringBuilder selectedText = new StringBuilder("\nFavorite Subject/s: ");
@@ -233,13 +239,10 @@ public class StudentForm extends javax.swing.JFrame {
     public String getSelectedButtonText(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
-
             if (button.isSelected()) {
                 return button.getText();
-            }
-            
+            }  
         }
-
         return null;
     }
     private void MathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MathActionPerformed
@@ -308,9 +311,15 @@ public class StudentForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
+        formWindowClosing(new java.awt.event.WindowEvent(this, java.awt.event.WindowEvent.WINDOW_CLOSING));
     }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
