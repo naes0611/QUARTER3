@@ -42,21 +42,6 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
     public pt_simplepayrollsystem() {
         initComponents();
         setupCurrencyField();
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                exitApp();
-            }
-        });
-    }
-    
-    private int exitApp(){
-        int result = JOptionPane.showConfirmDialog(pt_simplepayrollsystem.this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.YES_OPTION){
-            System.exit(0);
-        }
-        return result;
     }
     
     private void setupCurrencyField(){
@@ -143,14 +128,17 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
             case "invalid input" -> {
                 message = "Invalid input. Please check your inputs.";
             }
-            case "employee name empty" -> {
+            case "employee name cannot be empty" -> {
                 message = "Employee Name Field cannot be empty!";
             }
-            case "hours worked empty" -> {
+            case "hours worked cannot be empty" -> {
                 message = "Hours Worked Field cannot be empty!";
             }
-            case "hourly rate no input" -> {
-                message = "Hourly Rate Field cannot be 0.00";
+            case "hourly rate must be greater than zero" -> {
+                message = "Hourly Rate must be greater than zero!";
+            }
+            case "hours worked must be greater than zero" -> {
+                message = "Hours Worked must be greater than zero!";
             }
             default -> message = "An unexpected error occurred.";
         }
@@ -160,29 +148,31 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
     private boolean isValidInput(){
         String name = employeeNameField.getText();
         String hrsWorkedStr = hoursWorkedField.getText();
-        double rateperHr = ((Number)hourlyRateField.getValue()).doubleValue();
-        String hourlyRate = String.valueOf(rateperHr);
+        double hourlyRate = ((Number)hourlyRateField.getValue()).doubleValue();
         if (name.trim().isEmpty()){
-            errorMessages("employee name empty");
+            errorMessages("employee name cannot be empty");
             return false;
         }
         
         if (hrsWorkedStr.trim().isEmpty()){
-            errorMessages("hours worked empty");
-            return false;
-        }
-        if ("0.0".equals(hourlyRate)){
-            errorMessages("hourly rate no input");
+            errorMessages("hours worked cannot be empty");
             return false;
         }
         try {
             int hrsWorked = Integer.parseInt(hoursWorkedField.getText());
-            return true;
+            if (hrsWorked == 0) {
+                errorMessages("hours worked must be greater than zero");
+                return false;
+            }
+            if (hourlyRate == 0){
+                errorMessages("hourly rate must be greater than zero");
+                return false;
+            }
         } catch (NumberFormatException e) {
             errorMessages("invalid input");
             return false;
         }
-        
+        return true;
     }
     
     /**
@@ -208,6 +198,11 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Simple Payroll System");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setText("Employee Name:");
 
@@ -308,6 +303,7 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void employeeNameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_employeeNameFieldKeyTyped
@@ -360,7 +356,6 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
             return;
         }
         dataLabel.setText(displayPayrollSummary());
-        //JOptionPane.showMessageDialog(pt_simplepayrollsystem.this, displayPayrollSummary(), "Payroll Summary", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_computeBtnActionPerformed
     
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
@@ -371,8 +366,15 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
-        exitApp();
+        formWindowClosing(new java.awt.event.WindowEvent(this, java.awt.event.WindowEvent.WINDOW_CLOSING));
     }//GEN-LAST:event_exitBtnActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int choice = JOptionPane.showConfirmDialog(pt_simplepayrollsystem.this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
     
     /**
      * @param args the command line arguments

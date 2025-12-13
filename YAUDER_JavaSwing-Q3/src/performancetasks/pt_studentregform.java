@@ -1,4 +1,4 @@
-/*
+ /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -77,8 +77,8 @@ public class pt_studentregform extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
+        sexGroup = new javax.swing.ButtonGroup();
+        departmentGroup = new javax.swing.ButtonGroup();
         studentFirstName = new javax.swing.JLabel();
         studentLastName = new javax.swing.JLabel();
         EmailAddress = new javax.swing.JLabel();
@@ -90,7 +90,7 @@ public class pt_studentregform extends javax.swing.JFrame {
         txtEmailAddress = new javax.swing.JTextField();
         txtconfEmailAddress = new javax.swing.JTextField();
         DateofBirth = new javax.swing.JLabel();
-        sex = new javax.swing.JLabel();
+        sexlbl = new javax.swing.JLabel();
         ifMale = new javax.swing.JRadioButton();
         ifFemale = new javax.swing.JRadioButton();
         txtPassword = new javax.swing.JPasswordField();
@@ -113,10 +113,16 @@ public class pt_studentregform extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         errorLabel = new javax.swing.JLabel();
         errorMailLabel = new javax.swing.JLabel();
+        showPassword = new javax.swing.JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Student Registration Form");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         studentFirstName.setText("Student First Name");
         studentFirstName.setToolTipText("");
@@ -133,49 +139,51 @@ public class pt_studentregform extends javax.swing.JFrame {
 
         confPassword.setText("Confirm Password");
 
-        txtstudentFN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtstudentFNActionPerformed(evt);
-            }
-        });
         txtstudentFN.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtstudentFNKeyTyped(evt);
             }
         });
 
-        txtstudentLN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtstudentLNActionPerformed(evt);
-            }
-        });
         txtstudentLN.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtstudentLNKeyTyped(evt);
             }
         });
 
-        txtEmailAddress.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailAddressActionPerformed(evt);
+        txtEmailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEmailAddressKeyTyped(evt);
             }
         });
 
-        txtconfEmailAddress.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtconfEmailAddressActionPerformed(evt);
+        txtconfEmailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtconfEmailAddressKeyTyped(evt);
             }
         });
 
         DateofBirth.setText("Date of Birth");
 
-        sex.setText("Sex");
+        sexlbl.setText("Sex");
 
-        buttonGroup1.add(ifMale);
+        sexGroup.add(ifMale);
         ifMale.setText("Male");
 
-        buttonGroup1.add(ifFemale);
+        sexGroup.add(ifFemale);
         ifFemale.setText("Female");
+
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyTyped(evt);
+            }
+        });
+
+        txtconfPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtconfPasswordKeyTyped(evt);
+            }
+        });
 
         Year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Year", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", " " }));
 
@@ -206,19 +214,19 @@ public class pt_studentregform extends javax.swing.JFrame {
 
         Department.setText("Department");
 
-        buttonGroup2.add(Civil);
+        departmentGroup.add(Civil);
         Civil.setText("Civil");
 
-        buttonGroup2.add(compSciandEngr);
+        departmentGroup.add(compSciandEngr);
         compSciandEngr.setText("Computer Science and Engineer");
 
-        buttonGroup2.add(Electrics);
+        departmentGroup.add(Electrics);
         Electrics.setText("Electrics");
 
-        buttonGroup2.add(ElectronicsandCommunication);
+        departmentGroup.add(ElectronicsandCommunication);
         ElectronicsandCommunication.setText("Electronics and Communication");
 
-        buttonGroup2.add(Mechanical);
+        departmentGroup.add(Mechanical);
         Mechanical.setText("Mechanical");
 
         studentData.setEditable(false);
@@ -239,6 +247,14 @@ public class pt_studentregform extends javax.swing.JFrame {
         errorMailLabel.setBackground(new java.awt.Color(255, 255, 255));
         errorMailLabel.setForeground(new java.awt.Color(255, 0, 0));
         errorMailLabel.setPreferredSize(new java.awt.Dimension(200, 20));
+
+        showPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        showPassword.setText("Show Password?");
+        showPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showPasswordActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,7 +281,9 @@ public class pt_studentregform extends javax.swing.JFrame {
                                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtconfEmailAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(errorMailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(errorMailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(showPassword)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtconfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -276,7 +294,7 @@ public class pt_studentregform extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Department)
-                                    .addComponent(sex))
+                                    .addComponent(sexlbl))
                                 .addGap(36, 36, 36)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -338,7 +356,8 @@ public class pt_studentregform extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Password))
+                    .addComponent(Password)
+                    .addComponent(showPassword))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -357,7 +376,7 @@ public class pt_studentregform extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ifMale)
                             .addComponent(ifFemale)
-                            .addComponent(sex))
+                            .addComponent(sexlbl))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -382,11 +401,8 @@ public class pt_studentregform extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtstudentFNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstudentFNActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtstudentFNActionPerformed
     
     private void checkPasswords() {
         String password = new String(txtPassword.getPassword());
@@ -402,6 +418,7 @@ public class pt_studentregform extends javax.swing.JFrame {
             errorLabel.setText("Password does match!");
         }
     }
+    
     private void checkEmails() {
         String emailAddress = txtEmailAddress.getText();
         String confirmEmailAddress = txtconfEmailAddress.getText();
@@ -415,10 +432,12 @@ public class pt_studentregform extends javax.swing.JFrame {
             errorMailLabel.setForeground(new java.awt.Color(0, 255,0));
         }
     }
+    
     public static boolean isValidEmail(String emailAddress) {
         Matcher matcher = VALID_EMAIL_ADDRESS.matcher(emailAddress);
         return matcher.matches();
     }
+    
     public String getSelectedButtonText(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
@@ -430,20 +449,95 @@ public class pt_studentregform extends javax.swing.JFrame {
 
         return null;
     }
-    private void txtstudentLNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstudentLNActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtstudentLNActionPerformed
-
-    private void txtEmailAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailAddressActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailAddressActionPerformed
-
-    private void txtconfEmailAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtconfEmailAddressActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtconfEmailAddressActionPerformed
-
+    
+    private void errorMessages(String errorType) {
+        String message;
+        switch (errorType){
+            case "missing fields" -> message = "Please fill in all required fields.";
+            case "email does not match" -> message = "Email does not match.";
+            case "password does not match" -> message = "Password does not match.";
+            case "email not in valid format" -> message = "The email address you entered is not in a valid format.";
+            case "password too short or too long" -> message = "password must be 8-16 characters long.";
+            default -> message = "An unexpected error occurred.";
+        }
+        JOptionPane.showMessageDialog(this,
+                message,
+                "Input Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private boolean isValidInput(){
+        String FN = txtstudentFN.getText(),
+               LN = txtstudentLN.getText();
+        
+        String emailAddress = txtEmailAddress.getText(), 
+               confirmEmailAddress = txtconfEmailAddress.getText();
+        
+        String password = String.valueOf(txtPassword.getPassword()),
+               confirmPassword = String.valueOf(txtconfPassword.getPassword());
+        
+        int year = Year.getSelectedIndex(), 
+            month = Month.getSelectedIndex(), 
+            day = Day.getSelectedIndex();
+        
+         if (FN.isBlank() && LN.isBlank() && emailAddress.isBlank() && confirmEmailAddress.isBlank() && password.isBlank() 
+            && confirmPassword.isBlank() && year == 0 && month == 0 && day == 0 &&
+                sexGroup.getSelection() == null && departmentGroup.getSelection() == null) {
+             
+            errorMessages("missing fields");
+            return false;
+            
+         }
+         if (FN.isBlank() || LN.isBlank() || emailAddress.isBlank() || confirmEmailAddress.isBlank() || 
+            password.isBlank() || confirmPassword.isBlank() || year == 0 || month == 0 || day == 0 ||
+            sexGroup.getSelection() == null || departmentGroup.getSelection() == null) {
+             
+            errorMessages("missing fields");
+            return false;
+            
+         }
+         if (!emailAddress.equalsIgnoreCase(confirmEmailAddress)) {
+            errorMessages("email does not match");
+            return false;
+         } else {
+             if(!isValidEmail(emailAddress)){
+                errorMessages("email not in valid format");
+                return false;
+             }
+         }
+         if (!password.equals(confirmPassword)) {
+             errorMessages("password does not match");
+             return false;
+         } else {
+             if (password.length() < 8 || password.length() >16) {
+                errorMessages("password too short or too long");
+                return false;
+             }
+         }
+        return true;
+    }
+    
+    private String displayStudentInformation(){
+        String FN = txtstudentFN.getText().trim();
+        String LN = txtstudentLN.getText().trim();
+        String emailAddress = txtEmailAddress.getText().trim();
+        String password = String.valueOf(txtPassword.getPassword());
+        String year = Year.getSelectedItem().toString();
+        String month = Month.getSelectedItem().toString();
+        String day = Day.getSelectedItem().toString();
+        String sex = getSelectedButtonText(sexGroup);
+        String department = getSelectedButtonText(departmentGroup);
+        String studentInformation = "Name: " + FN + " " + LN +
+                             "\nEmail Address: " + emailAddress +
+                "\nPassword: " + password + 
+                "\nBirthday: " + month + " " + day + " " + year +
+                "\nSex: " + sex +
+                "\nDepartment: "+ department;
+        
+        return studentInformation;
+    }
+    
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
-        // TODO add your handling code here:
         txtstudentFN.setText("");
         txtstudentLN.setText("");
         txtEmailAddress.setText("");
@@ -454,105 +548,119 @@ public class pt_studentregform extends javax.swing.JFrame {
         Year.setSelectedIndex(0);
         Month.setSelectedIndex(0);
         Day.setSelectedIndex(0);
-        buttonGroup1.clearSelection();
-        buttonGroup2.clearSelection();
-        //emailnotmatch.setVisible(false);
-        //passnotmatch.setVisible(false);
+        sexGroup.clearSelection();
+        departmentGroup.clearSelection();
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
+        formWindowClosing(new java.awt.event.WindowEvent(this, java.awt.event.WindowEvent.WINDOW_CLOSING));
     }//GEN-LAST:event_cancelBtnActionPerformed
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
-        // TODO add your handling code here:
-        studentData.setText("");
-        
-        String FN = txtstudentFN.getText();
-        String LN = txtstudentLN.getText();
-        
-        String emailAddress = txtEmailAddress.getText(), 
-            confirmEmailAddress = txtconfEmailAddress.getText();
-        
-        String password = String.valueOf(txtPassword.getPassword()),
-            confirmPassword = String.valueOf(txtconfPassword.getPassword());
-        
-        int year = Year.getSelectedIndex(), month = Month.getSelectedIndex(), day = Day.getSelectedIndex();
-        
-        if (FN.isBlank() && LN.isBlank() && emailAddress.isBlank() && confirmEmailAddress.isBlank() && password.isBlank() 
-            && confirmPassword.isBlank() && year == 0 && month == 0 && day == 0 &&
-                buttonGroup1.getSelection() == null && buttonGroup2.getSelection() == null) {
+        if (!isValidInput()){
             studentData.setText("");
-            JOptionPane.showMessageDialog(
-            pt_studentregform.this,
-            "Please fill in all required fields.",
-            "Input Error!",
-            JOptionPane.ERROR_MESSAGE);
-        } else if (FN.isBlank() || LN.isBlank() || emailAddress.isBlank() || confirmEmailAddress.isBlank() || 
-            password.isBlank() || confirmPassword.isBlank() || year == 0 || month == 0 || day == 0 ||
-            buttonGroup1.getSelection() == null || buttonGroup2.getSelection() == null) {
-            studentData.setText("");
-            JOptionPane.showMessageDialog(
-            pt_studentregform.this,
-            "Please fill in all required fields.",
-            "Input Error!",
-            JOptionPane.ERROR_MESSAGE);    
-        } else {
-            
-            studentData.append("Name: "+FN+" "+LN);
-            
-            if (!emailAddress.equalsIgnoreCase(confirmEmailAddress)) {
-                studentData.setText("");
-                JOptionPane.showMessageDialog(
-                pt_studentregform.this,
-                "Email does not match.",
-                "Input Error!",
-                JOptionPane.ERROR_MESSAGE);
-            } else {
-                if (isValidEmail(emailAddress)) {
-                    
-                    studentData.append("\nEmail: "+ emailAddress);
-                    
-                    if (password.equals(confirmPassword)) {
-                        
-                        studentData.append("\nPassword: "+password);
-                        studentData.append("\nBirthday: "+ Month.getSelectedItem().toString() + " " + Day.getSelectedItem().toString() +" " +  Year.getSelectedItem().toString());
-                        studentData.append("\nSex: "+getSelectedButtonText(buttonGroup1));
-                        studentData.append("\nDepartment: "+getSelectedButtonText(buttonGroup2));
-                        
-                    } else {
-                        studentData.setText("");
-                        JOptionPane.showMessageDialog(
-                        pt_studentregform.this,
-                        "Password does not match.",
-                        "Input Error!",
-                        JOptionPane.ERROR_MESSAGE);
-                    }
-                    
-                } else {
-                    studentData.setText("");
-                    JOptionPane.showMessageDialog(
-                    pt_studentregform.this,
-                    "The email address you entered is not in a valid format.",
-                    "Input Error!",
-                    JOptionPane.ERROR_MESSAGE);
-                }
+            return;
+        }
+        studentData.setText(displayStudentInformation());
+    }//GEN-LAST:event_submitBtnActionPerformed
+    
+    private void restrictNameInput(java.awt.event.KeyEvent evt, javax.swing.JTextField textField){
+        char c = evt.getKeyChar();
+        String text = textField.getText();
+        int spaceCount = 0;
+        for (int i = 0; i < text.length(); i++){
+            if(text.charAt(i) == ' '){
+                spaceCount++;
             }
         }
-    }//GEN-LAST:event_submitBtnActionPerformed
+        if (Character.isAlphabetic(c)) {
+            if(text.length() > 20) {
+                evt.consume();
+            }
+            return;
+        }
+        if (c == ' '){
+            if (textField.getCaretPosition() == 0){
+                evt.consume();
+            }
+            if (spaceCount >= 2) {
+                evt.consume();
+            }
+            
+            int caretPos = textField.getCaretPosition();
+            if (caretPos > 0 && text.charAt(caretPos - 1) == ' ') {
+                evt.consume();
+            }
+            return;
+        }
+        evt.consume();
+    }
+    
+    private void restrictEmailInput(java.awt.event.KeyEvent evt, javax.swing.JTextField textField){
+        char c = evt.getKeyChar();
+        String text = textField.getText();
 
-    private void txtstudentFNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstudentFNKeyTyped
-        if (!Character.isDigit(evt.getKeyChar())) {
+        if (Character.isSpaceChar(c)){
             evt.consume();
         }
+        if (text.length() > 30) {
+            evt.consume();
+        }
+        
+    }
+
+    private void restrictPasswordInput(java.awt.event.KeyEvent evt, javax.swing.JTextField textField){
+        char c = evt.getKeyChar();
+        String text = textField.getText();
+
+        if (Character.isSpaceChar(c)){
+            evt.consume();
+        }
+        if (text.length() > 30) {
+            evt.consume();
+        }
+    }
+    
+    private void txtstudentFNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstudentFNKeyTyped
+        restrictNameInput(evt, txtstudentFN);
     }//GEN-LAST:event_txtstudentFNKeyTyped
 
     private void txtstudentLNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstudentLNKeyTyped
-        if (!Character.isDigit(evt.getKeyChar())) {
-            evt.consume();
-        }
+        restrictNameInput(evt, txtstudentLN);
     }//GEN-LAST:event_txtstudentLNKeyTyped
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void txtEmailAddressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailAddressKeyTyped
+        restrictEmailInput(evt, txtEmailAddress);
+    }//GEN-LAST:event_txtEmailAddressKeyTyped
+
+    private void txtconfEmailAddressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtconfEmailAddressKeyTyped
+        restrictEmailInput(evt, txtconfEmailAddress);
+    }//GEN-LAST:event_txtconfEmailAddressKeyTyped
+
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        restrictPasswordInput(evt, txtPassword);
+    }//GEN-LAST:event_txtPasswordKeyTyped
+
+    private void txtconfPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtconfPasswordKeyTyped
+        restrictPasswordInput(evt, txtconfPassword);
+    }//GEN-LAST:event_txtconfPasswordKeyTyped
+
+    private void showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordActionPerformed
+        if(showPassword.isSelected()){
+            txtPassword.setEchoChar((char)0);
+            txtconfPassword.setEchoChar((char)0);
+        } else {
+            txtPassword.setEchoChar('*');
+            txtconfPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_showPasswordActionPerformed
 
     /**
      *
@@ -604,13 +712,12 @@ public class pt_studentregform extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Month;
     private javax.swing.JLabel Password;
     private javax.swing.JComboBox<String> Year;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton clearBtn;
     private javax.swing.JRadioButton compSciandEngr;
     private javax.swing.JLabel confEmailAddress;
     private javax.swing.JLabel confPassword;
+    private javax.swing.ButtonGroup departmentGroup;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel errorMailLabel;
     private javax.swing.JRadioButton ifFemale;
@@ -618,7 +725,9 @@ public class pt_studentregform extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel sex;
+    private javax.swing.ButtonGroup sexGroup;
+    private javax.swing.JLabel sexlbl;
+    private javax.swing.JCheckBox showPassword;
     private javax.swing.JTextArea studentData;
     private javax.swing.JLabel studentFirstName;
     private javax.swing.JLabel studentLastName;

@@ -49,9 +49,14 @@ public class pt_gradecalculator extends javax.swing.JFrame {
         txtFilipino = new javax.swing.JTextField();
         txtRAWS = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Grade Calculator");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Grade Calculator");
@@ -184,24 +189,6 @@ public class pt_gradecalculator extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtLiterature, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtProg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtRAWS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtSTATS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -240,7 +227,9 @@ public class pt_gradecalculator extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+    
     private boolean isGradeValid(double grade){
         return grade>=60 && grade<=100;
     }
@@ -254,11 +243,11 @@ public class pt_gradecalculator extends javax.swing.JFrame {
         return true;
     }
     
-    private void errorMessage(String type){
+    private void errorMessages(String type){
         String message;
         switch(type.toLowerCase()){
             case "input range" -> message = "Please input grades in a range between 60-100!";
-            case "invalid input" -> message = "Invalid Input. Please input a valid number.";
+            case "invalid input" -> message = "Invalid Input. Please check your inputs.";
             default -> message = "An unexpected error occured.";
         }
         JOptionPane.showMessageDialog(
@@ -306,7 +295,7 @@ public class pt_gradecalculator extends javax.swing.JFrame {
             };
             
             if(!areGradesValid(grades)){
-                errorMessage("input range");
+                errorMessages("input range");
                 return;
             }
             
@@ -320,7 +309,7 @@ public class pt_gradecalculator extends javax.swing.JFrame {
             
             
         } catch (NumberFormatException e) {
-            errorMessage("invalid input");
+            errorMessages("invalid input");
         }
     }//GEN-LAST:event_computeBtnActionPerformed
     
@@ -373,6 +362,13 @@ public class pt_gradecalculator extends javax.swing.JFrame {
     private void txtRAWSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRAWSKeyTyped
         isValidInput(evt, txtRAWS);
     }//GEN-LAST:event_txtRAWSKeyTyped
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

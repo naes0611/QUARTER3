@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package activities;
+package javacomponents_part1_activities;
 
 import javax.swing.JOptionPane;
 
@@ -10,12 +10,12 @@ import javax.swing.JOptionPane;
  *
  * @author ihub27
  */
-public class OpeningClosingWindow extends javax.swing.JFrame {
+public class AnotherWindow extends javax.swing.JFrame {
 
     /**
-     * Creates new form OpeningClosingWindow
+     * Creates new form AnotherWindow
      */
-    public OpeningClosingWindow() {
+    public AnotherWindow() {
         initComponents();
     }
 
@@ -29,11 +29,12 @@ public class OpeningClosingWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        anotherWindowBtn = new javax.swing.JButton();
+        goBackBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Opening Closing Window");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Another Window");
         setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -41,13 +42,13 @@ public class OpeningClosingWindow extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("This is my main window");
+        jLabel1.setText("This is another window");
 
-        anotherWindowBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        anotherWindowBtn.setText("Go to another window");
-        anotherWindowBtn.addActionListener(new java.awt.event.ActionListener() {
+        goBackBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        goBackBtn.setText("Go back");
+        goBackBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                anotherWindowBtnActionPerformed(evt);
+                goBackBtnActionPerformed(evt);
             }
         });
 
@@ -56,35 +57,34 @@ public class OpeningClosingWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(101, 101, 101)
-                        .addComponent(anotherWindowBtn)))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addGap(106, 106, 106)
+                .addComponent(jLabel1)
+                .addContainerGap(113, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(goBackBtn)
+                .addGap(149, 149, 149))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(39, 39, 39)
                 .addComponent(jLabel1)
-                .addGap(70, 70, 70)
-                .addComponent(anotherWindowBtn)
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addGap(92, 92, 92)
+                .addComponent(goBackBtn)
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void anotherWindowBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anotherWindowBtnActionPerformed
-        AnotherWindow anotherWindow = new AnotherWindow();
-        anotherWindow.setLocationRelativeTo(this);
-        anotherWindow.setVisible(true);
+    private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
+        OpeningClosingWindow mainWindow = new OpeningClosingWindow();
+        mainWindow.setLocationRelativeTo(this);
+        mainWindow.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_anotherWindowBtnActionPerformed
+    }//GEN-LAST:event_goBackBtnActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         int choice = JOptionPane.showConfirmDialog(this,
@@ -114,26 +114,26 @@ public class OpeningClosingWindow extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OpeningClosingWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnotherWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OpeningClosingWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnotherWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OpeningClosingWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnotherWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OpeningClosingWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnotherWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OpeningClosingWindow().setVisible(true);
+                new AnotherWindow().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton anotherWindowBtn;
+    private javax.swing.JButton goBackBtn;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

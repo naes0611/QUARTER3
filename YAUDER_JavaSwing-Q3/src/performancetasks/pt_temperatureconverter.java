@@ -65,7 +65,10 @@ enum UnitOfTemperatures {
 }
 public class pt_temperatureconverter extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(pt_temperatureconverter.class.getName());
-
+    int from, 
+        to;
+    UnitOfTemperatures unitFrom,
+                       unitTo;
     /**
      * Creates new form pt_temperatureconverter
      */
@@ -89,8 +92,14 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         userInput = new javax.swing.JTextField();
         computeBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Temperature Converter");
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Temperature Converter");
@@ -160,6 +169,7 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
     private void userInputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userInputKeyTyped
@@ -190,18 +200,38 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
 
     private boolean isValidInput(){
         String input = userInput.getText().trim();
+        from = cbxconvertFrom.getSelectedIndex(); 
+        to  = cbxconvertTo.getSelectedIndex();
+        
         if(input.isBlank()){
-            errorMessage("Invalid Input");
+            errorMessages("Invalid Input");
+            return false;
+        }
+        if (from == 0 || to == 0){
+            if (from == 0 && to == 0) {
+                errorMessages("select conversion type");
+            } else if (from == 0) {
+                errorMessages("no unit to convert from");
+            } else {
+                errorMessages("no unit to convert to");
+            }
+            return false;
+        }
+        unitFrom = UnitOfTemperatures.values()[from - 1];
+        unitTo = UnitOfTemperatures.values()[to - 1];
+        if (unitFrom == unitTo) {
+            errorMessages("temperature cannot be converted to itself");
             return false;
         }
         try {
             Double.valueOf(input);
             return true;
         } catch (NumberFormatException e) {
-            errorMessage("Invalid Input");
+            errorMessages("Invalid Input");
             return false;
         }
     }
+    
     private double convert(double value, UnitOfTemperatures unitFrom, UnitOfTemperatures unitTo) {
         double celsius = unitFrom.toCelsius(value);
         return unitTo.fromCelsius(celsius);
@@ -219,7 +249,8 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
             "Temperature Converter",
         JOptionPane.INFORMATION_MESSAGE);
     }
-    private void errorMessage(String type){
+    
+    private void errorMessages(String type){
         String message;
         switch(type.toLowerCase()){
             case "select conversion type" -> message = "Select conversion type!";
@@ -237,36 +268,19 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
     }
 
     private void computeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_computeBtnActionPerformed
-        int from = cbxconvertFrom.getSelectedIndex(), to = cbxconvertTo.getSelectedIndex();
         if (!isValidInput()){
           return;
         }
-        if (from == 0 && to == 0){
-            errorMessage("select conversion type");
-            return;
-        }
-        if (from == 0) {
-            errorMessage("no unit to convert from");
-            return;
-        }
-        if (to == 0) {
-            errorMessage("no unit to convert to");
-            return;
-        }
-        
-        UnitOfTemperatures unitFrom = UnitOfTemperatures.values()[from - 1], unitTo = UnitOfTemperatures.values()[to - 1];
-        
-        if (unitFrom == unitTo) {
-            errorMessage("temperature cannot be converted to itself");
-            return;
-        }
-        
-        
         double input = Double.parseDouble(userInput.getText().trim());
-        convertMessage(input, unitFrom, unitTo);
-        
-        
+        convertMessage(input, unitFrom, unitTo); 
     }//GEN-LAST:event_computeBtnActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
