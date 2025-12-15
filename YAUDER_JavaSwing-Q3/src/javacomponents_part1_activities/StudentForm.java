@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
+import performancetasks.*;
 
 /**
  *
@@ -53,7 +54,7 @@ public class StudentForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         studentData = new javax.swing.JTextArea();
         clearBtn = new javax.swing.JButton();
-        cancelBtn = new javax.swing.JButton();
+        goBackBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Student Form");
@@ -132,10 +133,10 @@ public class StudentForm extends javax.swing.JFrame {
             }
         });
 
-        cancelBtn.setText("Cancel");
-        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+        goBackBtn.setText("Go Back");
+        goBackBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelBtnActionPerformed(evt);
+                goBackBtnActionPerformed(evt);
             }
         });
 
@@ -180,7 +181,7 @@ public class StudentForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(clearBtn)
                 .addGap(18, 18, 18)
-                .addComponent(cancelBtn)
+                .addComponent(goBackBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -212,7 +213,7 @@ public class StudentForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveBtn)
                     .addComponent(clearBtn)
-                    .addComponent(cancelBtn))
+                    .addComponent(goBackBtn))
                 .addGap(45, 45, 45))
         );
 
@@ -310,9 +311,12 @@ public class StudentForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_clearBtnActionPerformed
 
-    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        formWindowClosing(new java.awt.event.WindowEvent(this, java.awt.event.WindowEvent.WINDOW_CLOSING));
-    }//GEN-LAST:event_cancelBtnActionPerformed
+    private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
+        MainMenuOfApplications mainmenuApp = new MainMenuOfApplications();
+        mainmenuApp.setLocationRelativeTo(this);
+        mainmenuApp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_goBackBtnActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
@@ -362,9 +366,9 @@ public class StudentForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox Math;
     private javax.swing.JCheckBox Science;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton cancelBtn;
     private javax.swing.JButton clearBtn;
     private javax.swing.JLabel favoriteSubjectsLabel;
+    private javax.swing.JButton goBackBtn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JRadioButton notEnrolled;

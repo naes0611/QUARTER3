@@ -91,6 +91,7 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         cbxconvertTo = new javax.swing.JComboBox<>();
         userInput = new javax.swing.JTextField();
         computeBtn = new javax.swing.JButton();
+        goBackBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Temperature Converter");
@@ -126,6 +127,14 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
             }
         });
 
+        goBackBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        goBackBtn.setText("Go Back");
+        goBackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goBackBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,14 +143,6 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(45, 45, 45))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(computeBtn)))
-                .addContainerGap(71, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(cbxconvertFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -150,6 +151,17 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(cbxconvertTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(computeBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(goBackBtn)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +176,9 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(computeBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(computeBtn)
+                    .addComponent(goBackBtn))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -282,6 +296,13 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
+        MainMenuOfApplications mainmenuApp = new MainMenuOfApplications();
+        mainmenuApp.setLocationRelativeTo(this);
+        mainmenuApp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_goBackBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -311,6 +332,7 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxconvertFrom;
     private javax.swing.JComboBox<String> cbxconvertTo;
     private javax.swing.JButton computeBtn;
+    private javax.swing.JButton goBackBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField userInput;

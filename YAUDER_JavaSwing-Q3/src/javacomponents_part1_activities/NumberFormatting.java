@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javacomponents_part1_activities;
-
-import java.text.DecimalFormat;
+import performancetasks.*;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javax.swing.JOptionPane;
@@ -78,6 +77,7 @@ public class NumberFormatting extends javax.swing.JFrame {
         formattedDecimal = new javax.swing.JFormattedTextField();
         jLabel4 = new javax.swing.JLabel();
         formattedCurrency = new javax.swing.JFormattedTextField();
+        goBackBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Number Formatting");
@@ -107,6 +107,13 @@ public class NumberFormatting extends javax.swing.JFrame {
 
         jLabel4.setText("Format Text Field:");
 
+        goBackBtn.setText("Go Back");
+        goBackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                goBackBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,8 +136,10 @@ public class NumberFormatting extends javax.swing.JFrame {
                                 .addGap(6, 6, 6)
                                 .addComponent(formatLabel))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(formatButton)))
+                        .addGap(58, 58, 58)
+                        .addComponent(formatButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(goBackBtn)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -152,9 +161,11 @@ public class NumberFormatting extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(formatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(formatButton)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(formatButton)
+                    .addComponent(goBackBtn))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         pack();
@@ -174,6 +185,13 @@ public class NumberFormatting extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
+        MainMenuOfApplications mainmenuApp = new MainMenuOfApplications();
+        mainmenuApp.setLocationRelativeTo(this);
+        mainmenuApp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_goBackBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,6 +234,7 @@ public class NumberFormatting extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField formatTextField;
     private javax.swing.JFormattedTextField formattedCurrency;
     private javax.swing.JFormattedTextField formattedDecimal;
+    private javax.swing.JButton goBackBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

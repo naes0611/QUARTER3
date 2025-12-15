@@ -193,7 +193,7 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         hourlyRateField = new javax.swing.JFormattedTextField();
         employeeNameField = new javax.swing.JTextField();
         hoursWorkedField = new javax.swing.JTextField();
-        exitBtn = new javax.swing.JButton();
+        goBackBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Simple Payroll System");
@@ -238,10 +238,10 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
             }
         });
 
-        exitBtn.setText("Exit");
-        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+        goBackBtn.setText("Go Back");
+        goBackBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitBtnActionPerformed(evt);
+                goBackBtnActionPerformed(evt);
             }
         });
 
@@ -264,12 +264,15 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(29, 29, 29)
                         .addComponent(hoursWorkedField, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
                         .addComponent(computeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(78, 78, 78))
+                            .addComponent(goBackBtn, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dataLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -294,7 +297,7 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(clearBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(goBackBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(computeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
@@ -365,9 +368,12 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
         dataLabel.setText("");
     }//GEN-LAST:event_clearBtnActionPerformed
 
-    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
-        formWindowClosing(new java.awt.event.WindowEvent(this, java.awt.event.WindowEvent.WINDOW_CLOSING));
-    }//GEN-LAST:event_exitBtnActionPerformed
+    private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
+        MainMenuOfApplications mainmenuApp = new MainMenuOfApplications();
+        mainmenuApp.setLocationRelativeTo(this);
+        mainmenuApp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_goBackBtnActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         int choice = JOptionPane.showConfirmDialog(pt_simplepayrollsystem.this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
@@ -416,7 +422,7 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
     private javax.swing.JButton computeBtn;
     private javax.swing.JLabel dataLabel;
     private javax.swing.JTextField employeeNameField;
-    private javax.swing.JButton exitBtn;
+    private javax.swing.JButton goBackBtn;
     private javax.swing.JFormattedTextField hourlyRateField;
     private javax.swing.JTextField hoursWorkedField;
     private javax.swing.JLabel jLabel1;

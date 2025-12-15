@@ -100,7 +100,7 @@ public class pt_studentregform extends javax.swing.JFrame {
         Day = new javax.swing.JComboBox<>();
         submitBtn = new javax.swing.JButton();
         clearBtn = new javax.swing.JButton();
-        cancelBtn = new javax.swing.JButton();
+        goBackBtn = new javax.swing.JButton();
         Department = new javax.swing.JLabel();
         Civil = new javax.swing.JRadioButton();
         compSciandEngr = new javax.swing.JRadioButton();
@@ -205,10 +205,10 @@ public class pt_studentregform extends javax.swing.JFrame {
             }
         });
 
-        cancelBtn.setText("Cancel");
-        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+        goBackBtn.setText("Go Back");
+        goBackBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelBtnActionPerformed(evt);
+                goBackBtnActionPerformed(evt);
             }
         });
 
@@ -320,7 +320,7 @@ public class pt_studentregform extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(clearBtn)
                                 .addGap(18, 18, 18)
-                                .addComponent(cancelBtn)
+                                .addComponent(goBackBtn)
                                 .addGap(87, 87, 87)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -392,7 +392,7 @@ public class pt_studentregform extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(submitBtn)
                             .addComponent(clearBtn)
-                            .addComponent(cancelBtn)))
+                            .addComponent(goBackBtn)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -552,9 +552,12 @@ public class pt_studentregform extends javax.swing.JFrame {
         departmentGroup.clearSelection();
     }//GEN-LAST:event_clearBtnActionPerformed
 
-    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
-        formWindowClosing(new java.awt.event.WindowEvent(this, java.awt.event.WindowEvent.WINDOW_CLOSING));
-    }//GEN-LAST:event_cancelBtnActionPerformed
+    private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
+        MainMenuOfApplications mainmenuApp = new MainMenuOfApplications();
+        mainmenuApp.setLocationRelativeTo(this);
+        mainmenuApp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_goBackBtnActionPerformed
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
         if (!isValidInput()){
@@ -712,7 +715,6 @@ public class pt_studentregform extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Month;
     private javax.swing.JLabel Password;
     private javax.swing.JComboBox<String> Year;
-    private javax.swing.JButton cancelBtn;
     private javax.swing.JButton clearBtn;
     private javax.swing.JRadioButton compSciandEngr;
     private javax.swing.JLabel confEmailAddress;
@@ -720,6 +722,7 @@ public class pt_studentregform extends javax.swing.JFrame {
     private javax.swing.ButtonGroup departmentGroup;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel errorMailLabel;
+    private javax.swing.JButton goBackBtn;
     private javax.swing.JRadioButton ifFemale;
     private javax.swing.JRadioButton ifMale;
     private javax.swing.JLabel jLabel1;
