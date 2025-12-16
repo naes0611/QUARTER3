@@ -384,7 +384,7 @@ public class pt_gradecalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
-        MainMenuOfApplications mainmenuApp = new MainMenuOfApplications();
+        ApplicationsMenu mainmenuApp = new ApplicationsMenu();
         mainmenuApp.setLocationRelativeTo(this);
         mainmenuApp.setVisible(true);
         this.dispose();
