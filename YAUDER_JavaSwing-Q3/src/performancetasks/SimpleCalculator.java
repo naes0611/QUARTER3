@@ -52,11 +52,20 @@ public class SimpleCalculator extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simple Calculator");
 
-        txtDisplay.setEditable(false);
         txtDisplay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtDisplay.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDisplayKeyTyped(evt);
+            }
+        });
 
         jButton2.setText("+/-");
         jButton2.setMargin(new java.awt.Insets(2, 0, 3, 0));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         btnAC.setText("AC");
         btnAC.setMargin(new java.awt.Insets(2, 0, 3, 0));
@@ -67,6 +76,11 @@ public class SimpleCalculator extends javax.swing.JFrame {
         });
 
         btnPercent.setText("%");
+        btnPercent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPercentActionPerformed(evt);
+            }
+        });
 
         btnSeven.setText("7");
         btnSeven.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +174,11 @@ public class SimpleCalculator extends javax.swing.JFrame {
         });
 
         btnPeriod.setText(".");
+        btnPeriod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPeriodActionPerformed(evt);
+            }
+        });
 
         btnZero.setText("0");
         btnZero.addActionListener(new java.awt.event.ActionListener() {
@@ -225,7 +244,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
                             .addComponent(btnEqual, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSubtract, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,7 +337,11 @@ public class SimpleCalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_btnZeroActionPerformed
 
     private void btnSubtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtractActionPerformed
-        txtDisplay.setText(txtDisplay.getText() + '-');
+        if(!txtDisplay.getText().isEmpty()){
+           num1 = Double.parseDouble(txtDisplay.getText());
+           operator = "-";
+           txtDisplay.setText("");
+        }
     }//GEN-LAST:event_btnSubtractActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -330,11 +353,19 @@ public class SimpleCalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnMultiplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplyActionPerformed
-        txtDisplay.setText(txtDisplay.getText() + '*');
+        if(!txtDisplay.getText().isEmpty()){
+           num1 = Double.parseDouble(txtDisplay.getText());
+           operator = "*";
+           txtDisplay.setText("");
+        }
     }//GEN-LAST:event_btnMultiplyActionPerformed
 
     private void btnDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivideActionPerformed
-        txtDisplay.setText(txtDisplay.getText() + '/');
+        if(!txtDisplay.getText().isEmpty()){
+           num1 = Double.parseDouble(txtDisplay.getText());
+           operator = "/";
+           txtDisplay.setText("");
+        }
     }//GEN-LAST:event_btnDivideActionPerformed
 
     private void btnEqualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEqualActionPerformed
@@ -357,6 +388,12 @@ public class SimpleCalculator extends javax.swing.JFrame {
             operator = cmd;
         }
         
+        else if (cmd.equals("%")){
+            num1 = Double.parseDouble(txtDisplay.getText());
+            txtDisplay.setText(String.valueOf(num1/100));
+
+        }
+        
         //For Equal Sign
         else if(cmd.equals("=")){
             double num2 = Double.parseDouble(txtDisplay.getText());
@@ -364,17 +401,43 @@ public class SimpleCalculator extends javax.swing.JFrame {
             
             switch(operator){
                 case "+" -> result = num1 + num2; 
-//                    
-//                case "-" ->
-//                    
-//                case "/" ->
-//                    
-//                case "*" -> 
+                    
+                case "-" -> result = num1 - num2;
+                    
+                case "/" -> {
+                                if (num1 == 0) {
+                                    //showErrorMessage("Cannot divide by zero.);
+                                    System.out.println("error");
+                                    return;
+                                } 
+                                result = num1 / num2;
+                            }
+                case "*" -> result = num1 * num2;
             }
             txtDisplay.setText(String.valueOf(result));
         }
     }//GEN-LAST:event_btnEqualActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtDisplayKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDisplayKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDisplayKeyTyped
+
+    private void btnPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeriodActionPerformed
+        txtDisplay.setText(txtDisplay.getText() + '.');
+    }//GEN-LAST:event_btnPeriodActionPerformed
+
+    private void btnPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPercentActionPerformed
+        txtDisplay.setText(txtDisplay.getText() + '%');
+    }//GEN-LAST:event_btnPercentActionPerformed
+    
+    private void showErrorMessage(String message){
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
