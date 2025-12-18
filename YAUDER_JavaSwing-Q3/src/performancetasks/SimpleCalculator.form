@@ -31,12 +31,19 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="30" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -66,7 +73,7 @@
                                       <Component id="btnNine" min="-2" pref="48" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="BtnRemoveOneChar" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="BtnRemove" min="-2" pref="48" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="btnAC" min="-2" pref="48" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -78,7 +85,7 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="btnZero" min="-2" pref="48" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btnDecimal" min="-2" pref="48" max="-2" attributes="0"/>
+                                  <Component id="btnPeriod" min="-2" pref="48" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="btnOne" min="-2" pref="48" max="-2" attributes="0"/>
@@ -105,7 +112,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace pref="104" max="32767" attributes="0"/>
+                  <EmptySpace pref="94" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -119,7 +126,7 @@
                       <Component id="btnAC" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="btnPercent" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="btnDivide" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="BtnRemoveOneChar" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="BtnRemove" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -145,11 +152,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnZero" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="btnDecimal" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="btnPeriod" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="btnEqual" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="btnPlusMinus" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="97" max="32767" attributes="0"/>
+                  <EmptySpace pref="85" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -314,7 +321,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEightActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnDecimal">
+        <Component class="javax.swing.JButton" name="btnPeriod">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4f" green="4a" red="45" type="rgb"/>
@@ -328,7 +335,7 @@
             <Property name="text" type="java.lang.String" value="."/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDecimalActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPeriodActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnFour">
@@ -416,7 +423,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFiveActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="BtnRemoveOneChar">
+        <Component class="javax.swing.JButton" name="BtnRemove">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="77" green="75" red="71" type="rgb"/>
@@ -433,7 +440,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnRemoveOneCharActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnRemoveActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnOne">
@@ -459,7 +466,7 @@
               <Color blue="2b" green="28" red="23" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="0"/>
+              <Font name="Segoe UI" size="36" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -470,7 +477,6 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDisplayKeyReleased"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDisplayKeyTyped"/>
           </Events>
         </Component>
