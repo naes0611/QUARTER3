@@ -19,6 +19,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
      */
     public SimpleCalculator() {
         initComponents();
+        txtDisplay.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     }
 
     /**
@@ -46,7 +47,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
         btnSix = new javax.swing.JButton();
         btnEqual = new javax.swing.JButton();
         btnFive = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
+        BtnRemove = new javax.swing.JButton();
         btnOne = new javax.swing.JButton();
         txtDisplay = new javax.swing.JTextField();
         btnThree = new javax.swing.JButton();
@@ -217,11 +218,16 @@ public class SimpleCalculator extends javax.swing.JFrame {
             }
         });
 
-        jButton21.setBackground(new java.awt.Color(113, 117, 119));
-        jButton21.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton21.setForeground(new java.awt.Color(255, 255, 255));
-        jButton21.setText("←");
-        jButton21.setMargin(new java.awt.Insets(2, 0, 5, 0));
+        BtnRemove.setBackground(new java.awt.Color(113, 117, 119));
+        BtnRemove.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        BtnRemove.setForeground(new java.awt.Color(255, 255, 255));
+        BtnRemove.setText("←");
+        BtnRemove.setMargin(new java.awt.Insets(2, 0, 5, 0));
+        BtnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnRemoveActionPerformed(evt);
+            }
+        });
 
         btnOne.setBackground(new java.awt.Color(69, 74, 79));
         btnOne.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -293,7 +299,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(btnNine, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(BtnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(btnAC, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -335,7 +341,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
                     .addComponent(btnAC, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDivide, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BtnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEight, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -522,9 +528,10 @@ public class SimpleCalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEqualActionPerformed
 
     private void btnPlusMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusMinusActionPerformed
-        if(!txtDisplay.getText().isEmpty()){
-            num1 = Double.parseDouble(txtDisplay.getText());
-            //NOT FINISHED
+        num1 = Double.parseDouble(txtDisplay.getText());
+        if (num1>0 || num1 < 0){
+            num1 = num1 * (-1);
+            txtDisplay.setText(String.valueOf(num1));
         }
     }//GEN-LAST:event_btnPlusMinusActionPerformed
 
@@ -544,6 +551,19 @@ public class SimpleCalculator extends javax.swing.JFrame {
                 txtDisplay.setText(String.valueOf(num1/100));
             }
     }//GEN-LAST:event_btnPercentActionPerformed
+
+    private void BtnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRemoveActionPerformed
+        String bs;
+        if(txtDisplay.getText().length() > 0){
+            StringBuilder stB = new StringBuilder(txtDisplay.getText());
+            stB.deleteCharAt(txtDisplay.getText().length() - 1);
+            bs = stB.toString();
+            txtDisplay.setText(bs);
+            if(txtDisplay.getText().isEmpty()) {
+                txtDisplay.setText("0");
+            }
+        }
+    }//GEN-LAST:event_BtnRemoveActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
@@ -588,6 +608,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnRemove;
     private javax.swing.JButton btnAC;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDivide;
@@ -607,7 +628,6 @@ public class SimpleCalculator extends javax.swing.JFrame {
     private javax.swing.JButton btnThree;
     private javax.swing.JButton btnTwo;
     private javax.swing.JButton btnZero;
-    private javax.swing.JButton jButton21;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtDisplay;
     // End of variables declaration//GEN-END:variables

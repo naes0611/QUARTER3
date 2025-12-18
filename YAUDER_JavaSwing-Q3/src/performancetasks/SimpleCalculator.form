@@ -73,7 +73,7 @@
                                       <Component id="btnNine" min="-2" pref="48" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jButton21" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="BtnRemove" min="-2" pref="48" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="btnAC" min="-2" pref="48" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -126,7 +126,7 @@
                       <Component id="btnAC" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="btnPercent" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="btnDivide" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="jButton21" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="BtnRemove" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -423,7 +423,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFiveActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton21">
+        <Component class="javax.swing.JButton" name="BtnRemove">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="77" green="75" red="71" type="rgb"/>
@@ -439,6 +439,9 @@
               <Insets value="[2, 0, 5, 0]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnRemoveActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnOne">
           <Properties>
