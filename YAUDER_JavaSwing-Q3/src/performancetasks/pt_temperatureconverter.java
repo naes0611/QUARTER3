@@ -63,6 +63,7 @@ enum UnitOfTemperatures {
 
     public abstract double fromCelsius(double celsiusValue);
 }
+
 public class pt_temperatureconverter extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(pt_temperatureconverter.class.getName());
     int from, 

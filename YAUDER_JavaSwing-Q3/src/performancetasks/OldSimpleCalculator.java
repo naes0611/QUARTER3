@@ -5,28 +5,26 @@
 package performancetasks;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
-import javax.swing.JOptionPane;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  *
  * @author ihub27
  */
 
-public class SimpleCalculator extends javax.swing.JFrame {
-    String selectedOperator = "";
-    String lastOperator = "";
-    BigDecimal firstNum = BigDecimal.ZERO;
-    BigDecimal lastNum = BigDecimal.ZERO;
-    BigDecimal result = BigDecimal.ZERO;
-    boolean errorState = false;
+public class OldSimpleCalculator extends javax.swing.JFrame {
+    private BigDecimal num1 = BigDecimal.ZERO;
+    private char operator = 0;
+    private BigDecimal lastNum2 = BigDecimal.ZERO;
+    private boolean newInput = true;
     /**
      * Creates new form pt_calculator
      */
-    public SimpleCalculator() {
+    public OldSimpleCalculator() {
         initComponents();
-        txtDisplay.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        txtHistory.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     }
 
     /**
@@ -60,7 +58,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
         btnThree = new javax.swing.JButton();
         btnPlusMinus = new javax.swing.JButton();
         btnTwo = new javax.swing.JButton();
-        txtHistory = new javax.swing.JLabel();
+        txtDisplayHistory = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simple Calculator");
@@ -250,6 +248,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
         txtDisplay.setBackground(new java.awt.Color(35, 40, 43));
         txtDisplay.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         txtDisplay.setForeground(new java.awt.Color(255, 255, 255));
+        txtDisplay.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtDisplay.setText("0");
         txtDisplay.setBorder(null);
         txtDisplay.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -292,9 +291,10 @@ public class SimpleCalculator extends javax.swing.JFrame {
             }
         });
 
-        txtHistory.setBackground(new java.awt.Color(255, 255, 255));
-        txtHistory.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtHistory.setForeground(new java.awt.Color(153, 153, 153));
+        txtDisplayHistory.setBackground(new java.awt.Color(255, 255, 255));
+        txtDisplayHistory.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtDisplayHistory.setForeground(new java.awt.Color(153, 153, 153));
+        txtDisplayHistory.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -344,14 +344,14 @@ public class SimpleCalculator extends javax.swing.JFrame {
                             .addComponent(btnEqual, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSubtract, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txtHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtDisplayHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(104, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(txtHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDisplayHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -402,38 +402,60 @@ public class SimpleCalculator extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     
-    private void clearDisplay(){
-        txtDisplay.setText("0");
-        txtHistory.setText("");
+    private String formatNumber(BigDecimal num){
+        NumberFormat formatter = new DecimalFormat("0.0000000000000000E0");
+        formatter.setRoundingMode(RoundingMode.HALF_UP);
+        formatter.setMinimumFractionDigits((num.scale() > 0) ? num.precision() : num.scale());
+        return formatter.format(num);
     }
     
-    private void updateDisplay(String text){
-        if (txtDisplay.getText().equals("Cannot divide by zero") || txtDisplay.getText().equals("Invalid Input")){
-            txtDisplay.setText(text);
-            errorState = false;
+    
+    private String numCheck(BigDecimal result) {
+//        if (result.abs().compareTo(new BigDecimal(Long.MAX_VALUE)) > 0) {
+//            return overflow;
+//        }
+        if (result.stripTrailingZeros().toString().length() > 16) {
+            System.out.println("foramatting");
+            return formatNumber(result);
+        }
+        if (result.stripTrailingZeros().scale() <= 0) {
+            System.out.println("hehehe");
+           return result.toString();
         } else {
-            if (txtDisplay.getText().equals("0")){
-                txtDisplay.setText(text);
-            } else {
-                txtDisplay.setText(txtDisplay.getText() + text);
-            }
+            System.out.println("sdadsadas");
+           return result.toPlainString();
         }
     }
     
-    private void setOperator(String op){
-        if(!txtDisplay.getText().isEmpty()){
-           firstNum = new BigDecimal(txtDisplay.getText());
-           selectedOperator = op;
-           //txtLabelDisplay.setText(txtDisplay.getText() + selectedOperator);
-           txtDisplay.setText("");
+    private void updateDisplay(String text) {
+        if (!newInput) {
+                txtDisplay.setText("");
+                newInput = true;
+            }
+        if (txtDisplay.getText().equals("0")) {
+            txtDisplay.setText(text);
+            return;
         }
+            txtDisplay.setText(txtDisplay.getText() + text);
+    }
+
+    private void setOperator(String op) {
+        if (!txtDisplay.getText().isEmpty()) {
+                num1 = new BigDecimal(txtDisplay.getText());
+            }
+            operator = op.charAt(0);
+            txtDisplayHistory.setText(numCheck(num1) + " " + operator);
+            txtDisplay.setText("");
+            newInput = true;
     }
     
     private void btnACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnACActionPerformed
-        clearDisplay();
-        selectedOperator = "";
-        firstNum = BigDecimal.ZERO;
-        errorState = false;
+        txtDisplay.setText("0");
+        txtDisplayHistory.setText("");
+        num1 = BigDecimal.ZERO;
+        operator = 0;
+        lastNum2 = BigDecimal.ZERO;
+        newInput = true;
     }//GEN-LAST:event_btnACActionPerformed
 
     private void btnOneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOneActionPerformed
@@ -485,85 +507,87 @@ public class SimpleCalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnMultiplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplyActionPerformed
-        setOperator("*");
+        setOperator("×");
     }//GEN-LAST:event_btnMultiplyActionPerformed
 
     private void btnDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivideActionPerformed
-        setOperator("/");
+        setOperator("÷");
     }//GEN-LAST:event_btnDivideActionPerformed
-    
+
     private void calculate(){
-        try{
-            BigDecimal secondNum = new BigDecimal(txtDisplay.getText());
-            result = BigDecimal.ZERO;
-//            if (selectedOperator.isEmpty() && !lastOperator.isEmpty()) {
-//                secondNum = lastNum;
-//            } else {
-//                secondNum = new BigDecimal(txtDisplay.getText());
-//                lastNum = secondNum;
-//                lastOperator = selectedOperator;
-//            }
-            switch(selectedOperator){
-                case "+" -> result = firstNum.add(secondNum); 
-
-                case "-" -> result = firstNum.subtract(secondNum);
-
-                case "*" -> result = firstNum.multiply(secondNum);
-
-                case "/" -> {
-                                if (secondNum.compareTo(BigDecimal.ZERO)== 0) {
-                                    txtDisplay.setText("Cannot divide by zero");
-                                    errorState = true;
-                                    return;
-                                }
-                                result = firstNum.divide(secondNum, RoundingMode.HALF_UP);
-                            }
-                default -> result = new BigDecimal(txtDisplay.getText());
+        // If no operator selected, just display num1
+        if (operator == 0) {
+            if (!txtDisplay.getText().isEmpty()) {
+                num1 = new BigDecimal(txtDisplay.getText());
             }
-            
-            //System.out.println(result + selectedOperator + lastNum );
-            //txtLabelDisplay.setText(result.stripTrailingZeros().toPlainString() + lastOperator + lastNum + "="  );
-            if (result.stripTrailingZeros().scale() <= 0){
-                txtDisplay.setText(result.setScale(0, RoundingMode.HALF_UP).toPlainString());
-            } else {
-                txtDisplay.setText(result.stripTrailingZeros().toPlainString());
-            }
-        } catch (NumberFormatException e){
-            errorState = true;
-            txtDisplay.setText("Invalid Input");
+            // Display formatting
+            txtDisplay.setText(numCheck(num1));
+            txtDisplayHistory.setText(""); // clear history
+            newInput = false;
+            return;
         }
+
+        BigDecimal num2;
+
+        // If user typed new number, use it
+        if (newInput && !txtDisplay.getText().isEmpty()) {
+            num2 = new BigDecimal(txtDisplay.getText());
+            lastNum2 = num2;
+        } else {
+            // Reuse lastNum2 for repeated '='
+            num2 = lastNum2;
+        }
+
+        BigDecimal result = BigDecimal.ZERO;
+        switch (operator) {
+            case '+' -> result = num1.add(num2);
+            case '-' -> result = num1.subtract(num2);
+            case '×' -> result = num1.multiply(num2);
+            case '÷' -> {
+                            if (num2.compareTo(BigDecimal.ZERO) == 0) {
+                                txtDisplay.setText("Cannot divide by zero");
+                                return;
+                            }
+                            result = num1.divide(num2);
+                        }   
+        }
+
+        if (result.toString().length() > 16) {
+            txtDisplayHistory.setText(numCheck(num1) + " " + operator + " " + numCheck(num2) + " =");
+            txtDisplay.setText(numCheck(result));
+            System.out.println("ahahhaha");
+        } else {
+            txtDisplayHistory.setText(numCheck(num1) + " " + operator + " " + numCheck(num2) + " =");
+            txtDisplay.setText(numCheck(result));
+        }
+        num1 = result;
+        newInput = false;
     }
         
     private void btnEqualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEqualActionPerformed
-        //if (errorState == false){
-            calculate();
-        //}
+        calculate();
     }//GEN-LAST:event_btnEqualActionPerformed
 
     private void btnPlusMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusMinusActionPerformed
         try{
-            BigDecimal currentNum = new BigDecimal(txtDisplay.getText());
-            currentNum = currentNum.negate();
-            txtDisplay.setText(currentNum.stripTrailingZeros().toPlainString());  
+            num1 = new BigDecimal(txtDisplay.getText());
+            num1 = num1.negate();
+            txtDisplay.setText(num1.stripTrailingZeros().toPlainString());  
         }catch(NumberFormatException e){
-            errorState = true;
+            txtDisplay.setText("Error");
         }
     }//GEN-LAST:event_btnPlusMinusActionPerformed
     
     private boolean isOperator(char c){
-        return c == '+' || c == '-' || c == '*' || c == '/';
+        return c == '+' || c == '-' || c == '×' || c == '÷';
     }
     
     private boolean notAllowedCharacters(char c){
         String display = txtDisplay.getText();
         
-        if (Character.isDigit(c)){
-            return false;
-        }
+        if (Character.isDigit(c)) return false;
         
-        if (isOperator(c)){
-            return false;
-        }
+        if (isOperator(c)) return false;
         
         if (c == '.'){
             int lastOperatorIndex = -1;
@@ -582,86 +606,85 @@ public class SimpleCalculator extends javax.swing.JFrame {
             }
         }
         
-        if (c == '\b') {
-        return false;
-        }
+        if (c == '\b') return false;
         
         return true;
     }
     
     private void txtDisplayKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDisplayKeyTyped
-        /*char c = evt.getKeyChar();
-        String textFromDisplay = txtDisplay.getText();
-        if (notAllowedCharacters(c)){
-            evt.consume();
-        }
-        if (isOperator(c)) {
-            if (textFromDisplay.isEmpty() || isOperator(textFromDisplay.charAt(textFromDisplay.length() - 1))) {
-                evt.consume();
-            }
-        }
-        if (Character.isDigit(c)){
-            if (textFromDisplay.equals("0") || textFromDisplay.equals("0.0")){
-                txtDisplay.setText(String.valueOf(c));
-                evt.consume();
-                return;
-            }
-        }
-        try { 
-            firstNum = new BigDecimal(txtDisplay.getText());
-        }catch(NumberFormatException e){
-            txtDisplay.setText("Invalid Input");
-        }
-        
-        
-        if (textFromDisplay.equals("Invalid Input")){
-            if(Character.isDigit(c)){
-                txtDisplay.setText(String.valueOf(c));
-                evt.consume();
-            } else {
-                evt.consume();
-            }
-        }*/
+//        char c = evt.getKeyChar();
+//        String textFromDisplay = txtDisplay.getText();
+//        if (notAllowedCharacters(c)){
+//            evt.consume();
+//        }
+//        if (isOperator(c)) {
+//            if (textFromDisplay.isEmpty() || isOperator(textFromDisplay.charAt(textFromDisplay.length() - 1))) {
+//                evt.consume();
+//            }
+//        }
+//        if (Character.isDigit(c)){
+//            if (textFromDisplay.equals("0") || textFromDisplay.equals("0.0")){
+//                txtDisplay.setText(String.valueOf(c));
+//                evt.consume();
+//                return;
+//            }
+//        }
+//        try { 
+//            firstNum = new BigDecimal(txtDisplay.getText());
+//        }catch(NumberFormatException e){
+//            txtDisplay.setText("Invalid Input");
+//        }
+//        
+//        
+//        if (textFromDisplay.equals("Invalid Input")){
+//            if(Character.isDigit(c)){
+//                txtDisplay.setText(String.valueOf(c));
+//                evt.consume();
+//            } else {
+//                evt.consume();
+//            }
+//        }
     }//GEN-LAST:event_txtDisplayKeyTyped
 
     private void btnDecimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecimalActionPerformed
-        if(!txtDisplay.getText().contains(".")) {
-            if (txtDisplay.getText().isEmpty()){
-                txtDisplay.setText("0"+'.');
-            } else {
-                txtDisplay.setText(txtDisplay.getText() + '.');
+        if (!txtDisplay.getText().contains(".")) {
+            if (!newInput) {
+                txtDisplay.setText("0");
+                newInput = true;
             }
+            txtDisplay.setText(txtDisplay.getText() + ".");
         }
     }//GEN-LAST:event_btnDecimalActionPerformed
 
     private void btnPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPercentActionPerformed
         try {
-            BigDecimal num = new BigDecimal(txtDisplay.getText());
-            result = num.divide(new BigDecimal("100"));
+            num1 = new BigDecimal(txtDisplay.getText());
+            BigDecimal result = num1.divide(new BigDecimal("100"));
             txtDisplay.setText(result.stripTrailingZeros().toPlainString());
+            txtDisplayHistory.setText(result.stripTrailingZeros().toPlainString() +" / 100");
         } catch (NumberFormatException e){
-            errorState = true;
+            txtDisplay.setText("Error");
         }
     }//GEN-LAST:event_btnPercentActionPerformed
 
     private void BtnRemoveOneCharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRemoveOneCharActionPerformed
-        String text = txtDisplay.getText();
-
-        if(text.contains("Cannot divide by zero") || text.contains("Invalid Input")){
-                txtDisplay.setText("0");
-                errorState = false;
-                return;
-        }
-        if(text.length() > 0){
-            StringBuilder stB = new StringBuilder(text);
-            stB.deleteCharAt(text.length() - 1);
-            String updatedText = stB.toString();
-            if(updatedText.isEmpty() || updatedText.equals("-")) {
-                txtDisplay.setText("0");
-            } else {
-                txtDisplay.setText(updatedText);
-            }
-        } 
+//        String text = txtDisplay.getText();
+//
+//        if(text.contains("Cannot divide by zero") || text.contains("Invalid Input")){
+//                txtDisplay.setText("0");
+//                errorState = false;
+//                return;
+//        }
+//        if(text.length() > 0){
+//            StringBuilder stB = new StringBuilder(text);
+//            stB.deleteCharAt(text.length() - 1);
+//            String updatedText = stB.toString();
+//            if(updatedText.isEmpty() || updatedText.equals("-")) {
+//                txtDisplay.setText("0");
+//            } else {
+//                txtDisplay.setText(updatedText);
+//            }
+//        } 
     }//GEN-LAST:event_BtnRemoveOneCharActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -691,19 +714,21 @@ public class SimpleCalculator extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OldSimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OldSimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OldSimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OldSimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SimpleCalculator().setVisible(true);
+                new OldSimpleCalculator().setVisible(true);
             }
         });
     }
@@ -731,6 +756,6 @@ public class SimpleCalculator extends javax.swing.JFrame {
     private javax.swing.JButton btnZero;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtDisplay;
-    private javax.swing.JLabel txtHistory;
+    private javax.swing.JLabel txtDisplayHistory;
     // End of variables declaration//GEN-END:variables
 }

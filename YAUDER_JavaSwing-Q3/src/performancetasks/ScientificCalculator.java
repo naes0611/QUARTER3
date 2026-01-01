@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author ihub27
  */
 
-public class SimpleCalculator extends javax.swing.JFrame {
+public class ScientificCalculator extends javax.swing.JFrame {
     String selectedOperator = "";
     String lastOperator = "";
     BigDecimal firstNum = BigDecimal.ZERO;
@@ -23,10 +23,10 @@ public class SimpleCalculator extends javax.swing.JFrame {
     /**
      * Creates new form pt_calculator
      */
-    public SimpleCalculator() {
+    public ScientificCalculator() {
         initComponents();
         txtDisplay.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        txtHistory.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        txtLabelDisplay.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
     }
 
     /**
@@ -38,6 +38,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         btnAC = new javax.swing.JButton();
         btnDivide = new javax.swing.JButton();
@@ -60,7 +61,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
         btnThree = new javax.swing.JButton();
         btnPlusMinus = new javax.swing.JButton();
         btnTwo = new javax.swing.JButton();
-        txtHistory = new javax.swing.JLabel();
+        txtLabelDisplay = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Simple Calculator");
@@ -292,16 +293,12 @@ public class SimpleCalculator extends javax.swing.JFrame {
             }
         });
 
-        txtHistory.setBackground(new java.awt.Color(255, 255, 255));
-        txtHistory.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtHistory.setForeground(new java.awt.Color(153, 153, 153));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtDisplay)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -343,18 +340,15 @@ public class SimpleCalculator extends javax.swing.JFrame {
                             .addComponent(btnMultiply, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnEqual, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSubtract, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txtHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(104, Short.MAX_VALUE))
+                            .addComponent(btnSubtract, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(txtHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(33, 33, 33)
                 .addComponent(txtDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAC, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -384,18 +378,37 @@ public class SimpleCalculator extends javax.swing.JFrame {
                     .addComponent(btnDecimal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEqual, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPlusMinus, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
+
+        txtLabelDisplay.setBackground(new java.awt.Color(255, 255, 255));
+        txtLabelDisplay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtLabelDisplay.setForeground(new java.awt.Color(153, 153, 153));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(164, 164, 164)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtLabelDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(189, 189, 189)
+                .addComponent(jTabbedPane2))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtLabelDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(398, Short.MAX_VALUE))
         );
 
         pack();
@@ -404,7 +417,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
     
     private void clearDisplay(){
         txtDisplay.setText("0");
-        txtHistory.setText("");
+        txtLabelDisplay.setText("");
     }
     
     private void updateDisplay(String text){
@@ -428,70 +441,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
            txtDisplay.setText("");
         }
     }
-    
-    private void btnACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnACActionPerformed
-        clearDisplay();
-        selectedOperator = "";
-        firstNum = BigDecimal.ZERO;
-        errorState = false;
-    }//GEN-LAST:event_btnACActionPerformed
-
-    private void btnOneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOneActionPerformed
-        updateDisplay("1");
-    }//GEN-LAST:event_btnOneActionPerformed
-
-    private void btnTwoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTwoActionPerformed
-        updateDisplay("2");
-    }//GEN-LAST:event_btnTwoActionPerformed
-
-    private void btnThreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThreeActionPerformed
-        updateDisplay("3");
-    }//GEN-LAST:event_btnThreeActionPerformed
-
-    private void btnFourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFourActionPerformed
-        updateDisplay("4");
-    }//GEN-LAST:event_btnFourActionPerformed
-
-    private void btnFiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiveActionPerformed
-        updateDisplay("5");
-    }//GEN-LAST:event_btnFiveActionPerformed
-
-    private void btnSixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSixActionPerformed
-        updateDisplay("6");
-    }//GEN-LAST:event_btnSixActionPerformed
-
-    private void btnSevenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSevenActionPerformed
-        updateDisplay("7");
-    }//GEN-LAST:event_btnSevenActionPerformed
-
-    private void btnEightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEightActionPerformed
-        updateDisplay("8");
-    }//GEN-LAST:event_btnEightActionPerformed
-
-    private void btnNineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNineActionPerformed
-        updateDisplay("9");
-    }//GEN-LAST:event_btnNineActionPerformed
-
-    private void btnZeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZeroActionPerformed
-        updateDisplay("0"); 
-    }//GEN-LAST:event_btnZeroActionPerformed
-
-    private void btnSubtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtractActionPerformed
-        setOperator("-");
-    }//GEN-LAST:event_btnSubtractActionPerformed
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        setOperator("+");
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    private void btnMultiplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplyActionPerformed
-        setOperator("*");
-    }//GEN-LAST:event_btnMultiplyActionPerformed
-
-    private void btnDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivideActionPerformed
-        setOperator("/");
-    }//GEN-LAST:event_btnDivideActionPerformed
-    
+        
     private void calculate(){
         try{
             BigDecimal secondNum = new BigDecimal(txtDisplay.getText());
@@ -515,7 +465,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
                                     txtDisplay.setText("Cannot divide by zero");
                                     errorState = true;
                                     return;
-                                }
+                                } 
                                 result = firstNum.divide(secondNum, RoundingMode.HALF_UP);
                             }
                 default -> result = new BigDecimal(txtDisplay.getText());
@@ -533,23 +483,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
             txtDisplay.setText("Invalid Input");
         }
     }
-        
-    private void btnEqualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEqualActionPerformed
-        //if (errorState == false){
-            calculate();
-        //}
-    }//GEN-LAST:event_btnEqualActionPerformed
-
-    private void btnPlusMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusMinusActionPerformed
-        try{
-            BigDecimal currentNum = new BigDecimal(txtDisplay.getText());
-            currentNum = currentNum.negate();
-            txtDisplay.setText(currentNum.stripTrailingZeros().toPlainString());  
-        }catch(NumberFormatException e){
-            errorState = true;
-        }
-    }//GEN-LAST:event_btnPlusMinusActionPerformed
-    
+            
     private boolean isOperator(char c){
         return c == '+' || c == '-' || c == '*' || c == '/';
     }
@@ -589,6 +523,28 @@ public class SimpleCalculator extends javax.swing.JFrame {
         return true;
     }
     
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
+
+    private void btnTwoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTwoActionPerformed
+        updateDisplay("2");
+    }//GEN-LAST:event_btnTwoActionPerformed
+
+    private void btnPlusMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusMinusActionPerformed
+        try{
+            BigDecimal currentNum = new BigDecimal(txtDisplay.getText());
+            currentNum = currentNum.negate();
+            txtDisplay.setText(currentNum.stripTrailingZeros().toPlainString());
+        }catch(NumberFormatException e){
+            errorState = true;
+        }
+    }//GEN-LAST:event_btnPlusMinusActionPerformed
+
+    private void btnThreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThreeActionPerformed
+        updateDisplay("3");
+    }//GEN-LAST:event_btnThreeActionPerformed
+
     private void txtDisplayKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDisplayKeyTyped
         /*char c = evt.getKeyChar();
         String textFromDisplay = txtDisplay.getText();
@@ -607,13 +563,12 @@ public class SimpleCalculator extends javax.swing.JFrame {
                 return;
             }
         }
-        try { 
+        try {
             firstNum = new BigDecimal(txtDisplay.getText());
         }catch(NumberFormatException e){
             txtDisplay.setText("Invalid Input");
         }
-        
-        
+
         if (textFromDisplay.equals("Invalid Input")){
             if(Character.isDigit(c)){
                 txtDisplay.setText(String.valueOf(c));
@@ -623,6 +578,56 @@ public class SimpleCalculator extends javax.swing.JFrame {
             }
         }*/
     }//GEN-LAST:event_txtDisplayKeyTyped
+
+    private void txtDisplayKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDisplayKeyReleased
+
+    }//GEN-LAST:event_txtDisplayKeyReleased
+
+    private void btnOneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOneActionPerformed
+        updateDisplay("1");
+    }//GEN-LAST:event_btnOneActionPerformed
+
+    private void BtnRemoveOneCharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRemoveOneCharActionPerformed
+        String text = txtDisplay.getText();
+
+        if(text.contains("Cannot divide by zero") || text.contains("Invalid Input")){
+            txtDisplay.setText("0");
+            errorState = false;
+            return;
+        }
+        if(text.length() > 0){
+            StringBuilder stB = new StringBuilder(text);
+            stB.deleteCharAt(text.length() - 1);
+            String updatedText = stB.toString();
+            if(updatedText.isEmpty() || updatedText.equals("-")) {
+                txtDisplay.setText("0");
+            } else {
+                txtDisplay.setText(updatedText);
+            }
+        }
+    }//GEN-LAST:event_BtnRemoveOneCharActionPerformed
+
+    private void btnFiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiveActionPerformed
+        updateDisplay("5");
+    }//GEN-LAST:event_btnFiveActionPerformed
+
+    private void btnEqualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEqualActionPerformed
+        //if (errorState == false){
+            calculate();
+            //}
+    }//GEN-LAST:event_btnEqualActionPerformed
+
+    private void btnSixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSixActionPerformed
+        updateDisplay("6");
+    }//GEN-LAST:event_btnSixActionPerformed
+
+    private void btnZeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZeroActionPerformed
+        updateDisplay("0");
+    }//GEN-LAST:event_btnZeroActionPerformed
+
+    private void btnFourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFourActionPerformed
+        updateDisplay("4");
+    }//GEN-LAST:event_btnFourActionPerformed
 
     private void btnDecimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecimalActionPerformed
         if(!txtDisplay.getText().contains(".")) {
@@ -634,6 +639,30 @@ public class SimpleCalculator extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDecimalActionPerformed
 
+    private void btnEightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEightActionPerformed
+        updateDisplay("8");
+    }//GEN-LAST:event_btnEightActionPerformed
+
+    private void btnSubtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtractActionPerformed
+        setOperator("-");
+    }//GEN-LAST:event_btnSubtractActionPerformed
+
+    private void btnNineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNineActionPerformed
+        updateDisplay("9");
+    }//GEN-LAST:event_btnNineActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        setOperator("+");
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnSevenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSevenActionPerformed
+        updateDisplay("7");
+    }//GEN-LAST:event_btnSevenActionPerformed
+
+    private void btnMultiplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplyActionPerformed
+        setOperator("*");
+    }//GEN-LAST:event_btnMultiplyActionPerformed
+
     private void btnPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPercentActionPerformed
         try {
             BigDecimal num = new BigDecimal(txtDisplay.getText());
@@ -644,33 +673,16 @@ public class SimpleCalculator extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPercentActionPerformed
 
-    private void BtnRemoveOneCharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRemoveOneCharActionPerformed
-        String text = txtDisplay.getText();
+    private void btnDivideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivideActionPerformed
+        setOperator("/");
+    }//GEN-LAST:event_btnDivideActionPerformed
 
-        if(text.contains("Cannot divide by zero") || text.contains("Invalid Input")){
-                txtDisplay.setText("0");
-                errorState = false;
-                return;
-        }
-        if(text.length() > 0){
-            StringBuilder stB = new StringBuilder(text);
-            stB.deleteCharAt(text.length() - 1);
-            String updatedText = stB.toString();
-            if(updatedText.isEmpty() || updatedText.equals("-")) {
-                txtDisplay.setText("0");
-            } else {
-                txtDisplay.setText(updatedText);
-            }
-        } 
-    }//GEN-LAST:event_BtnRemoveOneCharActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowClosing
-
-    private void txtDisplayKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDisplayKeyReleased
-
-    }//GEN-LAST:event_txtDisplayKeyReleased
+    private void btnACActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnACActionPerformed
+        clearDisplay();
+        selectedOperator = "";
+        firstNum = BigDecimal.ZERO;
+        errorState = false;
+    }//GEN-LAST:event_btnACActionPerformed
     
     
     
@@ -691,19 +703,35 @@ public class SimpleCalculator extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScientificCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScientificCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScientificCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScientificCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SimpleCalculator().setVisible(true);
+                new ScientificCalculator().setVisible(true);
             }
         });
     }
@@ -730,7 +758,8 @@ public class SimpleCalculator extends javax.swing.JFrame {
     private javax.swing.JButton btnTwo;
     private javax.swing.JButton btnZero;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextField txtDisplay;
-    private javax.swing.JLabel txtHistory;
+    private javax.swing.JLabel txtLabelDisplay;
     // End of variables declaration//GEN-END:variables
 }
