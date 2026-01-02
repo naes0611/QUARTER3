@@ -10,6 +10,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import javax.swing.JLabel;
 
 /**
@@ -17,18 +21,22 @@ import javax.swing.JLabel;
  * @author seany
  */
 public class TimePanel extends javax.swing.JPanel {
-    private Font semiboldFont = new Font("Segoe UI Semibold", Font.PLAIN, 36);
-    private Font semilightFont = new Font("Segoe UI Semilight", Font.PLAIN, 36);
+    // For Display
+    private final Font semiboldFont = new Font("Segoe UI Semibold", Font.PLAIN, 36);
+    private final Font semilightFont = new Font("Segoe UI Semilight", Font.PLAIN, 36);
     private static boolean enabledDisplay = true; // enabled = txtDisplay1   disabled = txtDisplay2;
+    //For Conversion
+    private final MathContext mc;
+    private final NumberFormat numberFormat = NumberFormat.getNumberInstance();
     
     private boolean newInput = true;
-    private double result = 0;
+    private BigDecimal result = BigDecimal.ZERO;
     private UnitOfTime fromUnit;
     private UnitOfTime toUnit;
     private int from;
     private int to;
     
-    enum UnitOfTime{
+    private enum UnitOfTime{
         MICROSECONDS,
         MILLISECONDS,
         SECONDS,
@@ -44,6 +52,7 @@ public class TimePanel extends javax.swing.JPanel {
      * Creates new form TimePanel
      */
     public TimePanel() {
+        this.mc = new MathContext(16, RoundingMode.HALF_UP);
         initComponents();
         initLabelListeners();
     }
@@ -310,34 +319,77 @@ public class TimePanel extends javax.swing.JPanel {
 
     
     private void initLabelListeners(){
-        JLabel[] displayLabels = {
-            txtDisplay1,
-            txtDisplay2
-        };
-        from = unitComboBox1.getSelectedIndex();
-        to = unitComboBox2.getSelectedIndex();
-        
-        fromUnit = UnitOfTime.values()[from];
-        toUnit = UnitOfTime.values()[to];
-        
-        for(int i = 0; i < displayLabels.length; i++){
-            JLabel label = displayLabels[i];
-            label.addPropertyChangeListener((PropertyChangeEvent evt) -> {
-                if (enabledDisplay) {
-                    double num1 = Double.parseDouble(txtDisplay1.getText());
-                    txtDisplay2.setText(String.valueOf(convertTime(num1, fromUnit, toUnit)));
-                } else {
-                    double num2 = Double.parseDouble(txtDisplay2.getText());
-                }
-            });
-        }
+//        JLabel[] displayLabels = {
+//            txtDisplay1,
+//            txtDisplay2
+//        };
+//        from = unitComboBox1.getSelectedIndex();
+//        to = unitComboBox2.getSelectedIndex();
+//        
+//        fromUnit = UnitOfTime.values()[from];
+//        toUnit = UnitOfTime.values()[to];
+//        
+//        for(int i = 0; i < displayLabels.length; i++){
+//            JLabel label = displayLabels[i];
+//            label.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+//                if (enabledDisplay) {
+//                    double num1 = Double.parseDouble(txtDisplay1.getText());
+//                    txtDisplay2.setText(String.valueOf(convertTime(num1, fromUnit, toUnit)));
+//                } else {
+//                    double num2 = Double.parseDouble(txtDisplay2.getText());
+//                }
+//            });
+//        }
+    unitComboBox1.addActionListener(e -> updateConversion());
+    unitComboBox2.addActionListener(e -> updateConversion());
+//    addDocumentListener(txtDisplay1);
+//    addDocumentListener(txtDisplay2);
     }
+    
+//    private void addDocumentListener(JTextField textField) {
+//    textField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+//        public void insertUpdate(javax.swing.event.DocumentEvent e) {
+//            updateConversion();
+//        }
+//        public void removeUpdate(javax.swing.event.DocumentEvent e) {
+//            updateConversion();
+//        }
+//        public void changedUpdate(javax.swing.event.DocumentEvent e) {
+//            updateConversion();
+//        }
+//    });
+//}
     
     private JLabel getEnabledDisplay(){
         if (enabledDisplay) { 
             return txtDisplay1;
         }
         return txtDisplay2;
+    }
+    
+    private void updateConversion(){
+        BigDecimal num;
+        if (enabledDisplay) {
+            num = new BigDecimal(txtDisplay1.getText());
+        } else {
+            num = new BigDecimal(txtDisplay2.getText());
+        }
+        
+        from = unitComboBox1.getSelectedIndex();
+        to = unitComboBox2.getSelectedIndex();
+        
+        fromUnit = UnitOfTime.values()[from];
+        toUnit = UnitOfTime.values()[to];
+        
+        result = convertTime(num, fromUnit, toUnit);
+        
+        String formattedResult = numberFormat.format(result);
+        
+        if(enabledDisplay){
+            txtDisplay2.setText(formattedResult);
+        } else {
+            txtDisplay1.setText(formattedResult);
+        }
     }
     
     private void displayLabel(String text) {
@@ -349,60 +401,103 @@ public class TimePanel extends javax.swing.JPanel {
         getEnabledDisplay().setText(getEnabledDisplay().getText() + text);
     }
     
-    private double convertTime(double value, UnitOfTime fromUnit, UnitOfTime toUnit){
-        double microseconds = toMicroseconds(value, fromUnit);
-        
+    public BigDecimal convertTime(BigDecimal value, UnitOfTime fromUnit, UnitOfTime toUnit) {
+        // Convert from the source unit to microseconds
+        BigDecimal microseconds = toMicroseconds(value, fromUnit);
+        // Convert from microseconds to the target unit
         return fromMicroseconds(microseconds, toUnit);
     }
-    
-    private double toMicroseconds(double value, UnitOfTime unit){
-        switch(unit){
-            case MICROSECONDS: 
+
+    private BigDecimal toMicroseconds(BigDecimal value, UnitOfTime unit) {
+        switch (unit) {
+            case MICROSECONDS -> {
                 return value;
-            case MILLISECONDS:
-                return value * 1_000;
-            case SECONDS: 
-                return value * 1_000_000;
-            case MINUTES:
-                return value * 60 * 1_000_000;
-            case HOURS: 
-                return value * 60 * 60 * 1_000_000; 
-            case DAYS:
-                return value * 24 * 60 * 60 * 1_000_000;
-            case WEEKS: 
-                return value * 7 * 24 * 60 * 60 * 1_000_000;
-            case YEARS:
-                return value * 365.25 * 24 * 60 * 60 * 1_000_000;
-            default: 
-                return 0;
+            }
+            case MILLISECONDS -> {
+                return value.multiply(BigDecimal.valueOf(1_000));
+            }
+            case SECONDS -> {
+                return value.multiply(BigDecimal.valueOf(1_000_000));
+            }
+            case MINUTES -> {
+                return value.multiply(BigDecimal.valueOf(60))
+                        .multiply(BigDecimal.valueOf(1_000_000));
+            }
+            case HOURS -> {
+                return value.multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(60))
+                        .multiply(BigDecimal.valueOf(1_000_000)));
+            }
+            case DAYS -> {
+                return value.multiply(BigDecimal.valueOf(24)
+                        .multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(60))
+                        .multiply(BigDecimal.valueOf(1_000_000))));
+            }
+            case WEEKS -> {
+                return value.multiply(BigDecimal.valueOf(7)
+                        .multiply(BigDecimal.valueOf(24)
+                        .multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(60))
+                        .multiply(BigDecimal.valueOf(1_000_000)))));
+            }
+            case YEARS -> {
+                return value.multiply(BigDecimal.valueOf(365.25)
+                        .multiply(BigDecimal.valueOf(24)
+                        .multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(60))
+                        .multiply(BigDecimal.valueOf(1_000_000)))));
+            }
+            default -> { return BigDecimal.ZERO; }
         }
     }
-    
-    private double fromMicroseconds(double microseconds, UnitOfTime unit){
-        switch(unit){
-            case MICROSECONDS: 
-                return microseconds; 
-            case MILLISECONDS:
-                return microseconds / 1_000; 
-            case SECONDS:
-                return microseconds / 1_000_000;
-            case MINUTES: 
-                return microseconds / (60 * 1_000_000);
-            case HOURS:
-                return microseconds / (60 * 60 * 1_000_000);
-            case DAYS: 
-                return microseconds / (24 * 60 * 60 * 1_000_000);
-            case WEEKS:
-                return microseconds / (7 * 24 * 60 * 60 * 1_000_000);
-            case YEARS: 
-                return microseconds / (365.25 * 24 * 60 * 60 * 1_000_000);
-            default: 
-                return 0; 
+
+    private BigDecimal fromMicroseconds(BigDecimal microseconds, UnitOfTime unit) {
+        switch (unit) {
+            case MICROSECONDS -> {
+                return microseconds;
+            }
+            case MILLISECONDS -> {
+                return microseconds.divide(BigDecimal.valueOf(1_000), mc);
+            }
+            case SECONDS -> {
+                return microseconds.divide(BigDecimal.valueOf(1_000_000), mc);
+            }
+            case MINUTES -> {
+                return microseconds.divide(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(1_000_000)), mc);
+            }
+            case HOURS -> {
+                return microseconds.divide(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(1_000_000))), mc);
+            }
+            case DAYS -> {
+                return microseconds.divide(BigDecimal.valueOf(24)
+                        .multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(1_000_000)))), mc);
+            }
+            case WEEKS -> {
+                return microseconds.divide(BigDecimal.valueOf(7)
+                        .multiply(BigDecimal.valueOf(24)
+                        .multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(1_000_000))))), mc);
+            }
+            case YEARS -> {
+                return microseconds.divide(BigDecimal.valueOf(365.25)
+                        .multiply(BigDecimal.valueOf(24)
+                        .multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(60)
+                        .multiply(BigDecimal.valueOf(1_000_000))))), mc);
+            }
+            default -> { return BigDecimal.ZERO; }
         }
     }
     
     private void backspaceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backspaceBtnActionPerformed
-
+        updateConversion();
     }//GEN-LAST:event_backspaceBtnActionPerformed
     
     private void clearEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearEntryBtnActionPerformed
@@ -414,7 +509,12 @@ public class TimePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_clearEntryBtnActionPerformed
 
     private void decimalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decimalBtnActionPerformed
-        // TODO add your handling code here:
+        JLabel displayLabel = getEnabledDisplay();
+        String currentText = getEnabledDisplay().getText();
+        
+        if (currentText.contains(".")) return; // If already contains . then return
+        
+        displayLabel.setText(currentText + ".");
     }//GEN-LAST:event_decimalBtnActionPerformed
 
     private void zeroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroBtnActionPerformed
@@ -459,20 +559,27 @@ public class TimePanel extends javax.swing.JPanel {
 
     private void txtDisplay1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDisplay1MouseClicked
        Font getLabelFont = txtDisplay1.getFont();
-       if (getLabelFont.equals(semiboldFont)) return;
-       txtDisplay1.setFont(semiboldFont);
-       txtDisplay2.setFont(semilightFont);
-       enabledDisplay = true;
+       if (getLabelFont.equals(semiboldFont)) return; // If label already selected, return;
+       setEnabledDisplay(true);
     }//GEN-LAST:event_txtDisplay1MouseClicked
 
     private void txtDisplay2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDisplay2MouseClicked
         Font getLabelFont = txtDisplay2.getFont();
-        if (getLabelFont.equals(semiboldFont)) return;
-        txtDisplay2.setFont(semiboldFont);
-        txtDisplay1.setFont(semilightFont);
-        enabledDisplay = false;
+        if (getLabelFont.equals(semiboldFont)) return; // If label already selected, return;
+        setEnabledDisplay(false);
     }//GEN-LAST:event_txtDisplay2MouseClicked
-
+    
+    private void setEnabledDisplay(boolean display){
+        enabledDisplay = display; // If true, display1. else, display2
+        if (enabledDisplay){
+            txtDisplay1.setFont(semiboldFont);
+            txtDisplay2.setFont(semilightFont);
+        } else {
+            txtDisplay2.setFont(semiboldFont);
+            txtDisplay1.setFont(semilightFont);
+        }
+        updateConversion();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonsLabel;
