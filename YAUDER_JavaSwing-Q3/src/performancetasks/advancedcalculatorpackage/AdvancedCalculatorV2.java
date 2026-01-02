@@ -10,7 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.Timer;
-
+import performancetasks.*;
 /**
  *
  * @author seany
@@ -71,6 +71,7 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
         timeLabel = new javax.swing.JLabel();
         calculatorLabel = new javax.swing.JLabel();
         temperatureLabel = new javax.swing.JLabel();
+        goBackLabel = new javax.swing.JLabel();
         expandSidebarBtn = new javax.swing.JLabel();
         dividerPanel = new javax.swing.JPanel();
 
@@ -147,7 +148,27 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
         temperatureLabel.setOpaque(true);
         sidebarPanel.add(temperatureLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 230, 40));
 
-        mainPanel.add(sidebarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 530));
+        goBackLabel.setBackground(new java.awt.Color(230, 230, 230));
+        goBackLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        goBackLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        goBackLabel.setText("Go back");
+        goBackLabel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        goBackLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        goBackLabel.setOpaque(true);
+        goBackLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                goBackLabelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                goBackLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                goBackLabelMouseExited(evt);
+            }
+        });
+        sidebarPanel.add(goBackLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 230, 40));
+
+        mainPanel.add(sidebarPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 450));
 
         expandSidebarBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         expandSidebarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/performancetasks/imgs/navbtn.png"))); // NOI18N
@@ -176,10 +197,10 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
         );
         dividerPanelLayout.setVerticalGroup(
             dividerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
         );
 
-        mainPanel.add(dividerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 530));
+        mainPanel.add(dividerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 0, 450));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,7 +210,7 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         );
 
         pack();
@@ -221,7 +242,7 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
                 currentStep[0]++;
             }
         });
-        dividerPanel.setSize(340, 530);
+        dividerPanel.setSize(340, 450);
         isSidebarAnimating = true;
         animationTimer.start();
     }
@@ -262,7 +283,8 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
                 && comp != calculatorLabel && comp != collapseSidebarBtn
                 && comp != standardLabel && comp != scientificLabel
                 && comp != timeLabel && comp != temperatureLabel
-                && comp != convertersLabel && comp != dividerPanel) 
+                && comp != convertersLabel && comp != dividerPanel
+                && comp != goBackLabel) 
             {
                 mainPanel.remove(comp);
             }
@@ -281,7 +303,7 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
             standardLabel,
             scientificLabel,
             temperatureLabel,
-            timeLabel
+            timeLabel,
         };
         
         CalculatorModes[] calculatorModes = {
@@ -349,9 +371,24 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
         
         if (isSidebarExpanded && !isSidebarAnimating && clickPoint.x > sidebarWidth) {
             toggleSidebar();
-            dividerPanel.setSize(0,530);
+            dividerPanel.setSize(0,450);
         }
     }//GEN-LAST:event_dividerPanelMouseClicked
+
+    private void goBackLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackLabelMouseEntered
+        goBackLabel.setBackground(new Color(223,223,223));
+    }//GEN-LAST:event_goBackLabelMouseEntered
+
+    private void goBackLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackLabelMouseExited
+        goBackLabel.setBackground(new Color(230,230,230));
+    }//GEN-LAST:event_goBackLabelMouseExited
+
+    private void goBackLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackLabelMouseClicked
+        ApplicationsMenu appMenu = new ApplicationsMenu();
+        this.dispose();
+        appMenu.setLocationRelativeTo(this);
+        appMenu.setVisible(true);
+    }//GEN-LAST:event_goBackLabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -384,6 +421,7 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
     private javax.swing.JLabel convertersLabel;
     private javax.swing.JPanel dividerPanel;
     private javax.swing.JLabel expandSidebarBtn;
+    private javax.swing.JLabel goBackLabel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel scientificLabel;
     private javax.swing.JPanel sidebarPanel;

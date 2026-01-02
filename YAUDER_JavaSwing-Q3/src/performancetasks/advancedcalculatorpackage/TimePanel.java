@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JLabel;
 
 /**
@@ -18,6 +20,13 @@ public class TimePanel extends javax.swing.JPanel {
     private Font semiboldFont = new Font("Segoe UI Semibold", Font.PLAIN, 36);
     private Font semilightFont = new Font("Segoe UI Semilight", Font.PLAIN, 36);
     private static boolean enabledDisplay = true; // enabled = txtDisplay1   disabled = txtDisplay2;
+    
+    private boolean newInput = true;
+    private double result = 0;
+    private UnitOfTime fromUnit;
+    private UnitOfTime toUnit;
+    private int from;
+    private int to;
     
     enum UnitOfTime{
         MICROSECONDS,
@@ -36,6 +45,7 @@ public class TimePanel extends javax.swing.JPanel {
      */
     public TimePanel() {
         initComponents();
+        initLabelListeners();
     }
     
     /**
@@ -47,13 +57,13 @@ public class TimePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        displayPanel = new javax.swing.JPanel();
+        DisplayPanel = new javax.swing.JPanel();
         TimeLabel = new javax.swing.JLabel();
         txtDisplay2 = new javax.swing.JLabel();
-        timeComboBox2 = new javax.swing.JComboBox<>();
+        unitComboBox2 = new javax.swing.JComboBox<>();
         txtDisplay1 = new javax.swing.JLabel();
-        timeComboBox1 = new javax.swing.JComboBox<>();
-        buttonsLabel = new javax.swing.JPanel();
+        unitComboBox1 = new javax.swing.JComboBox<>();
+        ButtonsLabel = new javax.swing.JPanel();
         backspaceBtn = new javax.swing.JButton();
         clearEntryBtn = new javax.swing.JButton();
         eightBtn = new javax.swing.JButton();
@@ -71,12 +81,12 @@ public class TimePanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(340, 450));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        displayPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        DisplayPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         TimeLabel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         TimeLabel.setText("Time");
         TimeLabel.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        displayPanel.add(TimeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, -1, 35));
+        DisplayPanel.add(TimeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, -1, 35));
 
         txtDisplay2.setFont(new java.awt.Font("Segoe UI Semilight", 0, 36)); // NOI18N
         txtDisplay2.setText("0");
@@ -85,14 +95,14 @@ public class TimePanel extends javax.swing.JPanel {
                 txtDisplay2MouseClicked(evt);
             }
         });
-        displayPanel.add(txtDisplay2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+        DisplayPanel.add(txtDisplay2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
-        timeComboBox2.setMaximumRowCount(8);
-        timeComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Microseconds", "Milliseconds", "Seconds", "Minutes", "Hours", "Days", "Weeks", "Years" }));
-        timeComboBox2.setSelectedIndex(4);
-        timeComboBox2.setBorder(null);
-        timeComboBox2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        displayPanel.add(timeComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
+        unitComboBox2.setMaximumRowCount(8);
+        unitComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Microseconds", "Milliseconds", "Seconds", "Minutes", "Hours", "Days", "Weeks", "Years" }));
+        unitComboBox2.setSelectedIndex(4);
+        unitComboBox2.setBorder(null);
+        unitComboBox2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        DisplayPanel.add(unitComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
 
         txtDisplay1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 36)); // NOI18N
         txtDisplay1.setText("0");
@@ -101,18 +111,18 @@ public class TimePanel extends javax.swing.JPanel {
                 txtDisplay1MouseClicked(evt);
             }
         });
-        displayPanel.add(txtDisplay1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+        DisplayPanel.add(txtDisplay1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
-        timeComboBox1.setMaximumRowCount(8);
-        timeComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Microseconds", "Milliseconds", "Seconds", "Minutes", "Hours", "Days", "Weeks", "Years" }));
-        timeComboBox1.setSelectedIndex(3);
-        timeComboBox1.setBorder(null);
-        timeComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        displayPanel.add(timeComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+        unitComboBox1.setMaximumRowCount(8);
+        unitComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Microseconds", "Milliseconds", "Seconds", "Minutes", "Hours", "Days", "Weeks", "Years" }));
+        unitComboBox1.setSelectedIndex(3);
+        unitComboBox1.setBorder(null);
+        unitComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        DisplayPanel.add(unitComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
-        add(displayPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 240));
+        add(DisplayPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 240));
 
-        buttonsLabel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        ButtonsLabel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         backspaceBtn.setBackground(new java.awt.Color(249, 249, 249));
         backspaceBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/performancetasks/imgs/backspace.png"))); // NOI18N
@@ -125,7 +135,7 @@ public class TimePanel extends javax.swing.JPanel {
                 backspaceBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(backspaceBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(256, 0, 80, 50));
+        ButtonsLabel.add(backspaceBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(256, 0, 80, 50));
 
         clearEntryBtn.setBackground(new java.awt.Color(249, 249, 249));
         clearEntryBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -139,7 +149,7 @@ public class TimePanel extends javax.swing.JPanel {
                 clearEntryBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(clearEntryBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(256, 50, 80, 50));
+        ButtonsLabel.add(clearEntryBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(256, 50, 80, 50));
 
         eightBtn.setBackground(new java.awt.Color(249, 249, 249));
         eightBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -153,7 +163,7 @@ public class TimePanel extends javax.swing.JPanel {
                 eightBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(eightBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 0, 80, 50));
+        ButtonsLabel.add(eightBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 0, 80, 50));
 
         fiveBtn.setBackground(new java.awt.Color(249, 249, 249));
         fiveBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -167,7 +177,7 @@ public class TimePanel extends javax.swing.JPanel {
                 fiveBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(fiveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 50, 80, 50));
+        ButtonsLabel.add(fiveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 50, 80, 50));
 
         sevenBtn.setBackground(new java.awt.Color(249, 249, 249));
         sevenBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -181,7 +191,7 @@ public class TimePanel extends javax.swing.JPanel {
                 sevenBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(sevenBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 80, 50));
+        ButtonsLabel.add(sevenBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 80, 50));
 
         threeBtn.setBackground(new java.awt.Color(249, 249, 249));
         threeBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -195,7 +205,7 @@ public class TimePanel extends javax.swing.JPanel {
                 threeBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(threeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 100, 80, 50));
+        ButtonsLabel.add(threeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 100, 80, 50));
 
         decimalBtn.setBackground(new java.awt.Color(249, 249, 249));
         decimalBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -209,7 +219,7 @@ public class TimePanel extends javax.swing.JPanel {
                 decimalBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(decimalBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 150, 80, 50));
+        ButtonsLabel.add(decimalBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 150, 80, 50));
 
         oneBtn.setBackground(new java.awt.Color(249, 249, 249));
         oneBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -223,7 +233,7 @@ public class TimePanel extends javax.swing.JPanel {
                 oneBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(oneBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 100, 80, 50));
+        ButtonsLabel.add(oneBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 100, 80, 50));
 
         fourBtn.setBackground(new java.awt.Color(249, 249, 249));
         fourBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -237,7 +247,7 @@ public class TimePanel extends javax.swing.JPanel {
                 fourBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(fourBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 50, 80, 50));
+        ButtonsLabel.add(fourBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 50, 80, 50));
 
         twoBtn.setBackground(new java.awt.Color(249, 249, 249));
         twoBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -251,7 +261,7 @@ public class TimePanel extends javax.swing.JPanel {
                 twoBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(twoBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 100, 80, 50));
+        ButtonsLabel.add(twoBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 100, 80, 50));
 
         zeroBtn.setBackground(new java.awt.Color(249, 249, 249));
         zeroBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -265,7 +275,7 @@ public class TimePanel extends javax.swing.JPanel {
                 zeroBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(zeroBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 150, 80, 50));
+        ButtonsLabel.add(zeroBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 150, 80, 50));
 
         nineBtn.setBackground(new java.awt.Color(249, 249, 249));
         nineBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -279,7 +289,7 @@ public class TimePanel extends javax.swing.JPanel {
                 nineBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(nineBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 0, 80, 50));
+        ButtonsLabel.add(nineBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 0, 80, 50));
 
         sixBtn.setBackground(new java.awt.Color(249, 249, 249));
         sixBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -293,11 +303,35 @@ public class TimePanel extends javax.swing.JPanel {
                 sixBtnActionPerformed(evt);
             }
         });
-        buttonsLabel.add(sixBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 50, 80, 50));
+        ButtonsLabel.add(sixBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(171, 50, 80, 50));
 
-        add(buttonsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 340, 210));
+        add(ButtonsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 340, 210));
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void initLabelListeners(){
+        JLabel[] displayLabels = {
+            txtDisplay1,
+            txtDisplay2
+        };
+        from = unitComboBox1.getSelectedIndex();
+        to = unitComboBox2.getSelectedIndex();
+        
+        fromUnit = UnitOfTime.values()[from];
+        toUnit = UnitOfTime.values()[to];
+        
+        for(int i = 0; i < displayLabels.length; i++){
+            JLabel label = displayLabels[i];
+            label.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+                if (enabledDisplay) {
+                    double num1 = Double.parseDouble(txtDisplay1.getText());
+                    txtDisplay2.setText(String.valueOf(convertTime(num1, fromUnit, toUnit)));
+                } else {
+                    double num2 = Double.parseDouble(txtDisplay2.getText());
+                }
+            });
+        }
+    }
     
     private JLabel getEnabledDisplay(){
         if (enabledDisplay) { 
@@ -315,16 +349,68 @@ public class TimePanel extends javax.swing.JPanel {
         getEnabledDisplay().setText(getEnabledDisplay().getText() + text);
     }
     
-    private void calculate(){
+    private double convertTime(double value, UnitOfTime fromUnit, UnitOfTime toUnit){
+        double microseconds = toMicroseconds(value, fromUnit);
         
+        return fromMicroseconds(microseconds, toUnit);
+    }
+    
+    private double toMicroseconds(double value, UnitOfTime unit){
+        switch(unit){
+            case MICROSECONDS: 
+                return value;
+            case MILLISECONDS:
+                return value * 1_000;
+            case SECONDS: 
+                return value * 1_000_000;
+            case MINUTES:
+                return value * 60 * 1_000_000;
+            case HOURS: 
+                return value * 60 * 60 * 1_000_000; 
+            case DAYS:
+                return value * 24 * 60 * 60 * 1_000_000;
+            case WEEKS: 
+                return value * 7 * 24 * 60 * 60 * 1_000_000;
+            case YEARS:
+                return value * 365.25 * 24 * 60 * 60 * 1_000_000;
+            default: 
+                return 0;
+        }
+    }
+    
+    private double fromMicroseconds(double microseconds, UnitOfTime unit){
+        switch(unit){
+            case MICROSECONDS: 
+                return microseconds; 
+            case MILLISECONDS:
+                return microseconds / 1_000; 
+            case SECONDS:
+                return microseconds / 1_000_000;
+            case MINUTES: 
+                return microseconds / (60 * 1_000_000);
+            case HOURS:
+                return microseconds / (60 * 60 * 1_000_000);
+            case DAYS: 
+                return microseconds / (24 * 60 * 60 * 1_000_000);
+            case WEEKS:
+                return microseconds / (7 * 24 * 60 * 60 * 1_000_000);
+            case YEARS: 
+                return microseconds / (365.25 * 24 * 60 * 60 * 1_000_000);
+            default: 
+                return 0; 
+        }
     }
     
     private void backspaceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backspaceBtnActionPerformed
 
     }//GEN-LAST:event_backspaceBtnActionPerformed
-
+    
     private void clearEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearEntryBtnActionPerformed
-
+        if(enabledDisplay) {
+            txtDisplay1.setText("0");
+            return;
+        }
+        txtDisplay2.setText("0");
     }//GEN-LAST:event_clearEntryBtnActionPerformed
 
     private void decimalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decimalBtnActionPerformed
@@ -389,12 +475,12 @@ public class TimePanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ButtonsLabel;
+    private javax.swing.JPanel DisplayPanel;
     private javax.swing.JLabel TimeLabel;
     private javax.swing.JButton backspaceBtn;
-    private javax.swing.JPanel buttonsLabel;
     private javax.swing.JButton clearEntryBtn;
     private javax.swing.JButton decimalBtn;
-    private javax.swing.JPanel displayPanel;
     private javax.swing.JButton eightBtn;
     private javax.swing.JButton fiveBtn;
     private javax.swing.JButton fourBtn;
@@ -403,11 +489,11 @@ public class TimePanel extends javax.swing.JPanel {
     private javax.swing.JButton sevenBtn;
     private javax.swing.JButton sixBtn;
     private javax.swing.JButton threeBtn;
-    private javax.swing.JComboBox<String> timeComboBox1;
-    private javax.swing.JComboBox<String> timeComboBox2;
     private javax.swing.JButton twoBtn;
     private javax.swing.JLabel txtDisplay1;
     private javax.swing.JLabel txtDisplay2;
+    private javax.swing.JComboBox<String> unitComboBox1;
+    private javax.swing.JComboBox<String> unitComboBox2;
     private javax.swing.JButton zeroBtn;
     // End of variables declaration//GEN-END:variables
 }

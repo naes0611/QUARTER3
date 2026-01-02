@@ -312,9 +312,9 @@ public class StudentForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
-        MainMenuOfApplications mainmenuApp = new MainMenuOfApplications();
-        mainmenuApp.setLocationRelativeTo(this);
-        mainmenuApp.setVisible(true);
+        ApplicationsMenu AppMenu = new ApplicationsMenu();
+        AppMenu.setLocationRelativeTo(this);
+        AppMenu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_goBackBtnActionPerformed
 
