@@ -798,10 +798,6 @@ public class StandardPanel extends javax.swing.JPanel {
         calculate();
     }//GEN-LAST:event_equalToBtnActionPerformed
     
-    private boolean isOperator(char c){
-        return c == '+' || c == '-' || c == '×' || c == '÷';
-    }
-    
     private void resizeLabel(JLabel label){
         String text = label.getText();
         if (text.isEmpty()) return;
