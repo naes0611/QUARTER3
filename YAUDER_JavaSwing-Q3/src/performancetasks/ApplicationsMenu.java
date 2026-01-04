@@ -211,7 +211,9 @@ public class ApplicationsMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_javaParsingBtnActionPerformed
 
     private void nextpageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextpageBtnActionPerformed
-//        for (JComponents comp : MainPanel.getComponents())
+//        for (java.awt.Component comp : this.getComponents()) {
+//            if (comp != null && comp !=)
+//        }
     }//GEN-LAST:event_nextpageBtnActionPerformed
 
     /**

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package performancetasks;
+package javacomponents_part1_activities;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author ihub27
  */
 
-public class SimpleCalculator extends javax.swing.JFrame {
+public class OldSimpleCalculatorV2 extends javax.swing.JFrame {
     String selectedOperator = "";
     String lastOperator = "";
     BigDecimal firstNum = BigDecimal.ZERO;
@@ -23,7 +23,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
     /**
      * Creates new form pt_calculator
      */
-    public SimpleCalculator() {
+    public OldSimpleCalculatorV2() {
         initComponents();
         txtDisplay.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtHistory.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -691,19 +691,19 @@ public class SimpleCalculator extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OldSimpleCalculatorV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OldSimpleCalculatorV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OldSimpleCalculatorV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SimpleCalculator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OldSimpleCalculatorV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SimpleCalculator().setVisible(true);
+                new OldSimpleCalculatorV2().setVisible(true);
             }
         });
     }
