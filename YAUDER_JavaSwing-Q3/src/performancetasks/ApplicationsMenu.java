@@ -41,18 +41,24 @@ public class ApplicationsMenu extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         nextpageBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Main Menu of Applications");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Application Menu");
         setBackground(new java.awt.Color(255, 255, 255));
+        setMaximumSize(new java.awt.Dimension(530, 290));
+        setMinimumSize(new java.awt.Dimension(530, 290));
+        setPreferredSize(new java.awt.Dimension(530, 310));
         setResizable(false);
+        setSize(new java.awt.Dimension(530, 310));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Applications Menu");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, -1));
 
         gradecalculatorBtn.setText("Grade Calculator App");
         gradecalculatorBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -60,6 +66,7 @@ public class ApplicationsMenu extends javax.swing.JFrame {
                 gradecalculatorBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(gradecalculatorBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 210, -1));
 
         payrollsystemBtn.setText("Simple Payroll System App");
         payrollsystemBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -67,6 +74,7 @@ public class ApplicationsMenu extends javax.swing.JFrame {
                 payrollsystemBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(payrollsystemBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 210, -1));
 
         studentregformBtn.setText("Student Registration Form App");
         studentregformBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -74,6 +82,7 @@ public class ApplicationsMenu extends javax.swing.JFrame {
                 studentregformBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(studentregformBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 210, -1));
 
         temperatureconverterBtn.setText("Temperature Converter App");
         temperatureconverterBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -81,6 +90,7 @@ public class ApplicationsMenu extends javax.swing.JFrame {
                 temperatureconverterBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(temperatureconverterBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 210, -1));
 
         studentformBtn.setText("Student Form App");
         studentformBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -88,6 +98,7 @@ public class ApplicationsMenu extends javax.swing.JFrame {
                 studentformBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(studentformBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 210, -1));
 
         numberFormattingApp.setText("Number Formatting App");
         numberFormattingApp.addActionListener(new java.awt.event.ActionListener() {
@@ -95,6 +106,7 @@ public class ApplicationsMenu extends javax.swing.JFrame {
                 numberFormattingAppActionPerformed(evt);
             }
         });
+        getContentPane().add(numberFormattingApp, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 210, -1));
 
         openingClosingWindowBtn.setText("Opening Closing Window App");
         openingClosingWindowBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -102,6 +114,7 @@ public class ApplicationsMenu extends javax.swing.JFrame {
                 openingClosingWindowBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(openingClosingWindowBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 210, -1));
 
         javaParsingBtn.setText("Java Parsing App");
         javaParsingBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -109,92 +122,24 @@ public class ApplicationsMenu extends javax.swing.JFrame {
                 javaParsingBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(javaParsingBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 210, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Performance Tasks");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 50, 120, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Activities");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, -1, -1));
 
         nextpageBtn.setText(">>");
+        nextpageBtn.setMargin(new java.awt.Insets(0, 0, 0, 0));
         nextpageBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nextpageBtnActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(payrollsystemBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(gradecalculatorBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(studentformBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(numberFormattingApp, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addGap(70, 70, 70))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(temperatureconverterBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(studentregformBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(openingClosingWindowBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(javaParsingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
-                .addComponent(nextpageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(gradecalculatorBtn)
-                    .addComponent(studentformBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(payrollsystemBtn)
-                    .addComponent(numberFormattingApp))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(studentregformBtn)
-                    .addComponent(openingClosingWindowBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(temperatureconverterBtn)
-                    .addComponent(javaParsingBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(nextpageBtn)
-                .addContainerGap())
-        );
+        getContentPane().add(nextpageBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, 49, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -206,7 +151,9 @@ public class ApplicationsMenu extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_formWindowClosing
-
+    
+    
+    
     private void gradecalculatorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradecalculatorBtnActionPerformed
         pt_gradecalculator gradeCalculator = new pt_gradecalculator();
         gradeCalculator.setLocationRelativeTo(this);
@@ -264,7 +211,9 @@ public class ApplicationsMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_javaParsingBtnActionPerformed
 
     private void nextpageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextpageBtnActionPerformed
-        
+//        for (java.awt.Component comp : this.getComponents()) {
+//            if (comp != null && comp !=)
+//        }
     }//GEN-LAST:event_nextpageBtnActionPerformed
 
     /**
