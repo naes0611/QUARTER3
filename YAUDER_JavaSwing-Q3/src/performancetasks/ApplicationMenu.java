@@ -5,7 +5,6 @@
 package performancetasks;
 
 import javacomponents_part1_activities.*;
-
 /**
  *
  * @author seany
@@ -13,12 +12,13 @@ import javacomponents_part1_activities.*;
 public class ApplicationMenu extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ApplicationMenu.class.getName());
-
     /**
      * Creates new form ApplicationMenu
      */
     public ApplicationMenu() {
         initComponents();
+        MainPanel.add(new ApplicationMenuFirstPage(), new org.netbeans.lib.awtextra.AbsoluteConstraints
+        (0, 0, MainPanel.getWidth(), MainPanel.getHeight()));
     }
 
     /**
@@ -31,187 +31,40 @@ public class ApplicationMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         MainPanel = new javax.swing.JPanel();
-        NextPageButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        TempConverterButton = new javax.swing.JButton();
-        GradeCalcButton = new javax.swing.JButton();
-        SimpPayrollSystemButton = new javax.swing.JButton();
-        StudentRegFormButton = new javax.swing.JButton();
-        JavaParsingButton = new javax.swing.JButton();
-        OpeningClosingWindowButton = new javax.swing.JButton();
-        NumberFormattingButton = new javax.swing.JButton();
-        StudentFormButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Application Menu");
+        setPreferredSize(new java.awt.Dimension(575, 360));
 
-        MainPanel.setMinimumSize(new java.awt.Dimension(575, 395));
-        MainPanel.setOpaque(false);
         MainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        NextPageButton.setText(">>");
-        NextPageButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NextPageButtonActionPerformed(evt);
-            }
-        });
-        MainPanel.add(NextPageButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 90, 30));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        jLabel1.setText("Application Menu");
-        MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 20, -1, -1));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel2.setText("Activities");
-        MainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        jLabel3.setText("Performance Tasks");
-        MainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
-
-        TempConverterButton.setText("Temperature Converter");
-        TempConverterButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TempConverterButtonActionPerformed(evt);
-            }
-        });
-        MainPanel.add(TempConverterButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 172, -1));
-
-        GradeCalcButton.setText("Grade Calculator");
-        GradeCalcButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GradeCalcButtonActionPerformed(evt);
-            }
-        });
-        MainPanel.add(GradeCalcButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 172, -1));
-
-        SimpPayrollSystemButton.setText("Simple Payroll System");
-        SimpPayrollSystemButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SimpPayrollSystemButtonActionPerformed(evt);
-            }
-        });
-        MainPanel.add(SimpPayrollSystemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 172, -1));
-
-        StudentRegFormButton.setText("Student Registration Form");
-        StudentRegFormButton.setToolTipText("");
-        StudentRegFormButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StudentRegFormButtonActionPerformed(evt);
-            }
-        });
-        MainPanel.add(StudentRegFormButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
-
-        JavaParsingButton.setText("Java Parsing App");
-        JavaParsingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JavaParsingButtonActionPerformed(evt);
-            }
-        });
-        MainPanel.add(JavaParsingButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 260, 172, -1));
-
-        OpeningClosingWindowButton.setText("Opening Closing Window");
-        OpeningClosingWindowButton.setToolTipText("");
-        OpeningClosingWindowButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OpeningClosingWindowButtonActionPerformed(evt);
-            }
-        });
-        MainPanel.add(OpeningClosingWindowButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 210, 172, -1));
-
-        NumberFormattingButton.setText("Number Formatting");
-        NumberFormattingButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NumberFormattingButtonActionPerformed(evt);
-            }
-        });
-        MainPanel.add(NumberFormattingButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 160, 172, -1));
-
-        StudentFormButton.setText("Student Form");
-        StudentFormButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StudentFormButtonActionPerformed(evt);
-            }
-        });
-        MainPanel.add(StudentFormButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 110, 172, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 360, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void GradeCalcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GradeCalcButtonActionPerformed
-        pt_gradecalculator gradeCalculator = new pt_gradecalculator();
-        gradeCalculator.setLocationRelativeTo(this);
-        gradeCalculator.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_GradeCalcButtonActionPerformed
-
-    private void SimpPayrollSystemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpPayrollSystemButtonActionPerformed
-        pt_simplepayrollsystem payrollSystem = new pt_simplepayrollsystem();
-        payrollSystem.setLocationRelativeTo(this);
-        payrollSystem.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_SimpPayrollSystemButtonActionPerformed
-
-    private void StudentRegFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentRegFormButtonActionPerformed
-        pt_studentregform studentRegForm = new pt_studentregform();
-        studentRegForm.setLocationRelativeTo(this);
-        studentRegForm.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_StudentRegFormButtonActionPerformed
-
-    private void TempConverterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TempConverterButtonActionPerformed
-        pt_temperatureconverter tempConverter = new pt_temperatureconverter();
-        tempConverter.setLocationRelativeTo(this);
-        tempConverter.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_TempConverterButtonActionPerformed
-
-    private void StudentFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentFormButtonActionPerformed
-        StudentForm studentForm = new StudentForm();
-        studentForm.setLocationRelativeTo(this);
-        studentForm.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_StudentFormButtonActionPerformed
-
-    private void NumberFormattingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumberFormattingButtonActionPerformed
-        NumberFormatting numberFormatting = new NumberFormatting();
-        numberFormatting.setLocationRelativeTo(this);
-        numberFormatting.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_NumberFormattingButtonActionPerformed
-
-    private void OpeningClosingWindowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpeningClosingWindowButtonActionPerformed
-        OpeningClosingWindow openingClosingWindow = new OpeningClosingWindow();
-        openingClosingWindow.setLocationRelativeTo(this);
-        openingClosingWindow.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_OpeningClosingWindowButtonActionPerformed
-
-    private void JavaParsingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JavaParsingButtonActionPerformed
-        JavaParsing javaParsing = new JavaParsing();
-        javaParsing.setLocationRelativeTo(this);
-        javaParsing.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_JavaParsingButtonActionPerformed
-
-    private void NextPageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextPageButtonActionPerformed
-        
-    }//GEN-LAST:event_NextPageButtonActionPerformed
-
+    
+//    private void changePanelTo (javax.swing.JPanel newPanel) {
+//        for(java.awt.Component comp : MainPanel.getComponents()){
+//            if(comp != null && comp != MainLabel && comp != PerformanceLabel && comp != ActivitiesLabel) {
+//                MainPanel.remove(comp);
+//            }
+//        }
+//        MainPanel.add(newPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints
+//        (0, 0, MainPanel.getWidth(), MainPanel.getHeight()));
+//        
+//        MainPanel.revalidate();
+//        MainPanel.repaint();
+//    }
     /**
      * @param args the command line arguments
      */
@@ -238,18 +91,6 @@ public class ApplicationMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton GradeCalcButton;
-    private javax.swing.JButton JavaParsingButton;
     private javax.swing.JPanel MainPanel;
-    private javax.swing.JButton NextPageButton;
-    private javax.swing.JButton NumberFormattingButton;
-    private javax.swing.JButton OpeningClosingWindowButton;
-    private javax.swing.JButton SimpPayrollSystemButton;
-    private javax.swing.JButton StudentFormButton;
-    private javax.swing.JButton StudentRegFormButton;
-    private javax.swing.JButton TempConverterButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
