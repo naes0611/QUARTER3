@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
-import performancetasks.*;
+import performancetasks.ApplicationMenu;
 
 /**
  *
@@ -24,7 +24,6 @@ public class StudentForm extends javax.swing.JFrame {
     public StudentForm() {
         initComponents();
         checkboxes = new ArrayList<>();
-        
         checkboxes.add(Math); checkboxes.add(English); checkboxes.add(Science);
         
     }
@@ -68,25 +67,9 @@ public class StudentForm extends javax.swing.JFrame {
 
         nameLabel.setText("Name");
 
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
-            }
-        });
-
         Math.setText("Math");
-        Math.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MathActionPerformed(evt);
-            }
-        });
 
         English.setText("English");
-        English.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EnglishActionPerformed(evt);
-            }
-        });
 
         Science.setText("Science");
 
@@ -94,11 +77,6 @@ public class StudentForm extends javax.swing.JFrame {
 
         buttonGroup1.add(Enrolled);
         Enrolled.setText("Enrolled");
-        Enrolled.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EnrolledActionPerformed(evt);
-            }
-        });
 
         buttonGroup1.add(notEnrolled);
         notEnrolled.setText("Not Enrolled");
@@ -108,11 +86,6 @@ public class StudentForm extends javax.swing.JFrame {
         zodiacSignLabel.setText("Zodiac Sign");
 
         zodiacSignComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-Select-", "Capricorn", "Aquarius ", "Pisces", "Aries", "Taurus", "Gemini", "Cancer", "Leo,", "Virgo", "Libra", "Scorpio", "Sagittarius" }));
-        zodiacSignComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zodiacSignComboBoxActionPerformed(evt);
-            }
-        });
 
         saveBtn.setText("Save");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +119,7 @@ public class StudentForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(favoriteSubjectsLabel)
                         .addGap(18, 18, 18)
@@ -160,19 +133,15 @@ public class StudentForm extends javax.swing.JFrame {
                             .addComponent(statusLabel)
                             .addComponent(nameLabel)
                             .addComponent(zodiacSignLabel))
+                        .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(zodiacSignComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(80, 80, 80)
-                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(zodiacSignComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Enrolled)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(notEnrolled)))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Enrolled)
+                                .addGap(18, 18, 18)
+                                .addComponent(notEnrolled))
+                            .addComponent(txtName))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 37, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -220,23 +189,17 @@ public class StudentForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-//    private void displaySelectedSubjects() {
-//        StringBuilder selectedText = new StringBuilder("\nFavorite Subject/s: ");
-//        for (javax.swing.JCheckBox checkbox : checkboxes) {
-//            if (checkbox.isSelected()) selectedText.append(checkbox.getText()+" ");
-//        }
-//        studentData.append(selectedText.toString());
-//    }
+
     private boolean displaySelectedSubjects() {
         boolean anySelected = false;
         for (javax.swing.JCheckBox checkBox : checkboxes) {
             if (checkBox.isSelected()) {
                 anySelected = true;
-                //selectedSubjects.append(checkBox.getText()).append(" ");
             }
         }
         return anySelected;
     }
+    
     public String getSelectedButtonText(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
@@ -246,37 +209,28 @@ public class StudentForm extends javax.swing.JFrame {
         }
         return null;
     }
-    private void MathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MathActionPerformed
-        
-    }//GEN-LAST:event_MathActionPerformed
-
-    private void zodiacSignComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zodiacSignComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_zodiacSignComboBoxActionPerformed
-
+    
+    private void errorMessage(String message){
+        JOptionPane.showMessageDialog(
+            StudentForm.this,
+            message,
+            "Input Error!",
+            JOptionPane.ERROR_MESSAGE);
+    }
+    
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-        // TODO add your handling code here:
         studentData.setText("");
         
         String name = txtName.getText();
         int sign = zodiacSignComboBox.getSelectedIndex();
         boolean isChecked = displaySelectedSubjects();
-        System.out.println(isChecked);
         if (name.isBlank() && isChecked &&
             buttonGroup1.getSelection() == null && sign == 0){ 
             studentData.setText("");
-            JOptionPane.showMessageDialog(
-            StudentForm.this,
-            "Please fill in all required fields.",
-            "Input Error!",
-            JOptionPane.ERROR_MESSAGE);
+            errorMessage("Please fill in all required fields.");
         } else if (name.isBlank() || !isChecked || buttonGroup1.getSelection() == null || sign == 0) {
             studentData.setText("");
-            JOptionPane.showMessageDialog(
-            StudentForm.this,
-            "Please fill in all required fields.",
-            "Input Error!",
-            JOptionPane.ERROR_MESSAGE);
+            errorMessage("Please fill in all required fields.");
         } else {
             studentData.append("Name: "+ txtName.getText());
             studentData.append("\nFavorite Subject/s: ");
@@ -289,20 +243,7 @@ public class StudentForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
-    private void EnrolledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnrolledActionPerformed
-
-    }//GEN-LAST:event_EnrolledActionPerformed
-
-    private void EnglishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnglishActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EnglishActionPerformed
-
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
-
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
-        // TODO add your handling code here:
         txtName.setText("");
         Math.setSelected(false); English.setSelected(false); Science.setSelected(false);
         buttonGroup1.clearSelection();
@@ -312,14 +253,17 @@ public class StudentForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
-        ApplicationsMenu AppMenu = new ApplicationsMenu();
-        AppMenu.setLocationRelativeTo(this);
-        AppMenu.setVisible(true);
-        this.dispose();
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want go back to App Menu?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.YES_OPTION) {
+            ApplicationMenu appMenu = new ApplicationMenu();
+            appMenu.setLocationRelativeTo(this);
+            appMenu.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_goBackBtnActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (choice == JOptionPane.YES_OPTION){
             System.exit(0);
         }
@@ -341,22 +285,16 @@ public class StudentForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(StudentForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new StudentForm().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new StudentForm().setVisible(true);
         });
     }
 

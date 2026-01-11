@@ -218,31 +218,31 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         from = cbxconvertFrom.getSelectedIndex(); 
         to  = cbxconvertTo.getSelectedIndex();
         
-        if(input.isBlank()){
-            errorMessages("Invalid Input");
+        if(input.trim().isEmpty()){
+            errorMessages("Invalid Input. Please enter a number.");
             return false;
         }
         if (from == 0 || to == 0){
             if (from == 0 && to == 0) {
-                errorMessages("select conversion type");
+                errorMessages("Select conversion type!");
             } else if (from == 0) {
-                errorMessages("no unit to convert from");
+                errorMessages("Select unit to convert from!");
             } else {
-                errorMessages("no unit to convert to");
+                errorMessages("Select unit to convert to!");
             }
             return false;
         }
         unitFrom = UnitOfTemperatures.values()[from - 1];
         unitTo = UnitOfTemperatures.values()[to - 1];
         if (unitFrom == unitTo) {
-            errorMessages("temperature cannot be converted to itself");
+            errorMessages("Temperature cannot be converted to itself!");
             return false;
         }
         try {
             Double.valueOf(input);
             return true;
         } catch (NumberFormatException e) {
-            errorMessages("Invalid Input");
+            errorMessages("Invalid Input. Please enter a number.");
             return false;
         }
     }
@@ -265,16 +265,7 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
         JOptionPane.INFORMATION_MESSAGE);
     }
     
-    private void errorMessages(String type){
-        String message;
-        switch(type.toLowerCase()){
-            case "select conversion type" -> message = "Select conversion type!";
-            case "no unit to convert to" -> message = "Select unit to convert to!";
-            case "no unit to convert from" -> message = "Select unit to convert from!";
-            case "temperature cannot be converted to itself" -> message = "Temperature cannot be converted to itself!";
-            case "invalid input" -> message = "Invalid Input. Please enter a valid number.";
-            default -> message = "An unexpected error occurred.";
-        }
+    private void errorMessages(String message){
         JOptionPane.showMessageDialog(
             pt_temperatureconverter.this,
             message,
@@ -291,17 +282,20 @@ public class pt_temperatureconverter extends javax.swing.JFrame {
     }//GEN-LAST:event_computeBtnActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (choice == JOptionPane.YES_OPTION){
             System.exit(0);
         }
     }//GEN-LAST:event_formWindowClosing
 
     private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
-        ApplicationsMenu mainmenuApp = new ApplicationsMenu();
-        mainmenuApp.setLocationRelativeTo(this);
-        mainmenuApp.setVisible(true);
-        this.dispose();
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want go back to App Menu?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.YES_OPTION) {
+            ApplicationMenu appMenu = new ApplicationMenu();
+            appMenu.setLocationRelativeTo(this);
+            appMenu.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_goBackBtnActionPerformed
 
     /**

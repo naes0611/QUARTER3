@@ -45,22 +45,12 @@ public class JavaParsing extends javax.swing.JFrame {
             }
         });
 
-        userinput1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userinput1ActionPerformed(evt);
-            }
-        });
         userinput1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 userinput1KeyTyped(evt);
             }
         });
 
-        userinput2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userinput2ActionPerformed(evt);
-            }
-        });
         userinput2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 userinput2KeyTyped(evt);
@@ -202,14 +192,6 @@ public class JavaParsing extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_computeBtnActionPerformed
 
-    private void userinput1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userinput1ActionPerformed
-        
-    }//GEN-LAST:event_userinput1ActionPerformed
-
-    private void userinput2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userinput2ActionPerformed
-       
-    }//GEN-LAST:event_userinput2ActionPerformed
-
     private void userinput1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userinput1KeyTyped
         if (!Character.isDigit(evt.getKeyChar())) {
             evt.consume();
@@ -223,17 +205,20 @@ public class JavaParsing extends javax.swing.JFrame {
     }//GEN-LAST:event_userinput2KeyTyped
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (choice == JOptionPane.YES_OPTION){
             System.exit(0);
         }
     }//GEN-LAST:event_formWindowClosing
 
     private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
-        ApplicationsMenu AppMenu = new ApplicationsMenu();
-        AppMenu.setLocationRelativeTo(this);
-        AppMenu.setVisible(true);
-        this.dispose();
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want go back to App Menu?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.YES_OPTION) {
+            ApplicationMenu appMenu = new ApplicationMenu();
+            appMenu.setLocationRelativeTo(this);
+            appMenu.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_goBackBtnActionPerformed
 
     /**

@@ -256,18 +256,12 @@ public class pt_gradecalculator extends javax.swing.JFrame {
         return true;
     }
     
-    private void errorMessages(String type){
-        String message;
-        switch(type.toLowerCase()){
-            case "input range" -> message = "Please input grades in a range between 60-100!";
-            case "invalid input" -> message = "Invalid Input. Please check your inputs.";
-            default -> message = "An unexpected error occured.";
-        }
+    private void errorMessages(String message){
         JOptionPane.showMessageDialog(
                 pt_gradecalculator.this,
                 message,
                 "Invalid Input!",
-        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
     
     private void message(double average){
@@ -308,7 +302,7 @@ public class pt_gradecalculator extends javax.swing.JFrame {
             };
             
             if(!areGradesValid(grades)){
-                errorMessages("input range");
+                errorMessages("Please input grades in a range between 60-100!");
                 return;
             }
             
@@ -322,7 +316,7 @@ public class pt_gradecalculator extends javax.swing.JFrame {
             
             
         } catch (NumberFormatException e) {
-            errorMessages("invalid input");
+            errorMessages("Invalid Input. Please check your inputs");
         }
     }//GEN-LAST:event_computeBtnActionPerformed
     
@@ -377,17 +371,20 @@ public class pt_gradecalculator extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRAWSKeyTyped
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (choice == JOptionPane.YES_OPTION){
             System.exit(0);
         }
     }//GEN-LAST:event_formWindowClosing
 
     private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
-        ApplicationsMenu mainmenuApp = new ApplicationsMenu();
-        mainmenuApp.setLocationRelativeTo(this);
-        mainmenuApp.setVisible(true);
-        this.dispose();
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want go back to App Menu?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.YES_OPTION) {
+            ApplicationMenu appMenu = new ApplicationMenu();
+            appMenu.setLocationRelativeTo(this);
+            appMenu.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_goBackBtnActionPerformed
 
     /**

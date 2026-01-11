@@ -80,13 +80,11 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="userinput1">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userinput1ActionPerformed"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="userinput1KeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="userinput2">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userinput2ActionPerformed"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="userinput2KeyTyped"/>
       </Events>
     </Component>

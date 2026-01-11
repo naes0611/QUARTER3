@@ -450,16 +450,7 @@ public class pt_studentregform extends javax.swing.JFrame {
         return null;
     }
     
-    private void errorMessages(String errorType) {
-        String message;
-        switch (errorType){
-            case "missing fields" -> message = "Please fill in all required fields.";
-            case "email does not match" -> message = "Email does not match.";
-            case "password does not match" -> message = "Password does not match.";
-            case "email not in valid format" -> message = "The email address you entered is not in a valid format.";
-            case "password too short or too long" -> message = "password must be 8-16 characters long.";
-            default -> message = "An unexpected error occurred.";
-        }
+    private void errorMessages(String message) {
         JOptionPane.showMessageDialog(this,
                 message,
                 "Input Error",
@@ -484,7 +475,7 @@ public class pt_studentregform extends javax.swing.JFrame {
             && confirmPassword.isBlank() && year == 0 && month == 0 && day == 0 &&
                 sexGroup.getSelection() == null && departmentGroup.getSelection() == null) {
              
-            errorMessages("missing fields");
+            errorMessages("Please fill in all required fields.");
             return false;
             
          }
@@ -492,25 +483,25 @@ public class pt_studentregform extends javax.swing.JFrame {
             password.isBlank() || confirmPassword.isBlank() || year == 0 || month == 0 || day == 0 ||
             sexGroup.getSelection() == null || departmentGroup.getSelection() == null) {
              
-            errorMessages("missing fields");
+            errorMessages("Please fill in all required fields.");
             return false;
             
          }
          if (!emailAddress.equalsIgnoreCase(confirmEmailAddress)) {
-            errorMessages("email does not match");
+            errorMessages("Email does not match.");
             return false;
          } else {
              if(!isValidEmail(emailAddress)){
-                errorMessages("email not in valid format");
+                errorMessages("The email address you entered is not in a valid format.");
                 return false;
              }
          }
          if (!password.equals(confirmPassword)) {
-             errorMessages("password does not match");
+             errorMessages("Password does not match.");
              return false;
          } else {
              if (password.length() < 8 || password.length() >16) {
-                errorMessages("password too short or too long");
+                errorMessages("password must be 8-16 characters long.");
                 return false;
              }
          }
@@ -553,10 +544,13 @@ public class pt_studentregform extends javax.swing.JFrame {
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void goBackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackBtnActionPerformed
-        ApplicationsMenu mainmenuApp = new ApplicationsMenu();
-        mainmenuApp.setLocationRelativeTo(this);
-        mainmenuApp.setVisible(true);
-        this.dispose();
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want go back to App Menu?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.YES_OPTION) {
+            ApplicationMenu appMenu = new ApplicationMenu();
+            appMenu.setLocationRelativeTo(this);
+            appMenu.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_goBackBtnActionPerformed
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
@@ -633,7 +627,7 @@ public class pt_studentregform extends javax.swing.JFrame {
     }//GEN-LAST:event_txtstudentLNKeyTyped
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (choice == JOptionPane.YES_OPTION){
             System.exit(0);
         }
@@ -683,23 +677,17 @@ public class pt_studentregform extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(pt_studentregform.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(pt_studentregform.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(pt_studentregform.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(pt_studentregform.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         
+        //</editor-fold>
+        
         /* Create and display the form */
         
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new pt_studentregform().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new pt_studentregform().setVisible(true);
         });
     }
 

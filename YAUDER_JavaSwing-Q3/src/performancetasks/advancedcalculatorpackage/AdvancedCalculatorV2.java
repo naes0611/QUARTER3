@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import performancetasks.*;
 /**
@@ -384,10 +385,13 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
     }//GEN-LAST:event_goBackLabelMouseExited
 
     private void goBackLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackLabelMouseClicked
-        ApplicationsMenu appMenu = new ApplicationsMenu();
-        this.dispose();
-        appMenu.setLocationRelativeTo(this);
-        appMenu.setVisible(true);
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want go back to App Menu?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.YES_OPTION) {
+            ApplicationMenu appMenu = new ApplicationMenu();
+            appMenu.setLocationRelativeTo(this);
+            appMenu.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_goBackLabelMouseClicked
 
     /**

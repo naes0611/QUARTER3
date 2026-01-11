@@ -5,6 +5,7 @@
 package performancetasks;
 
 import javacomponents_part1_activities.*;
+import performancetasks.advancedcalculatorpackage.AdvancedCalculatorV2;
 /**
  *
  * @author seany
@@ -17,8 +18,7 @@ public class ApplicationMenu extends javax.swing.JFrame {
      */
     public ApplicationMenu() {
         initComponents();
-        MainPanel.add(new ApplicationMenuFirstPage(), new org.netbeans.lib.awtextra.AbsoluteConstraints
-        (0, 0, MainPanel.getWidth(), MainPanel.getHeight()));
+        SecondPage.setVisible(false);
     }
 
     /**
@@ -31,12 +31,155 @@ public class ApplicationMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         MainPanel = new javax.swing.JPanel();
+        FirstPage = new javax.swing.JPanel();
+        NextPageButton = new javax.swing.JButton();
+        TempConverterButton = new javax.swing.JButton();
+        GradeCalcButton = new javax.swing.JButton();
+        SimpPayrollSystemButton = new javax.swing.JButton();
+        StudentRegFormButton = new javax.swing.JButton();
+        JavaParsingButton = new javax.swing.JButton();
+        OpeningClosingWindowButton = new javax.swing.JButton();
+        NumberFormattingButton = new javax.swing.JButton();
+        StudentFormButton = new javax.swing.JButton();
+        PerformanceLabel = new javax.swing.JLabel();
+        MainLabel = new javax.swing.JLabel();
+        ActivitiesLabel = new javax.swing.JLabel();
+        SecondPage = new javax.swing.JPanel();
+        PreviousPageButton = new javax.swing.JButton();
+        ActivitiesLabel1 = new javax.swing.JLabel();
+        MainLabel1 = new javax.swing.JLabel();
+        PerformanceLabel1 = new javax.swing.JLabel();
+        AdvCalcButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Application Menu");
-        setPreferredSize(new java.awt.Dimension(575, 360));
 
         MainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        FirstPage.setMinimumSize(new java.awt.Dimension(575, 395));
+        FirstPage.setOpaque(false);
+        FirstPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        NextPageButton.setText(">>");
+        NextPageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NextPageButtonActionPerformed(evt);
+            }
+        });
+        FirstPage.add(NextPageButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 90, 30));
+
+        TempConverterButton.setText("Temperature Converter");
+        TempConverterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TempConverterButtonActionPerformed(evt);
+            }
+        });
+        FirstPage.add(TempConverterButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 172, -1));
+
+        GradeCalcButton.setText("Grade Calculator");
+        GradeCalcButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GradeCalcButtonActionPerformed(evt);
+            }
+        });
+        FirstPage.add(GradeCalcButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 172, -1));
+
+        SimpPayrollSystemButton.setText("Simple Payroll System");
+        SimpPayrollSystemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SimpPayrollSystemButtonActionPerformed(evt);
+            }
+        });
+        FirstPage.add(SimpPayrollSystemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 172, -1));
+
+        StudentRegFormButton.setText("Student Registration Form");
+        StudentRegFormButton.setToolTipText("");
+        StudentRegFormButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StudentRegFormButtonActionPerformed(evt);
+            }
+        });
+        FirstPage.add(StudentRegFormButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
+
+        JavaParsingButton.setText("Java Parsing App");
+        JavaParsingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JavaParsingButtonActionPerformed(evt);
+            }
+        });
+        FirstPage.add(JavaParsingButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 260, 172, -1));
+
+        OpeningClosingWindowButton.setText("Opening Closing Window");
+        OpeningClosingWindowButton.setToolTipText("");
+        OpeningClosingWindowButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OpeningClosingWindowButtonActionPerformed(evt);
+            }
+        });
+        FirstPage.add(OpeningClosingWindowButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 210, 172, -1));
+
+        NumberFormattingButton.setText("Number Formatting");
+        NumberFormattingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NumberFormattingButtonActionPerformed(evt);
+            }
+        });
+        FirstPage.add(NumberFormattingButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 160, 172, -1));
+
+        StudentFormButton.setText("Student Form");
+        StudentFormButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StudentFormButtonActionPerformed(evt);
+            }
+        });
+        FirstPage.add(StudentFormButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 110, 172, -1));
+
+        PerformanceLabel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        PerformanceLabel.setText("Performance Tasks");
+        FirstPage.add(PerformanceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
+
+        MainLabel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        MainLabel.setText("Application Menu");
+        FirstPage.add(MainLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 20, -1, -1));
+
+        ActivitiesLabel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        ActivitiesLabel.setText("Activities");
+        FirstPage.add(ActivitiesLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, -1, -1));
+
+        MainPanel.add(FirstPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 360));
+
+        SecondPage.setPreferredSize(new java.awt.Dimension(575, 360));
+        SecondPage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        PreviousPageButton.setText("<<");
+        PreviousPageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PreviousPageButtonActionPerformed(evt);
+            }
+        });
+        SecondPage.add(PreviousPageButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 90, 30));
+
+        ActivitiesLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        ActivitiesLabel1.setText("Activities");
+        SecondPage.add(ActivitiesLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, -1, -1));
+
+        MainLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        MainLabel1.setText("Application Menu");
+        SecondPage.add(MainLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 20, -1, -1));
+
+        PerformanceLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        PerformanceLabel1.setText("Performance Tasks");
+        SecondPage.add(PerformanceLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
+
+        AdvCalcButton.setText("Advanced Calculator");
+        AdvCalcButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdvCalcButtonActionPerformed(evt);
+            }
+        });
+        SecondPage.add(AdvCalcButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(355, 110, 172, -1));
+
+        MainPanel.add(SecondPage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 575, 360));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -52,19 +195,80 @@ public class ApplicationMenu extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
-//    private void changePanelTo (javax.swing.JPanel newPanel) {
-//        for(java.awt.Component comp : MainPanel.getComponents()){
-//            if(comp != null && comp != MainLabel && comp != PerformanceLabel && comp != ActivitiesLabel) {
-//                MainPanel.remove(comp);
-//            }
-//        }
-//        MainPanel.add(newPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints
-//        (0, 0, MainPanel.getWidth(), MainPanel.getHeight()));
-//        
-//        MainPanel.revalidate();
-//        MainPanel.repaint();
-//    }
+
+    private void NextPageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextPageButtonActionPerformed
+       FirstPage.setVisible(false);
+       SecondPage.setVisible(true);
+    }//GEN-LAST:event_NextPageButtonActionPerformed
+
+    private void TempConverterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TempConverterButtonActionPerformed
+        pt_temperatureconverter tempConverter = new pt_temperatureconverter();
+        tempConverter.setLocationRelativeTo(this);
+        tempConverter.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_TempConverterButtonActionPerformed
+
+    private void GradeCalcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GradeCalcButtonActionPerformed
+        pt_gradecalculator gradeCalculator = new pt_gradecalculator();
+        gradeCalculator.setLocationRelativeTo(this);
+        gradeCalculator.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_GradeCalcButtonActionPerformed
+
+    private void SimpPayrollSystemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpPayrollSystemButtonActionPerformed
+        pt_simplepayrollsystem payrollSystem = new pt_simplepayrollsystem();
+        payrollSystem.setLocationRelativeTo(this);
+        payrollSystem.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SimpPayrollSystemButtonActionPerformed
+
+    private void StudentRegFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentRegFormButtonActionPerformed
+        pt_studentregform studentRegForm = new pt_studentregform();
+        studentRegForm.setLocationRelativeTo(this);
+        studentRegForm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_StudentRegFormButtonActionPerformed
+
+    private void JavaParsingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JavaParsingButtonActionPerformed
+        JavaParsing javaParsing = new JavaParsing();
+        javaParsing.setLocationRelativeTo(this);
+        javaParsing.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_JavaParsingButtonActionPerformed
+
+    private void OpeningClosingWindowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpeningClosingWindowButtonActionPerformed
+        OpeningClosingWindow openingClosingWindow = new OpeningClosingWindow();
+        openingClosingWindow.setLocationRelativeTo(this);
+        openingClosingWindow.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_OpeningClosingWindowButtonActionPerformed
+
+    private void NumberFormattingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NumberFormattingButtonActionPerformed
+        NumberFormatting numberFormatting = new NumberFormatting();
+        numberFormatting.setLocationRelativeTo(this);
+        numberFormatting.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_NumberFormattingButtonActionPerformed
+
+    private void StudentFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StudentFormButtonActionPerformed
+        StudentForm studentForm = new StudentForm();
+        studentForm.setLocationRelativeTo(this);
+        studentForm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_StudentFormButtonActionPerformed
+
+    private void PreviousPageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PreviousPageButtonActionPerformed
+        SecondPage.setVisible(false);
+        FirstPage.setVisible(true);
+    }//GEN-LAST:event_PreviousPageButtonActionPerformed
+
+    private void AdvCalcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdvCalcButtonActionPerformed
+        AdvancedCalculatorV2 advCalc = new AdvancedCalculatorV2();
+        advCalc.setLocationRelativeTo(this);
+        advCalc.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_AdvCalcButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -91,6 +295,25 @@ public class ApplicationMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ActivitiesLabel;
+    private javax.swing.JLabel ActivitiesLabel1;
+    private javax.swing.JButton AdvCalcButton;
+    private javax.swing.JPanel FirstPage;
+    private javax.swing.JButton GradeCalcButton;
+    private javax.swing.JButton JavaParsingButton;
+    private javax.swing.JLabel MainLabel;
+    private javax.swing.JLabel MainLabel1;
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JButton NextPageButton;
+    private javax.swing.JButton NumberFormattingButton;
+    private javax.swing.JButton OpeningClosingWindowButton;
+    private javax.swing.JLabel PerformanceLabel;
+    private javax.swing.JLabel PerformanceLabel1;
+    private javax.swing.JButton PreviousPageButton;
+    private javax.swing.JPanel SecondPage;
+    private javax.swing.JButton SimpPayrollSystemButton;
+    private javax.swing.JButton StudentFormButton;
+    private javax.swing.JButton StudentRegFormButton;
+    private javax.swing.JButton TempConverterButton;
     // End of variables declaration//GEN-END:variables
 }
