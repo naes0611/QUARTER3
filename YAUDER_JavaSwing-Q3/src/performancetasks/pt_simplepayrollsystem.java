@@ -127,10 +127,10 @@ public class pt_simplepayrollsystem extends javax.swing.JFrame {
     }
     
     private boolean isValidInput(){
-        String name = employeeNameField.getText();
+        String name = employeeNameField.getText().trim();
         String hrsWorkedStr = hoursWorkedField.getText();
         double hourlyRate = ((Number)hourlyRateField.getValue()).doubleValue();
-        if (name.trim().isEmpty()){
+        if (name.isEmpty()){
             errorMessages("Employee Name Field cannot be empty!");
             return false;
         }

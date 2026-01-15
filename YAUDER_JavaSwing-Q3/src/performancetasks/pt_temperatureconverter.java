@@ -42,6 +42,7 @@ enum UnitOfTemperatures {
         public double fromCelsius(double celsiusValue){
             return celsiusValue + 273.15;
         }
+        
     };
 
     private final String name;

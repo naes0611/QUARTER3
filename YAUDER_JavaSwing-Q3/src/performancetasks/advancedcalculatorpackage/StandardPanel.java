@@ -27,7 +27,7 @@ public class StandardPanel extends javax.swing.JPanel {
     
     private char operator = 0;
     private final MathContext mc = new MathContext(16, RoundingMode.HALF_UP);
-    private final int MAX_TEXT_LENGTH = 16;
+    private final int MAX_TEXT_LENGTH = 200;
     private boolean isInputDisabled = false;
     private boolean newInput = true;
     private final String overflow = "Overflow";

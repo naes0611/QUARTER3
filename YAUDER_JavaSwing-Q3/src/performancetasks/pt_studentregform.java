@@ -20,7 +20,7 @@ import javax.swing.event.DocumentListener;
 public class pt_studentregform extends javax.swing.JFrame {
     private static final Pattern VALID_EMAIL_ADDRESS = 
             Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
-                    Pattern.CASE_INSENSITIVE);
+            Pattern.CASE_INSENSITIVE);
     /**
      * Creates new form pt_studentregform
      */
@@ -79,6 +79,7 @@ public class pt_studentregform extends javax.swing.JFrame {
 
         sexGroup = new javax.swing.ButtonGroup();
         departmentGroup = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
         studentFirstName = new javax.swing.JLabel();
         studentLastName = new javax.swing.JLabel();
         EmailAddress = new javax.swing.JLabel();
@@ -124,72 +125,92 @@ public class pt_studentregform extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         studentFirstName.setText("Student First Name");
         studentFirstName.setToolTipText("");
         studentFirstName.setName(""); // NOI18N
+        jPanel1.add(studentFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 63, -1, -1));
 
         studentLastName.setText("Student Last Name");
+        jPanel1.add(studentLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 101, -1, -1));
 
         EmailAddress.setText("Email Address");
+        jPanel1.add(EmailAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 139, -1, -1));
 
         confEmailAddress.setText("Confirm Email Address");
+        jPanel1.add(confEmailAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 177, -1, -1));
 
-        Password.setDisplayedMnemonic('p');
         Password.setText("Password");
+        jPanel1.add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 215, -1, -1));
 
         confPassword.setText("Confirm Password");
+        jPanel1.add(confPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 253, -1, -1));
 
         txtstudentFN.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtstudentFNKeyTyped(evt);
             }
         });
+        jPanel1.add(txtstudentFN, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 58, 200, -1));
 
         txtstudentLN.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtstudentLNKeyTyped(evt);
             }
         });
+        jPanel1.add(txtstudentLN, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 96, 200, -1));
 
         txtEmailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtEmailAddressKeyTyped(evt);
             }
         });
+        jPanel1.add(txtEmailAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 134, 200, -1));
 
         txtconfEmailAddress.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtconfEmailAddressKeyTyped(evt);
             }
         });
+        jPanel1.add(txtconfEmailAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 172, 200, -1));
 
         DateofBirth.setText("Date of Birth");
+        jPanel1.add(DateofBirth, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 285, -1, -1));
 
         sexlbl.setText("Sex");
+        jPanel1.add(sexlbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 314, -1, -1));
 
         sexGroup.add(ifMale);
         ifMale.setText("Male");
+        jPanel1.add(ifMale, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 312, -1, -1));
 
         sexGroup.add(ifFemale);
         ifFemale.setText("Female");
+        jPanel1.add(ifFemale, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 312, -1, -1));
 
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPasswordKeyTyped(evt);
             }
         });
+        jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 210, 200, -1));
 
         txtconfPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtconfPasswordKeyTyped(evt);
             }
         });
+        jPanel1.add(txtconfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 248, 200, -1));
 
         Year.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Year", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", " " }));
+        jPanel1.add(Year, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 280, -1, -1));
 
         Month.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Month", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
+        jPanel1.add(Month, new org.netbeans.lib.awtextra.AbsoluteConstraints(212, 280, -1, -1));
 
         Day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Day", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", " " }));
+        jPanel1.add(Day, new org.netbeans.lib.awtextra.AbsoluteConstraints(332, 280, -1, -1));
 
         submitBtn.setText("Submit");
         submitBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -197,6 +218,7 @@ public class pt_studentregform extends javax.swing.JFrame {
                 submitBtnActionPerformed(evt);
             }
         });
+        jPanel1.add(submitBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 482, -1, -1));
 
         clearBtn.setText("Clear");
         clearBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -204,6 +226,7 @@ public class pt_studentregform extends javax.swing.JFrame {
                 clearBtnActionPerformed(evt);
             }
         });
+        jPanel1.add(clearBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(166, 482, -1, -1));
 
         goBackBtn.setText("Go Back");
         goBackBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -211,42 +234,55 @@ public class pt_studentregform extends javax.swing.JFrame {
                 goBackBtnActionPerformed(evt);
             }
         });
+        jPanel1.add(goBackBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 482, -1, -1));
 
         Department.setText("Department");
+        jPanel1.add(Department, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 339, -1, -1));
 
         departmentGroup.add(Civil);
         Civil.setText("Civil");
+        jPanel1.add(Civil, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 339, -1, -1));
 
         departmentGroup.add(compSciandEngr);
         compSciandEngr.setText("Computer Science and Engineer");
+        jPanel1.add(compSciandEngr, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 366, -1, -1));
 
         departmentGroup.add(Electrics);
         Electrics.setText("Electrics");
+        jPanel1.add(Electrics, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 339, -1, -1));
 
         departmentGroup.add(ElectronicsandCommunication);
         ElectronicsandCommunication.setText("Electronics and Communication");
+        jPanel1.add(ElectronicsandCommunication, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 393, -1, -1));
 
         departmentGroup.add(Mechanical);
         Mechanical.setText("Mechanical");
+        jPanel1.add(Mechanical, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 339, -1, -1));
 
         studentData.setEditable(false);
         studentData.setColumns(20);
         studentData.setRows(5);
         jScrollPane1.setViewportView(studentData);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(424, 317, 366, 192));
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Your Data is Below");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(424, 280, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("New Student Registration Form");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(51, 15, -1, -1));
 
         errorLabel.setForeground(new java.awt.Color(255, 0, 0));
         errorLabel.setName(""); // NOI18N
         errorLabel.setPreferredSize(new java.awt.Dimension(200, 20));
+        jPanel1.add(errorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 254, -1, -1));
 
         errorMailLabel.setBackground(new java.awt.Color(255, 255, 255));
         errorMailLabel.setForeground(new java.awt.Color(255, 0, 0));
         errorMailLabel.setPreferredSize(new java.awt.Dimension(200, 20));
+        jPanel1.add(errorMailLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 172, -1, -1));
 
         showPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         showPassword.setText("Show Password?");
@@ -255,149 +291,17 @@ public class pt_studentregform extends javax.swing.JFrame {
                 showPasswordActionPerformed(evt);
             }
         });
+        jPanel1.add(showPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(369, 213, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(studentFirstName)
-                            .addComponent(studentLastName)
-                            .addComponent(EmailAddress)
-                            .addComponent(confEmailAddress)
-                            .addComponent(Password)
-                            .addComponent(confPassword))
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtEmailAddress)
-                                    .addComponent(txtstudentLN)
-                                    .addComponent(txtstudentFN)
-                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtconfEmailAddress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(errorMailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(showPassword)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtconfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DateofBirth)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Department)
-                                    .addComponent(sexlbl))
-                                .addGap(36, 36, 36)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Civil)
-                                        .addGap(12, 12, 12)
-                                        .addComponent(Electrics)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(Mechanical))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(ifMale)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ifFemale))
-                                    .addComponent(ElectronicsandCommunication)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(Month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(Day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(compSciandEngr)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(submitBtn)
-                                .addGap(18, 18, 18)
-                                .addComponent(clearBtn)
-                                .addGap(18, 18, 18)
-                                .addComponent(goBackBtn)
-                                .addGap(87, 87, 87)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(studentFirstName)
-                    .addComponent(txtstudentFN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(studentLastName)
-                    .addComponent(txtstudentLN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(EmailAddress)
-                    .addComponent(txtEmailAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(confEmailAddress)
-                    .addComponent(txtconfEmailAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(errorMailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Password)
-                    .addComponent(showPassword))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(confPassword)
-                        .addComponent(txtconfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(DateofBirth)
-                            .addComponent(Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Month, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ifMale)
-                            .addComponent(ifFemale)
-                            .addComponent(sexlbl))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(Civil)
-                                .addComponent(Electrics)
-                                .addComponent(Mechanical))
-                            .addComponent(Department))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(compSciandEngr)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ElectronicsandCommunication)
-                        .addGap(68, 68, 68)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(submitBtn)
-                            .addComponent(clearBtn)
-                            .addComponent(goBackBtn)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -458,53 +362,56 @@ public class pt_studentregform extends javax.swing.JFrame {
     }
     
     private boolean isValidInput(){
-        String FN = txtstudentFN.getText(),
-               LN = txtstudentLN.getText();
+        String FN = txtstudentFN.getText();
+        String LN = txtstudentLN.getText();
+        String emailAddress = txtEmailAddress.getText();
+        String confirmEmailAddress = txtconfEmailAddress.getText();
+        String password = String.valueOf(txtPassword.getPassword());
+        String confirmPassword = String.valueOf(txtconfPassword.getPassword());
         
-        String emailAddress = txtEmailAddress.getText(), 
-               confirmEmailAddress = txtconfEmailAddress.getText();
+        int year = Year.getSelectedIndex();
+        int month = Month.getSelectedIndex(); 
+        int day = Day.getSelectedIndex();
         
-        String password = String.valueOf(txtPassword.getPassword()),
-               confirmPassword = String.valueOf(txtconfPassword.getPassword());
+        Object sexSelection = sexGroup.getSelection();
+        Object departmentSelection = departmentGroup.getSelection();
         
-        int year = Year.getSelectedIndex(), 
-            month = Month.getSelectedIndex(), 
-            day = Day.getSelectedIndex();
+        // If one or more fields are empty/unselected, display error message
+        if (FN.isBlank() || LN.isBlank() || 
+            emailAddress.isBlank() || 
+            confirmEmailAddress.isBlank() || 
+            password.isBlank() || confirmPassword.isBlank() || 
+            year == 0 || month == 0 || day == 0 ||
+            sexSelection == null || departmentSelection == null) 
+        {
+           errorMessages("Please fill in all required fields.");
+           return false;
+        }
+
+        boolean isEmailMatch = emailAddress.equalsIgnoreCase(confirmEmailAddress);
+
+        if (!isEmailMatch) 
+        {
+           errorMessages("Email does not match.");
+           return false;
+        } 
         
-         if (FN.isBlank() && LN.isBlank() && emailAddress.isBlank() && confirmEmailAddress.isBlank() && password.isBlank() 
-            && confirmPassword.isBlank() && year == 0 && month == 0 && day == 0 &&
-                sexGroup.getSelection() == null && departmentGroup.getSelection() == null) {
-             
-            errorMessages("Please fill in all required fields.");
+        if(!isValidEmail(emailAddress))
+        {
+           errorMessages("The email address you entered is not in a valid format.");
+           return false;
+        }
+
+        boolean isPasswordMatch = password.equals(confirmPassword);
+
+        if (!isPasswordMatch) {
+            errorMessages("Password does not match.");
             return false;
-            
-         }
-         if (FN.isBlank() || LN.isBlank() || emailAddress.isBlank() || confirmEmailAddress.isBlank() || 
-            password.isBlank() || confirmPassword.isBlank() || year == 0 || month == 0 || day == 0 ||
-            sexGroup.getSelection() == null || departmentGroup.getSelection() == null) {
-             
-            errorMessages("Please fill in all required fields.");
-            return false;
-            
-         }
-         if (!emailAddress.equalsIgnoreCase(confirmEmailAddress)) {
-            errorMessages("Email does not match.");
-            return false;
-         } else {
-             if(!isValidEmail(emailAddress)){
-                errorMessages("The email address you entered is not in a valid format.");
-                return false;
-             }
-         }
-         if (!password.equals(confirmPassword)) {
-             errorMessages("Password does not match.");
-             return false;
-         } else {
-             if (password.length() < 8 || password.length() >16) {
-                errorMessages("password must be 8-16 characters long.");
-                return false;
-             }
-         }
+        } 
+        if (password.length() < 8 || password.length() >16) {
+           errorMessages("password must be 8-16 characters long.");
+           return false;
+        }
         return true;
     }
     
@@ -555,11 +462,51 @@ public class pt_studentregform extends javax.swing.JFrame {
 
     private void submitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitBtnActionPerformed
         if (!isValidInput()){
-            studentData.setText("");
             return;
         }
         studentData.setText(displayStudentInformation());
     }//GEN-LAST:event_submitBtnActionPerformed
+
+    private void txtstudentFNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstudentFNKeyTyped
+        restrictNameInput(evt, txtstudentFN);
+    }//GEN-LAST:event_txtstudentFNKeyTyped
+
+    private void txtstudentLNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstudentLNKeyTyped
+        restrictNameInput(evt, txtstudentLN);
+    }//GEN-LAST:event_txtstudentLNKeyTyped
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (choice == JOptionPane.YES_OPTION){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void txtEmailAddressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailAddressKeyTyped
+        restrictEmailInput(evt, txtEmailAddress);
+    }//GEN-LAST:event_txtEmailAddressKeyTyped
+
+    private void txtconfEmailAddressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtconfEmailAddressKeyTyped
+        restrictEmailInput(evt, txtconfEmailAddress);
+    }//GEN-LAST:event_txtconfEmailAddressKeyTyped
+
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        restrictPasswordInput(evt, txtPassword);
+    }//GEN-LAST:event_txtPasswordKeyTyped
+
+    private void txtconfPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtconfPasswordKeyTyped
+        restrictPasswordInput(evt, txtconfPassword);
+    }//GEN-LAST:event_txtconfPasswordKeyTyped
+
+    private void showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordActionPerformed
+        if(showPassword.isSelected()){
+            txtPassword.setEchoChar((char)0);
+            txtconfPassword.setEchoChar((char)0);
+        } else {
+            txtPassword.setEchoChar('*');
+            txtconfPassword.setEchoChar('*');
+        }
+    }//GEN-LAST:event_showPasswordActionPerformed
     
     private void restrictNameInput(java.awt.event.KeyEvent evt, javax.swing.JTextField textField){
         char c = evt.getKeyChar();
@@ -618,47 +565,6 @@ public class pt_studentregform extends javax.swing.JFrame {
         }
     }
     
-    private void txtstudentFNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstudentFNKeyTyped
-        restrictNameInput(evt, txtstudentFN);
-    }//GEN-LAST:event_txtstudentFNKeyTyped
-
-    private void txtstudentLNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstudentLNKeyTyped
-        restrictNameInput(evt, txtstudentLN);
-    }//GEN-LAST:event_txtstudentLNKeyTyped
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to close the application?", "Message", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (choice == JOptionPane.YES_OPTION){
-            System.exit(0);
-        }
-    }//GEN-LAST:event_formWindowClosing
-
-    private void txtEmailAddressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailAddressKeyTyped
-        restrictEmailInput(evt, txtEmailAddress);
-    }//GEN-LAST:event_txtEmailAddressKeyTyped
-
-    private void txtconfEmailAddressKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtconfEmailAddressKeyTyped
-        restrictEmailInput(evt, txtconfEmailAddress);
-    }//GEN-LAST:event_txtconfEmailAddressKeyTyped
-
-    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
-        restrictPasswordInput(evt, txtPassword);
-    }//GEN-LAST:event_txtPasswordKeyTyped
-
-    private void txtconfPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtconfPasswordKeyTyped
-        restrictPasswordInput(evt, txtconfPassword);
-    }//GEN-LAST:event_txtconfPasswordKeyTyped
-
-    private void showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordActionPerformed
-        if(showPassword.isSelected()){
-            txtPassword.setEchoChar((char)0);
-            txtconfPassword.setEchoChar((char)0);
-        } else {
-            txtPassword.setEchoChar('*');
-            txtconfPassword.setEchoChar('*');
-        }
-    }//GEN-LAST:event_showPasswordActionPerformed
-
     /**
      *
      * @param args
@@ -715,6 +621,7 @@ public class pt_studentregform extends javax.swing.JFrame {
     private javax.swing.JRadioButton ifMale;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.ButtonGroup sexGroup;
     private javax.swing.JLabel sexlbl;
