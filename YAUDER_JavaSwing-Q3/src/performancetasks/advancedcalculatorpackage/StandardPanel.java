@@ -14,8 +14,7 @@ import javax.swing.JLabel;
 
 /**
  * To do list
- * Fix Calculation Bug, add new flag for calculation
- * Fix Decimal Bug
+ * Fix Decimal Bug, cannot input 0 after decimal point
  * Fix Comments
  * Add Unary Operations
  * Add Memory overflow protection
@@ -38,7 +37,6 @@ public class StandardPanel extends javax.swing.JPanel {
     private BigDecimal result = BigDecimal.ZERO;
     
     private char operator = 0;
-    private char lastOperator = 0;
     private final MathContext mc = new MathContext(16, RoundingMode.HALF_UP);
     private final int MAX_INPUT_LENGTH = 16;
     private boolean newInput = true;
@@ -498,10 +496,11 @@ public class StandardPanel extends javax.swing.JPanel {
     private void appendNumber(String number) {
         String currentText = txtDisplay.getText();
         
-        // Clear display on new input or when error occurs
-        if (newInput || isError()) { // Fix this
+        // Clear display on new input or when error occurs, start fresh
+        if (newInput || isError()) {
             txtDisplay.setText(number);
             newInput = false;
+            justCalculated = false;
             resizeLabel(txtDisplay);
             return;
         }
@@ -516,7 +515,7 @@ public class StandardPanel extends javax.swing.JPanel {
         }
         
         // Check max length (without commas and decimal point)
-        String textWithoutFormat = unformatted.replace(".", "");
+        String textWithoutFormat = unformatted.replace(".", "".replace("-",""));
         if (textWithoutFormat.length() >= MAX_INPUT_LENGTH) {
             return;
         }
@@ -543,7 +542,7 @@ public class StandardPanel extends javax.swing.JPanel {
             BigDecimal value = new BigDecimal(currentText);
             txtDisplay.setText(formatNumber(value));
         } catch (NumberFormatException e) {
-            System.out.println("Exception on line 574");
+            
         }
         
         resizeLabel(txtDisplay);
@@ -554,26 +553,34 @@ public class StandardPanel extends javax.swing.JPanel {
     */
     private void setOperator(char op) {
         if (!isError()) {
+            // If there is already an operator, calculate first
+            if (operator != 0 && !newInput) {
+                calculate();
+                num1 = result;
+            } else {
                 num1 = parseDisplay();
             }
+        }
             operator = op;
             txtHistory.setText(formatNumber(num1) + " " + operator);
             newInput = true;
+            justCalculated = false;
     }
     
     /*
         Perform calculation
     */
     private void calculate(){
-        // if no operator selected, just format current number
+        // if no operator selected, just format and display current number
         if (operator == 0) {
             if (!isError()) {
                 num1 = parseDisplay();  
                 txtDisplay.setText(formatNumber(num1));
             }
-            
-            txtHistory.setText(""); // clear historyDisplay
-            newInput = false;
+
+            txtHistory.setText("");
+            newInput = true;
+            justCalculated = false;
             resizeLabel(txtDisplay);
             return;
         }
@@ -581,12 +588,12 @@ public class StandardPanel extends javax.swing.JPanel {
         BigDecimal num2;
 
         // Use new input or repeat last operation
-        if (newInput) { // skips this
+        if (!justCalculated) {
             num2 = parseDisplay();
-            System.out.println("num2 = " + num2);
             lastNum2 = num2;
         } else {
             num2 = lastNum2;
+            //
         }
         try{
             switch (operator) {
@@ -598,21 +605,24 @@ public class StandardPanel extends javax.swing.JPanel {
                         txtDisplay.setText("Cannot divide by zero");
                         txtHistory.setText(formatNumber(num1) + " ÷ " + formatNumber(num2) + " =");
                         resizeLabel(txtDisplay);
+                        operator = 0;
+                        newInput = true;
                         return;
                     }
                     result =  num1.divide(num2, mc);
                 }
             }
-            if (!isError()) {
-                txtHistory.setText(formatNumber(num1) + " " + operator + " " + formatNumber(num2) + " =");
-                txtDisplay.setText(formatNumber(result));
-                num1 = result;
-            }
+            
+            txtHistory.setText(formatNumber(num1) + " " + operator + " " + formatNumber(num2) + " =");
+            txtDisplay.setText(formatNumber(result));
+            num1 = result;
+            
         } catch(ArithmeticException e){
             txtDisplay.setText("Error");
         }
 
-        newInput = false;
+        newInput = true;
+        justCalculated = true;
         resizeLabel(txtDisplay);
     }
     
@@ -622,7 +632,6 @@ public class StandardPanel extends javax.swing.JPanel {
         // Clear history if starting new input
         if (newInput){
             txtHistory.setText("");
-            historyDisplay = "";
             return;
         }
         
@@ -634,27 +643,28 @@ public class StandardPanel extends javax.swing.JPanel {
         }
         
         // Remove commas for manipulation
-        
-       String unformatted = text.replace(",","");
+        String unformatted = text.replace(",","");
        
-       if (unformatted.length() > 1) {
-           String newText = unformatted.substring(0, unformatted.length() - 1);
-           
-           if (newText.equals("-")) {
-               txtDisplay.setText("0");
-           } else {
-               txtDisplay.setText(newText);
-               formatAndResize();
-           }
-       } else {
-           txtDisplay.setText("0");
-           resetFontSize();
-       }
+        if (unformatted.length() > 1) {
+            String newText = unformatted.substring(0, unformatted.length() - 1);
+            
+            // If only "-" remains, reset to 0
+            if (newText.equals("-")) {
+                txtDisplay.setText("0");
+                resetFontSize();
+            } else {
+                txtDisplay.setText(newText);
+                formatAndResize();
+            }
+        } else {
+            txtDisplay.setText("0");
+            resetFontSize();
+        }
     }//GEN-LAST:event_backspaceBtnActionPerformed
 
     private void clearEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearEntryBtnActionPerformed
         txtDisplay.setText("0");
-        historyDisplay = "";
+        newInput = true;
         resetFontSize();
     }//GEN-LAST:event_clearEntryBtnActionPerformed
 
@@ -665,6 +675,7 @@ public class StandardPanel extends javax.swing.JPanel {
         operator = 0;
         lastNum2 = BigDecimal.ZERO;
         newInput = true;
+        justCalculated = false;
         historyDisplay = "";
         resetFontSize();
     }//GEN-LAST:event_clearBtnActionPerformed
@@ -756,16 +767,17 @@ public class StandardPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_percentBtnActionPerformed
 
     private void negateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negateBtnActionPerformed
-        try{
-            num1 = parseDisplay();
-            result = num1.negate();
-            txtDisplay.setText(formatNumber(result));
-            newInput = false;
-            resizeLabel(txtDisplay);
-        }catch(Exception e){
-            txtDisplay.setText("Error");
-            resizeLabel(txtDisplay);
+        if (isError()) {
+            return;
         }
+        BigDecimal currentNum = parseDisplay();
+        BigDecimal negateNum = currentNum.negate();
+        txtDisplay.setText(formatNumber(negateNum));
+        if (operator != 0) {
+            txtHistory.setText(currentNum + " " + operator + " negate( " + formatNumber(currentNum) + " )");
+        }
+        newInput = false;
+        resizeLabel(txtDisplay);
     }//GEN-LAST:event_negateBtnActionPerformed
 
     private void reciprocalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reciprocalBtnActionPerformed
