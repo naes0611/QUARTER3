@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 
 /**
  * To do list
- * Fix Calculation Bug
+ * Fix Calculation Bug, add new flag for calculation
  * Fix Decimal Bug
  * Fix Comments
  * Add Unary Operations
@@ -38,9 +38,11 @@ public class StandardPanel extends javax.swing.JPanel {
     private BigDecimal result = BigDecimal.ZERO;
     
     private char operator = 0;
+    private char lastOperator = 0;
     private final MathContext mc = new MathContext(16, RoundingMode.HALF_UP);
     private final int MAX_INPUT_LENGTH = 16;
     private boolean newInput = true;
+    private boolean justCalculated = false;
     
     /**
      * Creates new form standardPanel
@@ -497,13 +499,12 @@ public class StandardPanel extends javax.swing.JPanel {
         String currentText = txtDisplay.getText();
         
         // Clear display on new input or when error occurs
-        if (newInput || isError()) {
+        if (newInput || isError()) { // Fix this
             txtDisplay.setText(number);
             newInput = false;
             resizeLabel(txtDisplay);
             return;
         }
-        
         // Removes commas for manipulation
         String unformatted = currentText.replace(",", "");
         
@@ -567,20 +568,22 @@ public class StandardPanel extends javax.swing.JPanel {
         // if no operator selected, just format current number
         if (operator == 0) {
             if (!isError()) {
-                num1 = parseDisplay();
+                num1 = parseDisplay();  
                 txtDisplay.setText(formatNumber(num1));
             }
+            
             txtHistory.setText(""); // clear historyDisplay
             newInput = false;
             resizeLabel(txtDisplay);
             return;
         }
-
+        
         BigDecimal num2;
 
         // Use new input or repeat last operation
-        if (newInput && !isError()) {
+        if (newInput) { // skips this
             num2 = parseDisplay();
+            System.out.println("num2 = " + num2);
             lastNum2 = num2;
         } else {
             num2 = lastNum2;
@@ -600,7 +603,6 @@ public class StandardPanel extends javax.swing.JPanel {
                     result =  num1.divide(num2, mc);
                 }
             }
-            
             if (!isError()) {
                 txtHistory.setText(formatNumber(num1) + " " + operator + " " + formatNumber(num2) + " =");
                 txtDisplay.setText(formatNumber(result));
