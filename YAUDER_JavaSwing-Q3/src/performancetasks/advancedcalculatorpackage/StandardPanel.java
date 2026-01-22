@@ -471,6 +471,7 @@ public class StandardPanel extends javax.swing.JPanel {
     /*
         Parse display text to BigDecimal for calculation (removes commas)
     */
+    
     private BigDecimal parseDisplay(){
         try {
             String text = txtDisplay.getText().replace(",", "");
@@ -496,7 +497,7 @@ public class StandardPanel extends javax.swing.JPanel {
     private void appendNumber(String number) {
         String currentText = txtDisplay.getText();
         
-        // Clear display on new input or when error occurs, start fresh
+        // When new input or when error occurs, start fresh
         if (newInput || isError()) {
             txtDisplay.setText(number);
             newInput = false;
@@ -508,7 +509,7 @@ public class StandardPanel extends javax.swing.JPanel {
         String unformatted = currentText.replace(",", "");
         
         
-        if (unformatted.equals("0") && !number.equals("0.")) {
+        if (unformatted.equals("0") && !number.equals(".")) {
             txtDisplay.setText(number);
             resizeLabel(txtDisplay);
             return;
@@ -533,7 +534,7 @@ public class StandardPanel extends javax.swing.JPanel {
         String currentText = txtDisplay.getText().replace(",", "");
         
         // Don't format if ending with a decimal point
-        if (currentText.endsWith(".")) {
+        if (currentText.endsWith(".") || currentText.contains(".")) {
             resizeLabel(txtDisplay);
             return;
         }
@@ -542,7 +543,7 @@ public class StandardPanel extends javax.swing.JPanel {
             BigDecimal value = new BigDecimal(currentText);
             txtDisplay.setText(formatNumber(value));
         } catch (NumberFormatException e) {
-            
+            System.out.println("Exception on line 546");
         }
         
         resizeLabel(txtDisplay);
@@ -577,7 +578,6 @@ public class StandardPanel extends javax.swing.JPanel {
                 num1 = parseDisplay();  
                 txtDisplay.setText(formatNumber(num1));
             }
-
             txtHistory.setText("");
             newInput = true;
             justCalculated = false;
@@ -594,6 +594,8 @@ public class StandardPanel extends javax.swing.JPanel {
         } else {
             num2 = lastNum2;
             //
+            System.out.println("num1 is = " + num1);
+            System.out.println("result is = " +result);
         }
         try{
             switch (operator) {
