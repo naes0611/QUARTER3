@@ -14,7 +14,8 @@ import javax.swing.JLabel;
 
 /**
  * To do list
- * Fix decimal bug
+ * Fix Calculation Bug
+ * Fix Decimal Bug
  * Fix Comments
  * Add Unary Operations
  * Add Memory overflow protection
@@ -585,21 +586,20 @@ public class StandardPanel extends javax.swing.JPanel {
             num2 = lastNum2;
         }
         try{
-            result = switch (operator) {
-                case '+' -> num1.add(num2, mc);
-                case '-' -> num1.subtract(num2, mc);
-                case '×' -> num1.multiply(num2, mc);
+            switch (operator) {
+                case '+' -> result = num1.add(num2, mc);
+                case '-' -> result = num1.subtract(num2, mc);
+                case '×' -> result = num1.multiply(num2, mc);
                 case '÷' -> {
                     if (num2.compareTo(BigDecimal.ZERO) == 0) {
                         txtDisplay.setText("Cannot divide by zero");
                         txtHistory.setText(formatNumber(num1) + " ÷ " + formatNumber(num2) + " =");
                         resizeLabel(txtDisplay);
-                        yield BigDecimal.ZERO;
+                        return;
                     }
-                    yield num1.divide(num2, mc);
+                    result =  num1.divide(num2, mc);
                 }
-                default -> BigDecimal.ZERO;
-            };
+            }
             
             if (!isError()) {
                 txtHistory.setText(formatNumber(num1) + " " + operator + " " + formatNumber(num2) + " =");
