@@ -350,7 +350,6 @@ public class pt_studentregform extends javax.swing.JFrame {
                 return button.getText();
             }
         }
-
         return null;
     }
     
@@ -426,11 +425,11 @@ public class pt_studentregform extends javax.swing.JFrame {
         String sex = getSelectedButtonText(sexGroup);
         String department = getSelectedButtonText(departmentGroup);
         String studentInformation = "Name: " + FN + " " + LN +
-                             "\nEmail Address: " + emailAddress +
-                "\nPassword: " + password + 
-                "\nBirthday: " + month + " " + day + " " + year +
-                "\nSex: " + sex +
-                "\nDepartment: "+ department;
+                            "\nEmail Address: " + emailAddress +
+                            "\nPassword: " + password + 
+                            "\nBirthday: " + month + " " + day + " " + year +
+                            "\nSex: " + sex +
+                            "\nDepartment: "+ department;
         
         return studentInformation;
     }

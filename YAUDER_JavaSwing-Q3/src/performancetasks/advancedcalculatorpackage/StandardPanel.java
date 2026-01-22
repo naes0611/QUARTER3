@@ -9,28 +9,37 @@ import java.awt.FontMetrics;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import javax.swing.JLabel;
+
+/**
+ * To do list
+ * Fix decimal bug
+ * Fix Comments
+ * Add Unary Operations
+ * Add Memory overflow protection
+ */
+
+
 
 /**
  *
  * @author seany
  */
 public class StandardPanel extends javax.swing.JPanel {
-    private final NumberFormat numberFormat = NumberFormat.getNumberInstance();
+   // For Display 
+    private final DecimalFormat decimalFormat = new DecimalFormat("#,##0.################");
+    private String historyDisplay = ""; // For Nested Operations
     
+    // For Calculation
     private BigDecimal num1 = BigDecimal.ZERO;
-    private BigDecimal lastNum1 = BigDecimal.ZERO;
-    private BigDecimal lastNum2 = BigDecimal.ZERO;
+    private BigDecimal lastNum2 = BigDecimal.ZERO; // Last second number (for repeating =)
     private BigDecimal result = BigDecimal.ZERO;
-    private String history = "";
     
     private char operator = 0;
     private final MathContext mc = new MathContext(16, RoundingMode.HALF_UP);
-    private final int MAX_TEXT_LENGTH = 200;
-    private boolean isInputDisabled = false;
+    private final int MAX_INPUT_LENGTH = 16;
     private boolean newInput = true;
-    private final String overflow = "Overflow";
     
     /**
      * Creates new form standardPanel
@@ -441,128 +450,166 @@ public class StandardPanel extends javax.swing.JPanel {
 
         add(ButtonsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 340, 290));
     }// </editor-fold>//GEN-END:initComponents
-  
-    private String numCheck(BigDecimal result) {
-//        if (result.stripTrailingZeros().scale() <= 0) {
-//           if (result.toString().length() >= 16) 
-//           {  return result.toString(); }
-//           
-//           return numberFormat.format(result);
-//        } else {
-//            return result.toPlainString();
-//        }
-
-        if (result.stripTrailingZeros().scale() <= 0) {
-            return result.toString();
-        } else {
-            return result.toPlainString();
+    
+    /*
+        Format BigDecimal into string for display (removes trailing zeros, and adds commas)
+    */
+    private String formatNumber(BigDecimal number) {
+        // Removes unnecessary zeros
+        BigDecimal strippedNumber = number.stripTrailingZeros();
+        
+        // If it's a whole number, format with commas
+        if(strippedNumber.scale() <= 0) {
+            return String.format("%,d", strippedNumber.toBigInteger());
+        }
+        
+        // Otherwise use decimal format
+        return decimalFormat.format(number);
+    }
+    
+    /*
+        Parse display text to BigDecimal for calculation (removes commas)
+    */
+    private BigDecimal parseDisplay(){
+        try {
+            String text = txtDisplay.getText().replace(",", "");
+            return new BigDecimal(text);
+        } catch (NumberFormatException e) {
+            return BigDecimal.ZERO;
         }
     }
-//    private static BigDecimal convertStringToBigDecimal(String numberString) {
-//        try {
-//            NumberFormat format = NumberFormat.getNumberInstance(Locale.ENGLISH);
-//            Number number = format.parse(numberString);
-//            return new BigDecimal(number.toString());
-//
-//        } catch (ParseException e) {
-//            System.err.println("Error parsing number: " + e.getMessage());
-//            return null;
-//        }
-//    }
     
-    private void updateDisplay(String text) {
-        int currentTextLength = txtDisplay.getText().length();
-        if (isInputDisabled && operator != 0 && currentTextLength >= MAX_TEXT_LENGTH) {
-            txtDisplay.setText(text);
-            isInputDisabled = false;
-            return;
-        }
-        if (!isInputDisabled && operator != 0 && currentTextLength >= MAX_TEXT_LENGTH) {
-            return;
-        }
-        
-        if (currentTextLength >= MAX_TEXT_LENGTH) { 
-            isInputDisabled = true; 
-            return;
-        }
-        
-        if (!newInput) {
-            txtDisplay.setText("0");
-            newInput = true;
-        }
+    /*
+        Check if display shows an error message
+    */
+    private boolean isError(){
+        String text = txtDisplay.getText();
+        return text.equals("Cannot divide by zero") ||
+            text.equals("Invalid input") ||
+            text.equals("Error");
+    }
+    
+    /*
+        Append number to display
+    */
+    private void appendNumber(String number) {
         String currentText = txtDisplay.getText();
-        if (currentText.equals("0") || currentText.equals("Overflow") || currentText.equals("Cannot divide by zero") ||
-            currentText.equals("Invalid Input") || currentText.equals("Error")) {
-            txtDisplay.setText(text);
+        
+        // Clear display on new input or when error occurs
+        if (newInput || isError()) {
+            txtDisplay.setText(number);
+            newInput = false;
+            resizeLabel(txtDisplay);
             return;
         }
         
-        if (currentText.equals(numCheck(num1)) && operator != 0){
-            txtDisplay.setText(text);
+        // Removes commas for manipulation
+        String unformatted = currentText.replace(",", "");
+        
+        
+        if (unformatted.equals("0") && !number.equals("0.")) {
+            txtDisplay.setText(number);
+            resizeLabel(txtDisplay);
             return;
         }
         
-        txtDisplay.setText(txtDisplay.getText() + text);
+        // Check max length (without commas and decimal point)
+        String textWithoutFormat = unformatted.replace(".", "");
+        if (textWithoutFormat.length() >= MAX_INPUT_LENGTH) {
+            return;
+        }
+        
+        // Append number
+        txtDisplay.setText(unformatted + number);
+        formatAndResize();
+        
+    }
+    
+    /*
+        Format display with commas and resize
+    */
+    private void formatAndResize() {
+        String currentText = txtDisplay.getText().replace(",", "");
+        
+        // Don't format if ending with a decimal point
+        if (currentText.endsWith(".")) {
+            resizeLabel(txtDisplay);
+            return;
+        }
+        
+        try {
+            BigDecimal value = new BigDecimal(currentText);
+            txtDisplay.setText(formatNumber(value));
+        } catch (NumberFormatException e) {
+            System.out.println("Exception on line 574");
+        }
+        
         resizeLabel(txtDisplay);
     }
-
+    
+    /*
+        Set operator and prepare for next input
+    */
     private void setOperator(char op) {
-        if (!txtDisplay.getText().isEmpty()) {
-                num1 = new BigDecimal(txtDisplay.getText());
+        if (!isError()) {
+                num1 = parseDisplay();
             }
             operator = op;
-            txtHistory.setText(numCheck(num1) + " " + operator);
-            txtDisplay.setText(numCheck(num1));
+            txtHistory.setText(formatNumber(num1) + " " + operator);
             newInput = true;
     }
     
+    /*
+        Perform calculation
+    */
     private void calculate(){
-        // if no operator selected, just display num1
+        // if no operator selected, just format current number
         if (operator == 0) {
-            if (!txtDisplay.getText().isEmpty()) {
-                num1 = new BigDecimal(txtDisplay.getText());
+            if (!isError()) {
+                num1 = parseDisplay();
+                txtDisplay.setText(formatNumber(num1));
             }
-            // Display formatting
-            txtDisplay.setText(numCheck(num1));
-            txtHistory.setText(""); // clear history
+            txtHistory.setText(""); // clear historyDisplay
             newInput = false;
+            resizeLabel(txtDisplay);
             return;
         }
 
         BigDecimal num2;
 
-        // If user typed new number, use it
-        if (newInput && !txtDisplay.getText().isEmpty()) {
-            num2 = new BigDecimal(txtDisplay.getText());
+        // Use new input or repeat last operation
+        if (newInput && !isError()) {
+            num2 = parseDisplay();
             lastNum2 = num2;
         } else {
-            // Reuse lastNum2 for repeated '='
             num2 = lastNum2;
         }
         try{
-            result = BigDecimal.ZERO;
-            switch (operator) {
-                case '+' -> result = num1.add(num2, mc);
-                case '-' -> result = num1.subtract(num2, mc);
-                case '×' -> result = num1.multiply(num2, mc);
+            result = switch (operator) {
+                case '+' -> num1.add(num2, mc);
+                case '-' -> num1.subtract(num2, mc);
+                case '×' -> num1.multiply(num2, mc);
                 case '÷' -> {
-                                if (num2.compareTo(BigDecimal.ZERO) == 0) {
-                                    txtDisplay.setText("Cannot divide by zero");
-                                    resizeLabel(txtDisplay);
-                                    return;
-                                }
-                                result = num1.divide(num2 ,mc);
-                            }   
+                    if (num2.compareTo(BigDecimal.ZERO) == 0) {
+                        txtDisplay.setText("Cannot divide by zero");
+                        txtHistory.setText(formatNumber(num1) + " ÷ " + formatNumber(num2) + " =");
+                        resizeLabel(txtDisplay);
+                        yield BigDecimal.ZERO;
+                    }
+                    yield num1.divide(num2, mc);
+                }
+                default -> BigDecimal.ZERO;
+            };
+            
+            if (!isError()) {
+                txtHistory.setText(formatNumber(num1) + " " + operator + " " + formatNumber(num2) + " =");
+                txtDisplay.setText(formatNumber(result));
+                num1 = result;
             }
-
         } catch(ArithmeticException e){
-            txtDisplay.setText(overflow);
-            resizeLabel(txtDisplay);
+            txtDisplay.setText("Error");
         }
 
-        txtHistory.setText(numCheck(num1) + " " + operator + " " + numCheck(num2) + " =");
-        txtDisplay.setText(numCheck(result));
-        num1 = result;
         newInput = false;
         resizeLabel(txtDisplay);
     }
@@ -570,35 +617,42 @@ public class StandardPanel extends javax.swing.JPanel {
     private void backspaceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backspaceBtnActionPerformed
         String text = txtDisplay.getText();
         
-        if(newInput || !txtHistory.getText().isEmpty()){
+        // Clear history if starting new input
+        if (newInput){
             txtHistory.setText("");
-            history = "";
+            historyDisplay = "";
             return;
         }
-
-        if(text.equals("Cannot divide by zero") || text.equals("Invalid Input") ||
-           text.equals("Error") || text.contains("Overflow")){
-                txtDisplay.setText("0");
-                return;
+        
+        // Reset on error
+        if (isError()) {
+            txtDisplay.setText("0");
+            resetFontSize();
+            return;
         }
-        if(text.length() > 0){
-            StringBuilder stB = new StringBuilder(text);
-            stB.deleteCharAt(text.length() - 1);
-            String updatedText = stB.toString();
-            if(updatedText.isEmpty() || updatedText.equals("-")) {
-                txtDisplay.setText("0");
-            } else {
-                txtDisplay.setText(updatedText);
-            }
-        } 
-        resizeLabel(txtDisplay);
+        
+        // Remove commas for manipulation
+        
+       String unformatted = text.replace(",","");
+       
+       if (unformatted.length() > 1) {
+           String newText = unformatted.substring(0, unformatted.length() - 1);
+           
+           if (newText.equals("-")) {
+               txtDisplay.setText("0");
+           } else {
+               txtDisplay.setText(newText);
+               formatAndResize();
+           }
+       } else {
+           txtDisplay.setText("0");
+           resetFontSize();
+       }
     }//GEN-LAST:event_backspaceBtnActionPerformed
 
     private void clearEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearEntryBtnActionPerformed
-        if (newInput) {
-            history = "";
-        }
         txtDisplay.setText("0");
+        historyDisplay = "";
         resetFontSize();
     }//GEN-LAST:event_clearEntryBtnActionPerformed
 
@@ -607,63 +661,66 @@ public class StandardPanel extends javax.swing.JPanel {
         txtHistory.setText("");
         num1 = BigDecimal.ZERO;
         operator = 0;
-        lastNum1 = BigDecimal.ZERO;
         lastNum2 = BigDecimal.ZERO;
         newInput = true;
-        isInputDisabled = false;
-        history = "";
+        historyDisplay = "";
         resetFontSize();
     }//GEN-LAST:event_clearBtnActionPerformed
 
     private void zeroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroBtnActionPerformed
-        updateDisplay("0");
+        appendNumber("0");
     }//GEN-LAST:event_zeroBtnActionPerformed
 
     private void oneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneBtnActionPerformed
-        updateDisplay("1");
+        appendNumber("1");
     }//GEN-LAST:event_oneBtnActionPerformed
 
     private void twoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoBtnActionPerformed
-        updateDisplay("2");
+        appendNumber("2");
     }//GEN-LAST:event_twoBtnActionPerformed
 
     private void threeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threeBtnActionPerformed
-        updateDisplay("3");
+        appendNumber("3");
     }//GEN-LAST:event_threeBtnActionPerformed
 
     private void fourBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fourBtnActionPerformed
-        updateDisplay("4");
+        appendNumber("4");
     }//GEN-LAST:event_fourBtnActionPerformed
 
     private void fiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiveBtnActionPerformed
-        updateDisplay("5");
+        appendNumber("5");
     }//GEN-LAST:event_fiveBtnActionPerformed
 
     private void sixBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sixBtnActionPerformed
-        updateDisplay("6");
+        appendNumber("6");
     }//GEN-LAST:event_sixBtnActionPerformed
 
     private void sevenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sevenBtnActionPerformed
-        updateDisplay("7");
+        appendNumber("7");
     }//GEN-LAST:event_sevenBtnActionPerformed
 
     private void eightBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eightBtnActionPerformed
-        updateDisplay("8");
+        appendNumber("8");
     }//GEN-LAST:event_eightBtnActionPerformed
 
     private void nineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nineBtnActionPerformed
-        updateDisplay("9");
+        appendNumber("9");
     }//GEN-LAST:event_nineBtnActionPerformed
 
     private void decimalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decimalBtnActionPerformed
-        if (!txtDisplay.getText().contains(".")) {
-            if (!newInput) {
-                txtDisplay.setText("0");
-                newInput = true;
-            }
-            txtDisplay.setText(txtDisplay.getText() + ".");
+        String currentText = txtDisplay.getText();
+        
+        if (newInput || isError()) {
+            txtDisplay.setText("0.");
+            newInput = false;
+            resizeLabel(txtDisplay);
+            return;
         }
-        resizeLabel(txtDisplay);
+        
+        if (!currentText.contains(".")) {
+            txtDisplay.setText(currentText + ".");
+            resizeLabel(txtDisplay);
+        }
     }//GEN-LAST:event_decimalBtnActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
@@ -684,114 +741,41 @@ public class StandardPanel extends javax.swing.JPanel {
 
     private void percentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_percentBtnActionPerformed
         try {
-            num1 = new BigDecimal(txtDisplay.getText());
-            result = num1.divide(new BigDecimal("100"));
-            txtDisplay.setText(numCheck(result));
-            txtHistory.setText(result.stripTrailingZeros().toPlainString() +" / 100");
+            num1 = parseDisplay();
+            result = num1.divide(new BigDecimal("100"), mc);
+            txtDisplay.setText(formatNumber(result));
+            txtHistory.setText(formatNumber(num1) + " ÷ 100");
+            newInput = false;
             resizeLabel(txtDisplay);
         } catch (NumberFormatException e){
             txtDisplay.setText("Error");
+            resizeLabel(txtDisplay);
         }
     }//GEN-LAST:event_percentBtnActionPerformed
 
     private void negateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negateBtnActionPerformed
         try{
-            num1 = new BigDecimal(txtDisplay.getText());
+            num1 = parseDisplay();
             result = num1.negate();
-            txtDisplay.setText(numCheck(result));  
+            txtDisplay.setText(formatNumber(result));
+            newInput = false;
             resizeLabel(txtDisplay);
-        }catch(NumberFormatException e){
+        }catch(Exception e){
             txtDisplay.setText("Error");
-        } catch (ArithmeticException e) {
-            txtDisplay.setText("Overflow");
             resizeLabel(txtDisplay);
         }
     }//GEN-LAST:event_negateBtnActionPerformed
 
     private void reciprocalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reciprocalBtnActionPerformed
-        try {
-            if (newInput) {
-                num1 = new BigDecimal(txtDisplay.getText());
-                history = "";
-                lastNum1 = num1;
-            }
-            if (txtDisplay.getText().equals("0")){
-                txtHistory.setText("1/("+txtDisplay.getText()+")");
-                txtDisplay.setText("Cannot divide by zero");
-                return;
-            }
-            
-            BigDecimal reciprocal = BigDecimal.ONE;
-            result = reciprocal.divide(num1, mc);
-            txtDisplay.setText(numCheck(result));
-            if (history.isEmpty()) {
-                history = reciprocal+"/("+lastNum1+")";
-            } else {
-                history = reciprocal+"/(" + history + ")";
-            }
-            txtHistory.setText(history);
-            
-            num1 = result;
-            newInput = false;
-            resizeLabel(txtDisplay);
-        } catch(ArithmeticException e){
-            txtDisplay.setText(overflow);
-            resizeLabel(txtDisplay);
-        }
+        // WIP
     }//GEN-LAST:event_reciprocalBtnActionPerformed
     
     private void xSquaredBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xSquaredBtnActionPerformed
-        try {
-            if (newInput) {
-                num1 = new BigDecimal(txtDisplay.getText());
-                history = "";
-                lastNum1 = num1;
-            }
-            
-            result = num1.pow(2, mc);
-            txtDisplay.setText(numCheck(result));
-
-            if (history.isEmpty()) {
-                history = "sqr(" + lastNum1 + ")";
-            } else {
-                history = "sqr(" + history + ")";
-            }
-            txtHistory.setText(history);
-            
-            newInput = false;
-            num1 = result;
-            resizeLabel(txtDisplay);
-        } catch(ArithmeticException e){
-            txtDisplay.setText(overflow);
-            resizeLabel(txtDisplay);
-        }
+        // WIP
     }//GEN-LAST:event_xSquaredBtnActionPerformed
 
     private void squarerootofXBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_squarerootofXBtnActionPerformed
-        try{
-            if (newInput) {
-                num1 = new BigDecimal(txtDisplay.getText());
-                history = "";
-                lastNum1 = num1;
-            }
-            
-            result = num1.sqrt(mc);
-            txtDisplay.setText(numCheck(result));
-            
-            if (history.isEmpty()) {
-                history = "√(" + lastNum1 + ")";
-            } else {
-                history = "√(" + history + ")";
-            }
-            txtHistory.setText(history);
-            
-            newInput = false;
-            num1 = result;
-            resizeLabel(txtDisplay);
-        } catch(ArithmeticException e){
-            txtDisplay.setText(overflow);
-            resizeLabel(txtDisplay);
-        }
+        // WIP
     }//GEN-LAST:event_squarerootofXBtnActionPerformed
 
     private void equalToBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_equalToBtnActionPerformed
@@ -801,9 +785,8 @@ public class StandardPanel extends javax.swing.JPanel {
     private void resizeLabel(JLabel label){
         String text = label.getText();
         if (text.isEmpty()) return;
-
-        // Start with a large font size
-        int fontSize = 36;
+        
+        int fontSize = 36; // Default Font Size
         Font font = label.getFont().deriveFont((float) fontSize);
         FontMetrics metrics = label.getFontMetrics(font);
 

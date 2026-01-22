@@ -16,9 +16,9 @@ import javax.swing.JLabel;
  *
  * @author seany
  */
-public class SimpleCalculator extends javax.swing.JFrame {
+public class DEPRECATED_SimpleCalculator extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SimpleCalculator.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DEPRECATED_SimpleCalculator.class.getName());
     
     private final NumberFormat numberFormat = NumberFormat.getNumberInstance();
     
@@ -37,7 +37,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
     /**
      * Creates new form SimpleCalculator
      */
-    public SimpleCalculator() {
+    public DEPRECATED_SimpleCalculator() {
         initComponents();
     }
 
@@ -863,7 +863,7 @@ public class SimpleCalculator extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new SimpleCalculator().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new DEPRECATED_SimpleCalculator().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
