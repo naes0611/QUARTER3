@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 
 /**
  * To do list
- * Fix Decimal Bug, cannot input 0 after decimal point
  * Fix Comments
  * Add Unary Operations
  * Add Memory overflow protection
@@ -23,7 +22,8 @@ import javax.swing.JLabel;
 
 
 /**
- *
+ * Calculator
+ * Features: Scientific notation,
  * @author seany
  */
 public class StandardPanel extends javax.swing.JPanel {
@@ -39,6 +39,7 @@ public class StandardPanel extends javax.swing.JPanel {
     private char operator = 0;
     private final MathContext mc = new MathContext(16, RoundingMode.HALF_UP);
     private final int MAX_INPUT_LENGTH = 16;
+    private final int MAX_DISPLAY_DIGITS = 16;
     private boolean newInput = true;
     private boolean justCalculated = false;
     
@@ -452,20 +453,42 @@ public class StandardPanel extends javax.swing.JPanel {
         add(ButtonsPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 340, 290));
     }// </editor-fold>//GEN-END:initComponents
     
+    private int countDigits(String formattedNumber) {
+        String digitsOnly = formattedNumber.replace(",", "")
+                                           .replace(".", "")
+                                           .replace("-", "")
+                                           .replace("E", "")
+                                           .replace("e", "")
+                                           .replace("+", "");
+        return digitsOnly.length();
+    }
+    
     /*
         Format BigDecimal into string for display (removes trailing zeros, and adds commas)
     */
-    private String formatNumber(BigDecimal number) {
-        // Removes unnecessary zeros
-        BigDecimal strippedNumber = number.stripTrailingZeros();
+    private String formatNumber(BigDecimal value) {
+        if (value == null) return "0";
         
-        // If it's a whole number, format with commas
+        // Removes unnecessary zeros
+        BigDecimal strippedNumber = value.stripTrailingZeros();
+        
+        // Format normal first
+        String normalFormat;
         if(strippedNumber.scale() <= 0) {
-            return String.format("%,d", strippedNumber.toBigInteger());
+            normalFormat = String.format("%,d", strippedNumber.toBigInteger());
+        } else {
+            // Otherwise use decimal format
+            normalFormat = decimalFormat.format(value);
         }
         
-        // Otherwise use decimal format
-        return decimalFormat.format(number);
+        // Check if digit count exceeds MAX_DISPLAY_DIGITS
+        int digitCount = countDigits(normalFormat);
+        // Use scientific notation if digit count exceeds MAX_DISPLAY_DIGITS
+        if (digitCount > MAX_DISPLAY_DIGITS) {
+            return value.toString();
+        }
+        
+        return normalFormat;
     }
     
     /*
@@ -488,6 +511,7 @@ public class StandardPanel extends javax.swing.JPanel {
         String text = txtDisplay.getText();
         return text.equals("Cannot divide by zero") ||
             text.equals("Invalid input") ||
+            text.equals("Overflow") ||
             text.equals("Error");
     }
     
@@ -543,7 +567,6 @@ public class StandardPanel extends javax.swing.JPanel {
             BigDecimal value = new BigDecimal(currentText);
             txtDisplay.setText(formatNumber(value));
         } catch (NumberFormatException e) {
-            System.out.println("Exception on line 546");
         }
         
         resizeLabel(txtDisplay);
@@ -593,9 +616,6 @@ public class StandardPanel extends javax.swing.JPanel {
             lastNum2 = num2;
         } else {
             num2 = lastNum2;
-            //
-            System.out.println("num1 is = " + num1);
-            System.out.println("result is = " +result);
         }
         try{
             switch (operator) {
@@ -620,12 +640,16 @@ public class StandardPanel extends javax.swing.JPanel {
             num1 = result;
             
         } catch(ArithmeticException e){
-            txtDisplay.setText("Error");
+            txtDisplay.setText("Overflow");
         }
 
         newInput = true;
         justCalculated = true;
         resizeLabel(txtDisplay);
+    }
+    
+    private void performUnaryOperation() {
+        
     }
     
     private void backspaceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backspaceBtnActionPerformed
@@ -765,6 +789,8 @@ public class StandardPanel extends javax.swing.JPanel {
         } catch (NumberFormatException e){
             txtDisplay.setText("Error");
             resizeLabel(txtDisplay);
+        } catch (ArithmeticException e) {
+            txtDisplay.setText("Overflow");
         }
     }//GEN-LAST:event_percentBtnActionPerformed
 
@@ -772,14 +798,18 @@ public class StandardPanel extends javax.swing.JPanel {
         if (isError()) {
             return;
         }
-        BigDecimal currentNum = parseDisplay();
-        BigDecimal negateNum = currentNum.negate();
-        txtDisplay.setText(formatNumber(negateNum));
-        if (operator != 0) {
-            txtHistory.setText(currentNum + " " + operator + " negate( " + formatNumber(currentNum) + " )");
+        try {
+            BigDecimal currentNum = parseDisplay();
+            BigDecimal negateNum = currentNum.negate();
+            txtDisplay.setText(formatNumber(negateNum));
+            if (operator != 0) {
+                txtHistory.setText(currentNum + " " + operator + " negate( " + formatNumber(currentNum) + " )");
+            }
+            newInput = false;
+            resizeLabel(txtDisplay);
+        } catch (ArithmeticException e) {
+            txtDisplay.setText("Overflow");
         }
-        newInput = false;
-        resizeLabel(txtDisplay);
     }//GEN-LAST:event_negateBtnActionPerformed
 
     private void reciprocalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reciprocalBtnActionPerformed
