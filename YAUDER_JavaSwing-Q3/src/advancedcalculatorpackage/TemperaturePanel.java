@@ -431,10 +431,10 @@ public class TemperaturePanel extends javax.swing.JPanel {
         Updates conversion and displays result
     */
     private void updateConversion(){
-            double num = parseDisplay();
-            double result = convert(num, getActiveUnit(), getInactiveUnit());
-            getInactiveDisplay().setText(formatNumber(result));
-            resizeLabel(getInactiveDisplay());
+        double num = parseDisplay();
+        double result = convert(num, getActiveUnit(), getInactiveUnit());
+        getInactiveDisplay().setText(formatNumber(result));
+        resizeLabel(getInactiveDisplay());
     }
     
     /*
@@ -487,6 +487,7 @@ public class TemperaturePanel extends javax.swing.JPanel {
             String newText = currentText.substring(0, currentText.length() -1);
             currentDisplay.setText(newText);
         } else {
+            
             currentDisplay.setText("0");
         }
         formatAndUpdate();
