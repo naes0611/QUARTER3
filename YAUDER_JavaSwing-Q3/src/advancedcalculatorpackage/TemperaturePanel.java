@@ -20,7 +20,7 @@ public class TemperaturePanel extends javax.swing.JPanel {
     private final Font semilightFont = new Font("Segoe UI Semilight", Font.PLAIN, 36);
     
     // Limits
-    private final int MAX_DIGIT_INPUT = 16;
+    private final int MAX_DIGIT_INPUT = 15;
     
     // For Conversion
     private final DecimalFormat decimalFormat = new DecimalFormat("#,##0.############");;
@@ -360,16 +360,6 @@ public class TemperaturePanel extends javax.swing.JPanel {
     private void initLabelListeners(){
         unitComboBox1.addActionListener(e -> updateConversion());
         unitComboBox2.addActionListener(e -> updateConversion());
-    }
-    
-    /**
-     * 
-     */
-    private int countDigits (String formattedNumber) {
-        String digitsOnly = formattedNumber.replace(",", "")
-                                           .replace(".", "")
-                                           .replace("-", "");
-        return digitsOnly.length();
     }
     
     /*
