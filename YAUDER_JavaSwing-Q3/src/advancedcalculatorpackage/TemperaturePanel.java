@@ -560,8 +560,6 @@ public class TemperaturePanel extends javax.swing.JPanel {
         JLabel currentDisplay = getActiveDisplay();
         String currentText = currentDisplay.getText();
         
-        if (currentText.startsWith("-")) return;
-        
         if (currentText.equals("0") || currentText.endsWith(".")) {
             currentDisplay.setText("-"+currentText);
             return;
