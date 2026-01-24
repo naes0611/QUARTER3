@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package performancetasks.advancedcalculatorpackage;
+package advancedcalculatorpackage;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -22,8 +22,7 @@ import javax.swing.JScrollPane;
 
 
 /**
- * Calculator
- * Features: Scientific notation,
+ * Standard Calculator
  * @author seany
  */
 public class StandardPanel extends javax.swing.JPanel {

@@ -5,7 +5,7 @@
 package performancetasks;
 
 import javacomponents_part1_activities.*;
-import performancetasks.advancedcalculatorpackage.AdvancedCalculatorV2;
+import advancedcalculatorpackage.AdvancedCalculatorV2;
 /**
  *
  * @author seany

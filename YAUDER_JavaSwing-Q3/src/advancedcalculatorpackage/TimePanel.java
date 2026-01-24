@@ -2,18 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package performancetasks.advancedcalculatorpackage;
+package advancedcalculatorpackage;
 
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
-import java.text.NumberFormat;
+import java.text.DecimalFormat;
 import javax.swing.JLabel;
 
 /**
@@ -24,18 +16,15 @@ public class TimePanel extends javax.swing.JPanel {
     // For Display
     private final Font semiboldFont = new Font("Segoe UI Semibold", Font.PLAIN, 36);
     private final Font semilightFont = new Font("Segoe UI Semilight", Font.PLAIN, 36);
-    private static boolean enabledDisplay = true; // enabled = txtDisplay1   disabled = txtDisplay2;
-    //For Conversion
-    private final MathContext mc;
-    private final NumberFormat numberFormat = NumberFormat.getNumberInstance();
     
-    double num;
-    private boolean newInput = true;
-    private double result = 0;
-    private UnitOfTime fromUnit;
-    private UnitOfTime toUnit;
-    private int from;
-    private int to;
+    // Limits
+    private final int MAX_DIGIT_INPUT = 15;
+    
+    // For Conversion
+    private final DecimalFormat decimalFormat = new DecimalFormat("#,##0.############");
+    
+    // Tracks Active Display (true = display1, false = display2)
+    private static boolean activeDisplay = true;
     
     private enum UnitOfTime{
         MICROSECONDS,
@@ -53,9 +42,7 @@ public class TimePanel extends javax.swing.JPanel {
      * Creates new form TimePanel
      */
     public TimePanel() {
-        this.mc = new MathContext(16, RoundingMode.HALF_UP);
         initComponents();
-        initLabelListeners();
     }
     
     /**
@@ -318,228 +305,86 @@ public class TimePanel extends javax.swing.JPanel {
         add(ButtonsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 340, 210));
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    private void initLabelListeners(){
-//        JLabel[] displayLabels = {
-//            txtDisplay1,
-//            txtDisplay2
-//        };
-//        from = unitComboBox1.getSelectedIndex();
-//        to = unitComboBox2.getSelectedIndex();
-//        
-//        fromUnit = UnitOfTime.values()[from];
-//        toUnit = UnitOfTime.values()[to];
-//        
-//        for(int i = 0; i < displayLabels.length; i++){
-//            JLabel label = displayLabels[i];
-//            label.addPropertyChangeListener((PropertyChangeEvent evt) -> {
-//                if (enabledDisplay) {
-//                    double num1 = Double.parseDouble(txtDisplay1.getText());
-//                    txtDisplay2.setText(String.valueOf(convertTime(num1, fromUnit, toUnit)));
-//                } else {
-//                    double num2 = Double.parseDouble(txtDisplay2.getText());
-//                }
-//            });
-//        }
-    unitComboBox1.addActionListener(e -> updateConversion());
-    unitComboBox2.addActionListener(e -> updateConversion());
-//    addDocumentListener(txtDisplay1);
-//    addDocumentListener(txtDisplay2);
+    private JLabel getActiveDisplay() {
+        return activeDisplay ? txtDisplay1 : txtDisplay2;
     }
     
-//    private void addDocumentListener(JTextField textField) {
-//    textField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-//        public void insertUpdate(javax.swing.event.DocumentEvent e) {
-//            updateConversion();
-//        }
-//        public void removeUpdate(javax.swing.event.DocumentEvent e) {
-//            updateConversion();
-//        }
-//        public void changedUpdate(javax.swing.event.DocumentEvent e) {
-//            updateConversion();
-//        }
-//    });
-//}
-    
-    private JLabel getActiveDisplay(){
-        return enabledDisplay ? txtDisplay1 : txtDisplay2;
-    }
-    
-    private void updateConversion(){
-        if (enabledDisplay) {
-            num = Double.parseDouble(txtDisplay1.getText());
-        } else {
-            num = Double.parseDouble(txtDisplay2.getText());
-        }
-        
-        from = unitComboBox1.getSelectedIndex();
-        to = unitComboBox2.getSelectedIndex();
-        
-        fromUnit = UnitOfTime.values()[from];
-        toUnit = UnitOfTime.values()[to];
-        
-        result = convertTime(num, fromUnit, toUnit);
-        System.out.println("result "+ result);
-        String formattedResult = numberFormat.format(result);
-        System.out.println("formattedResult " + formattedResult);
-        if(enabledDisplay){
-            txtDisplay2.setText(String.valueOf(result));
-        } else {
-            txtDisplay1.setText(String.valueOf(result));
-        }
-    }
-    
-    private void displayLabel(String text) {
-        JLabel currentDisplay = getActiveDisplay();
-        String currentText = getActiveDisplay().getText();
-        if (currentText.equals("0")){
-            currentDisplay.setText(text);
-            return;
-        }
-        currentDisplay.setText(currentText + text);
-    }
-    
-    public double convertTime(double value, UnitOfTime fromUnit, UnitOfTime toUnit) {
-        // Convert from the source unit to microseconds
-        
-        double seconds = toSeconds(value, fromUnit);
-        System.out.println(seconds);
-        
-        // Convert from microseconds to the target unit
-        return fromSeconds(seconds, toUnit);
-    }
-
-    private double toSeconds(double value, UnitOfTime unit) {
-        switch (unit) {
-            case SECONDS -> {
-                return value;
-            }
-            case MINUTES -> {
-                return value * 60;
-            }
-            case HOURS -> {
-                return value * 3_600;
-            }
-            case DAYS -> {
-                return value * 86_400;
-            }
-            case WEEKS -> {
-                return value * 604_800;
-            }
-            case YEARS -> {
-                return value * 31_557_600;
-            }
-            default -> { return 0; }
-        }
-    }
-
-    private double fromSeconds(double value, UnitOfTime unit) {
-        switch (unit) {
-            case SECONDS -> {
-                return value;
-            }
-            case MINUTES -> {
-                return value / (60);
-            }
-            case HOURS -> {
-                return value / (60 * 60);
-            }
-            case DAYS -> {
-                return value / (24 * 60 * 60);
-            }
-            case WEEKS -> {
-                return value / (7 * 24 * 60 * 60); 
-            }
-            case YEARS -> {
-                return value / (365.25 * 24 * 60 * 60);
-            }
-            default -> { return 0; }
-        }
+    private JLabel getInactiveDisplay() {
+        return activeDisplay ? txtDisplay2 : txtDisplay1;
     }
     
     private void backspaceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backspaceBtnActionPerformed
-        updateConversion();
+        
     }//GEN-LAST:event_backspaceBtnActionPerformed
     
     private void clearEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearEntryBtnActionPerformed
-        if(enabledDisplay) {
-            txtDisplay1.setText("0");
-        } else {
-            txtDisplay2.setText("0");
-        }
+        
     }//GEN-LAST:event_clearEntryBtnActionPerformed
 
     private void decimalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decimalBtnActionPerformed
-        JLabel currentDisplay = getActiveDisplay();
-        String currentText = getActiveDisplay().getText();
         
-        if (currentText.contains(".")) return;
-        
-        currentDisplay.setText(currentText + ".");
     }//GEN-LAST:event_decimalBtnActionPerformed
 
     private void zeroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroBtnActionPerformed
-        displayLabel("0");
+        
     }//GEN-LAST:event_zeroBtnActionPerformed
 
     private void oneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneBtnActionPerformed
-        displayLabel("1");
+        
     }//GEN-LAST:event_oneBtnActionPerformed
 
     private void twoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoBtnActionPerformed
-        displayLabel("2");
+        
     }//GEN-LAST:event_twoBtnActionPerformed
 
     private void threeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threeBtnActionPerformed
-        displayLabel("3");
+        
     }//GEN-LAST:event_threeBtnActionPerformed
 
     private void fourBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fourBtnActionPerformed
-        displayLabel("4");
+        
     }//GEN-LAST:event_fourBtnActionPerformed
 
     private void fiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiveBtnActionPerformed
-        displayLabel("5");
+        
     }//GEN-LAST:event_fiveBtnActionPerformed
 
     private void sixBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sixBtnActionPerformed
-        displayLabel("6");
+        
     }//GEN-LAST:event_sixBtnActionPerformed
 
     private void sevenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sevenBtnActionPerformed
-        displayLabel("7");
+        
     }//GEN-LAST:event_sevenBtnActionPerformed
 
     private void eightBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eightBtnActionPerformed
-        displayLabel("8");
+        
     }//GEN-LAST:event_eightBtnActionPerformed
 
     private void nineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nineBtnActionPerformed
-        displayLabel("9");
+        
     }//GEN-LAST:event_nineBtnActionPerformed
 
     private void txtDisplay1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDisplay1MouseClicked
-        if (!txtDisplay1.getFont().equals(semiboldFont)){
-            setEnabledDisplay(true);
-        }
+        setEnabledDisplay(true);
     }//GEN-LAST:event_txtDisplay1MouseClicked
 
     private void txtDisplay2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDisplay2MouseClicked
-        if (!txtDisplay2.getFont().equals(semiboldFont)){
-            setEnabledDisplay(false);
-        }
+        setEnabledDisplay(false);
     }//GEN-LAST:event_txtDisplay2MouseClicked
     
-    private void setEnabledDisplay(boolean display){
-        enabledDisplay = display; // If true, display1. else, display2
-        if (enabledDisplay){
+    private void setEnabledDisplay(boolean display1){
+        if (activeDisplay == display1) return;
+        
+        activeDisplay = display1;
+        
+        if (activeDisplay){
             txtDisplay1.setFont(semiboldFont);
             txtDisplay2.setFont(semilightFont);
         } else {
             txtDisplay2.setFont(semiboldFont);
             txtDisplay1.setFont(semilightFont);
         }
-        updateConversion();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

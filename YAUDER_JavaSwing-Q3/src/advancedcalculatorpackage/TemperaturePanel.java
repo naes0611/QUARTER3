@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 import javax.swing.JLabel;
 
 /**
- *
+ * Temperature Converter
  * @author seany
  */
 public class TemperaturePanel extends javax.swing.JPanel {
