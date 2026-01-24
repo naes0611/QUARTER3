@@ -20,8 +20,7 @@ public class TemperaturePanel extends javax.swing.JPanel {
     private final Font semilightFont = new Font("Segoe UI Semilight", Font.PLAIN, 36);
     
     // Limits
-    private final int MAX_INPUT_LENGTH = 16;
-    private final int MAX_DISPLAY_DIGITS = 16;
+    private final int MAX_DIGIT_INPUT = 16;
     
     // For Conversion
     private final DecimalFormat decimalFormat = new DecimalFormat("#,##0.############");;
@@ -77,6 +76,8 @@ public class TemperaturePanel extends javax.swing.JPanel {
      */
     public TemperaturePanel() {
         initComponents();
+        initLabelListeners();
+        updateConversion();
     }
     
     /**
@@ -354,6 +355,58 @@ public class TemperaturePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     /*
+        Initialize event listeners for unit combo boxes
+    */
+    private void initLabelListeners(){
+        unitComboBox1.addActionListener(e -> updateConversion());
+        unitComboBox2.addActionListener(e -> updateConversion());
+    }
+    
+    /**
+     * 
+     */
+    private int countDigits (String formattedNumber) {
+        String digitsOnly = formattedNumber.replace(",", "")
+                                           .replace(".", "")
+                                           .replace("-", "");
+        return digitsOnly.length();
+    }
+    
+    /*
+        Convert temperature between units
+    */
+    private double convert(double value, UnitOfTemperature unitFrom, UnitOfTemperature unitTo) {
+        double celsius = unitFrom.toCelsius(value);
+        return unitTo.fromCelsius(celsius);
+    }
+    
+    /*
+        Format numbers with commas and remove unnecessary decimals
+    */
+    private String formatNumber(double value){
+        String formatted = decimalFormat.format(value);
+        
+        // If it is a whole number, return without decimals
+        if (value == Math.floor(value) && !Double.isInfinite(value)) {
+            return String.format("%,d", (long) value);
+        }
+        
+        return formatted;
+    }
+    
+    /*
+        Parses number string 
+    */
+    private double parseNumber(String text) {
+        try {
+            // Removes commas before parsing
+            return Double.parseDouble(text.replace(",", ""));
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+    
+    /*
         Get current active display
     */
     private JLabel getActiveDisplay(){
@@ -383,52 +436,122 @@ public class TemperaturePanel extends javax.swing.JPanel {
         return UnitOfTemperature.values()[index];
     }
     
-    private void backspaceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backspaceBtnActionPerformed
+    /*
+        Updates conversion and displays result
+    */
+    private void updateConversion(){
+            double num = parseNumber(getActiveDisplay().getText());
+            double result = convert(num, getActiveUnit(), getInactiveUnit());
+            getInactiveDisplay().setText(formatNumber(result));
+            resizeLabel(getInactiveDisplay());
+    }
+    
+    /*
+        Format active label and update conversion
+    */
+    private void formatAndUpdate() {
+        JLabel currentDisplay = getActiveDisplay();
+        String currentText = currentDisplay.getText().replace(",", "");
         
+        if (!currentText.contains(".") && !currentText.isEmpty()) {
+            currentDisplay.setText(formatNumber(parseNumber(currentText)));
+	}
+        resizeLabel(getActiveDisplay());
+        resizeLabel(getInactiveDisplay());
+        updateConversion();
+    }
+    
+    /*
+        Append number to active display
+    */
+    private void appendNumber(String number) {
+        JLabel currentDisplay = getActiveDisplay();
+        String currentText = currentDisplay.getText().replace(",", "");
+        
+        if (currentText.equals("0")) {
+            currentDisplay.setText(number);
+            formatAndUpdate();
+            return;
+        
+        }
+        
+        // Checks text length without thousand separator, decimal, and minus
+        String textWithoutFormat = currentText.replace(".", "").replace("-", "");
+        
+        if (textWithoutFormat.length() > MAX_DIGIT_INPUT) {
+            return;
+        }
+        
+        if (currentText.contains(".") || !currentText.equals("0")) {
+            currentDisplay.setText(currentText + number);
+            formatAndUpdate();
+        }
+    }
+    
+    private void backspaceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backspaceBtnActionPerformed
+        JLabel currentDisplay = getActiveDisplay();
+        String currentText = currentDisplay.getText().replace(",", "");
+        
+        if (currentText.length() > 1) {
+            String newText = currentText.substring(0, currentText.length() -1);
+            currentDisplay.setText(newText);
+        } else {
+            currentDisplay.setText("0");
+        }
+        formatAndUpdate();
     }//GEN-LAST:event_backspaceBtnActionPerformed
     
     private void clearEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearEntryBtnActionPerformed
-        
+        getActiveDisplay().setText("0");
+        resetFontSize(getActiveDisplay());
+        formatAndUpdate();
     }//GEN-LAST:event_clearEntryBtnActionPerformed
 
     private void decimalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decimalBtnActionPerformed
+        JLabel currentDisplay = getActiveDisplay();
+        String currentText = currentDisplay.getText().replace(",", "");
+         
+        if (currentText.contains(".")) return;
         
+        currentDisplay.setText(currentText + ".");
+        resizeLabel(currentDisplay);
+        updateConversion();
     }//GEN-LAST:event_decimalBtnActionPerformed
 
     private void zeroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroBtnActionPerformed
-
+        appendNumber("0");
     }//GEN-LAST:event_zeroBtnActionPerformed
 
     private void twoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoBtnActionPerformed
-
+        appendNumber("2");
     }//GEN-LAST:event_twoBtnActionPerformed
 
     private void threeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threeBtnActionPerformed
-        
+        appendNumber("3");
     }//GEN-LAST:event_threeBtnActionPerformed
 
     private void fourBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fourBtnActionPerformed
-        
+        appendNumber("4");
     }//GEN-LAST:event_fourBtnActionPerformed
 
     private void fiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiveBtnActionPerformed
-        
+        appendNumber("5");
     }//GEN-LAST:event_fiveBtnActionPerformed
 
     private void sixBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sixBtnActionPerformed
-        
+        appendNumber("6");
     }//GEN-LAST:event_sixBtnActionPerformed
 
     private void sevenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sevenBtnActionPerformed
-        
+        appendNumber("7");
     }//GEN-LAST:event_sevenBtnActionPerformed
 
     private void eightBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eightBtnActionPerformed
-        
+        appendNumber("8");
     }//GEN-LAST:event_eightBtnActionPerformed
 
     private void nineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nineBtnActionPerformed
-        
+        appendNumber("9");
     }//GEN-LAST:event_nineBtnActionPerformed
 
     private void txtDisplay1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDisplay1MouseClicked
@@ -440,11 +563,11 @@ public class TemperaturePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_txtDisplay2MouseClicked
 
     private void oneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneBtnActionPerformed
-        
+        appendNumber("1");
     }//GEN-LAST:event_oneBtnActionPerformed
 
     private void negateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negateBtnActionPerformed
-        
+         
     }//GEN-LAST:event_negateBtnActionPerformed
     
     /*
@@ -464,6 +587,7 @@ public class TemperaturePanel extends javax.swing.JPanel {
         }
         resizeLabel(getActiveDisplay());
         resizeLabel(getInactiveDisplay());
+        updateConversion();
     }
     
     private void resizeLabel(JLabel label){
