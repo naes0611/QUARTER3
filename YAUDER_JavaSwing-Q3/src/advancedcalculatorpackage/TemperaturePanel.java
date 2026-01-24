@@ -560,11 +560,6 @@ public class TemperaturePanel extends javax.swing.JPanel {
         JLabel currentDisplay = getActiveDisplay();
         String currentText = currentDisplay.getText();
         
-        if (currentText.equals("0") || currentText.endsWith(".")) {
-            currentDisplay.setText("-"+currentText);
-            return;
-        }
-        
         double negateNum = -parseNumber(currentText);
         currentDisplay.setText(formatNumber(negateNum));
         formatAndUpdate();
