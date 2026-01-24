@@ -387,10 +387,11 @@ public class TemperaturePanel extends javax.swing.JPanel {
     /*
         Parses number string 
     */
-    private double parseNumber(String text) {
+    private double parseDisplay() {
         try {
             // Removes commas before parsing
-            return Double.parseDouble(text.replace(",", ""));
+            String text = getActiveDisplay().getText().replace(",", "");
+            return Double.parseDouble(text);
         } catch (NumberFormatException e) {
             return 0;
         }
@@ -430,7 +431,7 @@ public class TemperaturePanel extends javax.swing.JPanel {
         Updates conversion and displays result
     */
     private void updateConversion(){
-            double num = parseNumber(getActiveDisplay().getText());
+            double num = parseDisplay();
             double result = convert(num, getActiveUnit(), getInactiveUnit());
             getInactiveDisplay().setText(formatNumber(result));
             resizeLabel(getInactiveDisplay());
@@ -444,7 +445,7 @@ public class TemperaturePanel extends javax.swing.JPanel {
         String currentText = currentDisplay.getText().replace(",", "");
         
         if (!currentText.contains(".") && !currentText.isEmpty()) {
-            currentDisplay.setText(formatNumber(parseNumber(currentText)));
+            currentDisplay.setText(formatNumber(parseDisplay()));
 	}
         resizeLabel(getActiveDisplay());
         resizeLabel(getInactiveDisplay());
@@ -560,8 +561,35 @@ public class TemperaturePanel extends javax.swing.JPanel {
         JLabel currentDisplay = getActiveDisplay();
         String currentText = currentDisplay.getText();
         
-        double negateNum = -parseNumber(currentText);
-        currentDisplay.setText(formatNumber(negateNum));
+        if (currentText.startsWith("-")) {
+            String newText = currentText.substring(1);
+            currentDisplay.setText(newText);
+
+            if (newText.endsWith(".")) {
+                resizeLabel(currentDisplay);
+                updateConversion();
+            } else {
+                formatAndUpdate();
+            }
+            return;
+        }
+        
+        if (currentText.equals("0")) {
+            currentDisplay.setText("-" + currentText);
+            return;
+        }
+        
+        if (currentText.endsWith(".")) {
+            currentDisplay.setText("-" + currentText);
+            resizeLabel(currentDisplay);
+            updateConversion();
+            return;
+        }
+
+        // Handle regular numbers
+        double num = parseDisplay();
+        num *= -1;
+        currentDisplay.setText(formatNumber(num));
         formatAndUpdate();
     }//GEN-LAST:event_negateBtnActionPerformed
     
