@@ -468,7 +468,7 @@ public class TemperaturePanel extends javax.swing.JPanel {
         // Checks text length without thousand separator, decimal, and minus
         String textWithoutFormat = currentText.replace(".", "").replace("-", "");
         
-        if (textWithoutFormat.length() > MAX_DIGIT_INPUT) {
+        if (textWithoutFormat.length() >= MAX_DIGIT_INPUT) {
             return;
         }
         
@@ -557,7 +557,19 @@ public class TemperaturePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_oneBtnActionPerformed
 
     private void negateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_negateBtnActionPerformed
-         
+        JLabel currentDisplay = getActiveDisplay();
+        String currentText = currentDisplay.getText();
+        
+        if (currentText.startsWith("-")) return;
+        
+        if (currentText.equals("0") || currentText.endsWith(".")) {
+            currentDisplay.setText("-"+currentText);
+            return;
+        }
+        
+        double negateNum = -parseNumber(currentText);
+        currentDisplay.setText(formatNumber(negateNum));
+        formatAndUpdate();
     }//GEN-LAST:event_negateBtnActionPerformed
     
     /*
