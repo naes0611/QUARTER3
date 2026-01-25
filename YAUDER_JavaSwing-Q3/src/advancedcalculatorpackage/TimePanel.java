@@ -4,6 +4,7 @@
  */
 package advancedcalculatorpackage;
 
+import advancedcalculatorpackage.Units.UnitOfTime;
 import java.awt.Font;
 import java.text.DecimalFormat;
 import javax.swing.JLabel;
@@ -12,126 +13,8 @@ import javax.swing.JLabel;
  *
  * @author seany
  */
-public class TimePanel extends javax.swing.JPanel {
-    // For Display
-    private final Font semiboldFont = new Font("Segoe UI Semibold", Font.PLAIN, 36);
-    private final Font semilightFont = new Font("Segoe UI Semilight", Font.PLAIN, 36);
-    
-    // Limits
-    private final int MAX_DIGIT_INPUT = 15;
-    
-    // For Conversion
-    private final DecimalFormat decimalFormat = new DecimalFormat("#,##0.############");
-    
-    // Tracks Active Display (true = display1, false = display2)
-    private static boolean activeDisplay = true;
-    
-    /**
-     * 
-     */
-    private enum UnitOfTime{
-        MICROSECONDS {
-            @Override
-            public double toSeconds(double value) {
-                return value / 1_000_000;
-            }
+public class TimePanel extends javax.swing.JPanel implements converter {
 
-            @Override
-            public double fromSeconds(double seconds) {
-                return seconds * 1_000_000;
-            }
-            
-        },
-        MILLISECONDS {
-            @Override
-            public double toSeconds(double value) {
-                return value / 1_000;
-            }
-
-            @Override
-            public double fromSeconds(double seconds) {
-                return seconds * 1_000;
-            }
-            
-        },
-        SECONDS {
-            @Override
-            public double toSeconds(double value) {
-                return value;
-            }
-
-            @Override
-            public double fromSeconds(double seconds) {
-                return seconds;
-            }
-            
-        },
-        MINUTES {
-            @Override
-            public double toSeconds(double value) {
-                return value * 60;
-            }
-
-            @Override
-            public double fromSeconds(double seconds) {
-                return seconds / 60;
-            }
-            
-        },
-        HOURS {
-            @Override
-            public double toSeconds(double value) {
-                return value * 3_600;
-            }
-
-            @Override
-            public double fromSeconds(double seconds) {
-                return seconds / 3_600;
-            }
-            
-        },
-        DAYS {
-            @Override
-            public double toSeconds(double value) {
-                return value * 86_400;
-            }
-
-            @Override
-            public double fromSeconds(double seconds) {
-                return seconds * 86_400;
-            }
-            
-        },
-        WEEKS {
-            @Override
-            public double toSeconds(double value) {
-                return value * 604_800;
-            }
-
-            @Override
-            public double fromSeconds(double seconds) {
-                return seconds / 604_800;
-            }
-            
-        },
-        YEARS {
-            @Override
-            public double toSeconds(double value) {
-                return value * 31_557_600;
-            }
-
-            @Override
-            public double fromSeconds(double seconds) {
-                return seconds / 31_557_600;
-            }
-            
-        };
-        
-        public abstract double toSeconds(double value);
-        public abstract double fromSeconds(double seconds);
-    };
-    
-    
     /**
      * Creates new form TimePanel
      */
