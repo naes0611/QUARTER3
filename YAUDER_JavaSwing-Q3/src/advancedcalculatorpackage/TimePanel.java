@@ -26,6 +26,9 @@ public class TimePanel extends javax.swing.JPanel {
     // Tracks Active Display (true = display1, false = display2)
     private static boolean activeDisplay = true;
     
+    /**
+     * 
+     */
     private enum UnitOfTime{
         MICROSECONDS,
         MILLISECONDS,
@@ -304,13 +307,23 @@ public class TimePanel extends javax.swing.JPanel {
 
         add(ButtonsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 340, 210));
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private JLabel getActiveDisplay() {
         return activeDisplay ? txtDisplay1 : txtDisplay2;
     }
     
     private JLabel getInactiveDisplay() {
         return activeDisplay ? txtDisplay2 : txtDisplay1;
+    }
+    
+    private UnitOfTime getActiveUnit() {
+        int index = activeDisplay ? unitComboBox1.getSelectedIndex() : unitComboBox2.getSelectedIndex();
+        return UnitOfTime.values()[index];
+    }
+    
+    private UnitOfTime getInactiveUnit() {
+        int index = activeDisplay ? unitComboBox2.getSelectedIndex() : unitComboBox1.getSelectedIndex();
+        return UnitOfTime.values()[index];
     }
     
     private void backspaceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backspaceBtnActionPerformed
