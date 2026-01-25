@@ -30,14 +30,105 @@ public class TimePanel extends javax.swing.JPanel {
      * 
      */
     private enum UnitOfTime{
-        MICROSECONDS,
-        MILLISECONDS,
-        SECONDS,
-        MINUTES,
-        HOURS,
-        DAYS,
-        WEEKS,
-        YEARS;
+        MICROSECONDS {
+            @Override
+            public double toSeconds(double value) {
+                return value / 1_000_000;
+            }
+
+            @Override
+            public double fromSeconds(double seconds) {
+                return seconds * 1_000_000;
+            }
+            
+        },
+        MILLISECONDS {
+            @Override
+            public double toSeconds(double value) {
+                return value / 1_000;
+            }
+
+            @Override
+            public double fromSeconds(double seconds) {
+                return seconds * 1_000;
+            }
+            
+        },
+        SECONDS {
+            @Override
+            public double toSeconds(double value) {
+                return value;
+            }
+
+            @Override
+            public double fromSeconds(double seconds) {
+                return seconds;
+            }
+            
+        },
+        MINUTES {
+            @Override
+            public double toSeconds(double value) {
+                return value * 60;
+            }
+
+            @Override
+            public double fromSeconds(double seconds) {
+                return seconds / 60;
+            }
+            
+        },
+        HOURS {
+            @Override
+            public double toSeconds(double value) {
+                return value * 3_600;
+            }
+
+            @Override
+            public double fromSeconds(double seconds) {
+                return seconds / 3_600;
+            }
+            
+        },
+        DAYS {
+            @Override
+            public double toSeconds(double value) {
+                return value * 86_400;
+            }
+
+            @Override
+            public double fromSeconds(double seconds) {
+                return seconds * 86_400;
+            }
+            
+        },
+        WEEKS {
+            @Override
+            public double toSeconds(double value) {
+                return value * 604_800;
+            }
+
+            @Override
+            public double fromSeconds(double seconds) {
+                return seconds / 604_800;
+            }
+            
+        },
+        YEARS {
+            @Override
+            public double toSeconds(double value) {
+                return value * 31_557_600;
+            }
+
+            @Override
+            public double fromSeconds(double seconds) {
+                return seconds / 31_557_600;
+            }
+            
+        };
+        
+        public abstract double toSeconds(double value);
+        public abstract double fromSeconds(double seconds);
     };
     
     
@@ -308,23 +399,26 @@ public class TimePanel extends javax.swing.JPanel {
         add(ButtonsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 340, 210));
     }// </editor-fold>//GEN-END:initComponents
     
-    private JLabel getActiveDisplay() {
-        return activeDisplay ? txtDisplay1 : txtDisplay2;
+    private void initLabelListeners() {
+        
     }
     
-    private JLabel getInactiveDisplay() {
-        return activeDisplay ? txtDisplay2 : txtDisplay1;
+    private void formatAndUpdate() {
+        
+    }
+            
+    private void appendNumber(String number) {
+        JLabel currentDisplay = getActiveDisplay();
+        String currentText = currentDisplay.getText();
+        
+        currentDisplay.setText(currentText + number);
+        formatAndUpdate();
     }
     
-    private UnitOfTime getActiveUnit() {
-        int index = activeDisplay ? unitComboBox1.getSelectedIndex() : unitComboBox2.getSelectedIndex();
-        return UnitOfTime.values()[index];
+    private void updateConversion() {
+        
     }
     
-    private UnitOfTime getInactiveUnit() {
-        int index = activeDisplay ? unitComboBox2.getSelectedIndex() : unitComboBox1.getSelectedIndex();
-        return UnitOfTime.values()[index];
-    }
     
     private void backspaceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backspaceBtnActionPerformed
         
@@ -398,6 +492,28 @@ public class TimePanel extends javax.swing.JPanel {
             txtDisplay2.setFont(semiboldFont);
             txtDisplay1.setFont(semilightFont);
         }
+    }
+    
+    /**
+     * returns active and inactive display and units
+     */
+    
+    private JLabel getActiveDisplay() {
+        return activeDisplay ? txtDisplay1 : txtDisplay2;
+    }
+    
+    private JLabel getInactiveDisplay() {
+        return activeDisplay ? txtDisplay2 : txtDisplay1;
+    }
+    
+    private UnitOfTime getActiveUnit() {
+        int index = activeDisplay ? unitComboBox1.getSelectedIndex() : unitComboBox2.getSelectedIndex();
+        return UnitOfTime.values()[index];
+    }
+    
+    private UnitOfTime getInactiveUnit() {
+        int index = activeDisplay ? unitComboBox2.getSelectedIndex() : unitComboBox1.getSelectedIndex();
+        return UnitOfTime.values()[index];
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
