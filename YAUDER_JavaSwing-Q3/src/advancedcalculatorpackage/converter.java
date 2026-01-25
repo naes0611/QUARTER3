@@ -14,5 +14,6 @@ import advancedcalculatorpackage.UnitOfTime;
 public interface converter {
     JLabel getActiveDisplay();
     JLabel getInactiveDisplay();
-
+    Enum getActiveUnit();
+    Enum getInactiveUnit();
 }
