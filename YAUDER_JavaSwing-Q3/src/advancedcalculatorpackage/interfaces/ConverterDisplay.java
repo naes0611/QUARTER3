@@ -1,25 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package advancedcalculatorpackage.interfaces;
 
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.FontMetrics;
 /**
- *
+ * Interface for managing converter display components
  * @author seany
  */
 public interface ConverterDisplay {
+    
     // Display Font Constants
     Font SEMIBOLD_FONT = new Font("Segoe UI Semibold", Font.PLAIN, 36);
     Font SEMILIGHT_FONT = new Font("Segoe UI Semilight", Font.PLAIN, 36);
     
+    /**
+     * Get the currently active display label
+     * @return active JLabel
+     */
     JLabel getActiveDisplay();
     
+    /**
+     * Get the currently inactive display label
+     * @return inactive JLabel
+     */
     JLabel getInactiveDisplay();
     
+    /**
+     * Resize label based on text content
+     * @param label the label to size
+     */
     default void resizeLabel(JLabel label) {
         String text = label.getText();
         if (text.isEmpty()) return;
@@ -47,6 +56,10 @@ public interface ConverterDisplay {
         }
     }
     
+    /**
+     * Reset font size of label to default
+     * @param label the label to size
+     */
     default void resetFontSize(JLabel label) {
         Font font = label.getFont().deriveFont(36f);
         label.setFont(font);
