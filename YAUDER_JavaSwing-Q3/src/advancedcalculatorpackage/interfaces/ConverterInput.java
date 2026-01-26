@@ -17,13 +17,13 @@ public interface ConverterInput {
     void appendNumber(String number);
     
     /**
+     * Format active label and update conversion
+     */
+    void formatAndUpdate();
+    
+    /**
      * Set which display is currently active
      * @param display1 true for display1, false for display2
      */
     void setActiveDisplay(boolean display1);
-    
-    /**
-     * Format active label and update conversion
-     */
-    void formatAndUpdate();
 }

@@ -7,8 +7,13 @@
             <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/performancetasks/pt_studentregform.java</file>
             <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/advancedcalculatorpackage/AdvancedCalculatorV2.java</file>
             <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/advancedcalculatorpackage/StandardPanel.java</file>
-            <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/advancedcalculatorpackage/TimePanel.java</file>
             <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/advancedcalculatorpackage/TemperaturePanel.java</file>
+            <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/advancedcalculatorpackage/TimePanel.java</file>
+            <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/advancedcalculatorpackage/interfaces/UnitConverter.java</file>
+            <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/advancedcalculatorpackage/interfaces/ConverterDisplay.java</file>
+            <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/advancedcalculatorpackage/interfaces/ConverterInput.java</file>
+            <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/advancedcalculatorpackage/interfaces/NumberFormatter.java</file>
+            <file>file:/C:/Users/seany/Documents/NetBeansProjects/QUARTER3/YAUDER_JavaSwing-Q3/src/advancedcalculatorpackage/interfaces/Converter.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,21 +5,24 @@
 package advancedcalculatorpackage;
 
 import advancedcalculatorpackage.Units.UnitOfTime;
-import java.awt.Font;
-import java.text.DecimalFormat;
+import advancedcalculatorpackage.interfaces.Converter;
 import javax.swing.JLabel;
 
 /**
- *
+ * Time Converter Panel
  * @author seany
  */
-public class TimePanel extends javax.swing.JPanel implements converter {
-
+public final class TimePanel extends javax.swing.JPanel implements Converter<UnitOfTime> {
+    
+    // Tracks Active Display (true = display1, false = display2)
+    boolean activeDisplay = true;
     /**
      * Creates new form TimePanel
      */
     public TimePanel() {
         initComponents();
+        initActionListeners();
+        formatAndUpdate();
     }
     
     /**
@@ -282,123 +285,272 @@ public class TimePanel extends javax.swing.JPanel implements converter {
         add(ButtonsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 340, 210));
     }// </editor-fold>//GEN-END:initComponents
     
-    private void initLabelListeners() {
-        
+    /**
+     * Initialize action listeners for unit combo boxes
+     */
+    public void initActionListeners() {
+        unitComboBox1.addActionListener(e -> updateConversion());
+        unitComboBox2.addActionListener(e -> updateConversion());
     }
     
-    private void formatAndUpdate() {
+    /**
+     * Counts the number of digits excluding formatting characters
+     * @param formattedNumber the formatted number
+     * @return the total amount of digits only
+     */
+    @Override
+    public int countDigits(String formattedNumber) {
+        String digitsOnly = formattedNumber.replace(",", "")
+                                           .replace(".", "")
+                                           .replace("-", "");
+        return digitsOnly.length();
+    }
+    
+    /**
+     * Convert value from one unit to another
+     * @param value the value to convert
+     * @param unitFrom source unit
+     * @param unitTo target unit
+     * @return converted value
+     */
+    @Override
+    public double convert(double value, UnitOfTime unitFrom, UnitOfTime unitTo) {
+        double seconds = unitFrom.toSeconds(value);
+        return unitTo.fromSeconds(seconds);
+    }
+    
+    /**
+     * Format number with commas and appropriate decimal places
+     * @param value the value to be formatted
+     * @return formatted String
+     */
+    @Override
+    public String formatNumber(double value) {
+        String formatted = DECIMAL_FORMAT.format(value);
         
+        if (value == Math.floor(value) && !Double.isInfinite(value)) {
+            return String.format("%,d", (long) value);
+        }
+        return formatted;
+    }
+    
+    /**
+     * Parse display text to double value
+     * @return parsed number
+     */
+    @Override
+    public double parseDisplay() {
+        try {
+            String text = getActiveDisplay().getText().replace(",", "");
+            return Double.parseDouble(text);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
             
-    private void appendNumber(String number) {
+    /**
+     * Update conversion and display result
+     */
+    @Override
+    public void updateConversion() {
+        double num = parseDisplay();
+        double result = convert(num, getActiveUnit(), getInactiveUnit());
+        getInactiveDisplay().setText(formatNumber(result));
+        resizeLabel(getInactiveDisplay());
+    }
+    
+    /**
+     * Format active label and update conversion
+     */
+    @Override
+    public void formatAndUpdate() {
+        JLabel currentDisplay = getActiveDisplay();
+        String currentText = currentDisplay.getText().replace(",", "");
+        
+        if (!currentText.contains(".") && !currentText.isEmpty()) {
+            currentDisplay.setText(formatNumber(parseDisplay()));
+        }
+        
+        resizeLabel(getActiveDisplay());
+        resizeLabel(getInactiveDisplay());
+        updateConversion();
+    }
+    
+    /**
+     * Append a number to the active display
+     * @param number the number string to append
+     */
+    @Override
+    public void appendNumber(String number) {
         JLabel currentDisplay = getActiveDisplay();
         String currentText = currentDisplay.getText();
         
-        currentDisplay.setText(currentText + number);
-        formatAndUpdate();
-    }
-    
-    private void updateConversion() {
+        if (currentText.equals("0")) {
+            currentDisplay.setText(number);
+            formatAndUpdate();
+            return;
+        }
         
+        if (countDigits(currentText) >= MAX_DIGIT_INPUT) return;
+        
+        if (currentText.contains(".") || !currentText.equals("0")) {
+            currentDisplay.setText(currentText + number);
+            formatAndUpdate();
+        }
     }
-    
     
     private void backspaceBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backspaceBtnActionPerformed
+        JLabel currentDisplay = getActiveDisplay();
+        String currentText = currentDisplay.getText().replace(",", "");
         
+        if (currentText.length() > 1) {
+            String newText = currentText.substring(0, currentText.length() -1);
+            currentDisplay.setText(newText);
+        } else {
+            currentDisplay.setText("0");
+        }
+        formatAndUpdate();
     }//GEN-LAST:event_backspaceBtnActionPerformed
     
     private void clearEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearEntryBtnActionPerformed
-        
+        getActiveDisplay().setText("0");
+        formatAndUpdate();
     }//GEN-LAST:event_clearEntryBtnActionPerformed
 
     private void decimalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decimalBtnActionPerformed
+        JLabel currentDisplay = getActiveDisplay();
+        String currentText = currentDisplay.getText();
+         
+        if (currentText.contains(".")) return;
         
+        currentDisplay.setText(currentText + ".");
+        formatAndUpdate();
     }//GEN-LAST:event_decimalBtnActionPerformed
 
     private void zeroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroBtnActionPerformed
-        
+        appendNumber("0");
     }//GEN-LAST:event_zeroBtnActionPerformed
 
     private void oneBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneBtnActionPerformed
-        
+        appendNumber("1");
     }//GEN-LAST:event_oneBtnActionPerformed
 
     private void twoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoBtnActionPerformed
-        
+        appendNumber("2");
     }//GEN-LAST:event_twoBtnActionPerformed
 
     private void threeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threeBtnActionPerformed
-        
+        appendNumber("3");
     }//GEN-LAST:event_threeBtnActionPerformed
 
     private void fourBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fourBtnActionPerformed
-        
+        appendNumber("4");
     }//GEN-LAST:event_fourBtnActionPerformed
 
     private void fiveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiveBtnActionPerformed
-        
+        appendNumber("5");
     }//GEN-LAST:event_fiveBtnActionPerformed
 
     private void sixBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sixBtnActionPerformed
-        
+        appendNumber("6");
     }//GEN-LAST:event_sixBtnActionPerformed
 
     private void sevenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sevenBtnActionPerformed
-        
+        appendNumber("7");
     }//GEN-LAST:event_sevenBtnActionPerformed
 
     private void eightBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eightBtnActionPerformed
-        
+        appendNumber("8");
     }//GEN-LAST:event_eightBtnActionPerformed
 
     private void nineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nineBtnActionPerformed
-        
+        appendNumber("9");
     }//GEN-LAST:event_nineBtnActionPerformed
 
     private void txtDisplay1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDisplay1MouseClicked
-        setEnabledDisplay(true);
+        setActiveDisplay(true);
     }//GEN-LAST:event_txtDisplay1MouseClicked
 
     private void txtDisplay2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDisplay2MouseClicked
-        setEnabledDisplay(false);
+        setActiveDisplay(false);
     }//GEN-LAST:event_txtDisplay2MouseClicked
     
-    private void setEnabledDisplay(boolean display1){
+    /**
+     * Set which display is currently active
+     * @param display1 true for display1, false for display2
+     */
+    @Override
+    public void setActiveDisplay(boolean display1) {
         if (activeDisplay == display1) return;
         
         activeDisplay = display1;
         
         if (activeDisplay){
-            txtDisplay1.setFont(semiboldFont);
-            txtDisplay2.setFont(semilightFont);
+            txtDisplay1.setFont(SEMIBOLD_FONT);
+            txtDisplay2.setFont(SEMILIGHT_FONT);
         } else {
-            txtDisplay2.setFont(semiboldFont);
-            txtDisplay1.setFont(semilightFont);
+            txtDisplay2.setFont(SEMIBOLD_FONT);
+            txtDisplay1.setFont(SEMILIGHT_FONT);
         }
+        formatAndUpdate();
     }
     
     /**
-     * returns active and inactive display and units
+     * Get the currently active display label
+     * @return active JLabel
      */
-    
-    private JLabel getActiveDisplay() {
+    @Override
+    public JLabel getActiveDisplay() {
         return activeDisplay ? txtDisplay1 : txtDisplay2;
     }
     
-    private JLabel getInactiveDisplay() {
+    /**
+     * Get the currently inactive display label
+     * @return inactive JLabel
+     */
+    @Override
+    public JLabel getInactiveDisplay() {
         return activeDisplay ? txtDisplay2 : txtDisplay1;
     }
     
-    private UnitOfTime getActiveUnit() {
+    /**
+     * Get the unit for the active display
+     * @return active unit
+     */
+    @Override
+    public UnitOfTime getActiveUnit() {
         int index = activeDisplay ? unitComboBox1.getSelectedIndex() : unitComboBox2.getSelectedIndex();
         return UnitOfTime.values()[index];
     }
     
-    private UnitOfTime getInactiveUnit() {
+    /**
+     * Get the unit for the inactive display
+     * @return inactive unit
+     */
+    @Override
+    public UnitOfTime getInactiveUnit() {
         int index = activeDisplay ? unitComboBox2.getSelectedIndex() : unitComboBox1.getSelectedIndex();
         return UnitOfTime.values()[index];
     }
-
+    
+    /**
+     * Resizes label font to fit content within maximum width
+     * @param label the label to resize
+     */
+    @Override
+    public void resizeLabel(JLabel label) {
+        Converter.super.resizeLabel(label); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+    
+    /**
+     * Resets label font to default size
+     * @param label the label to reset
+     */
+    @Override
+    public void resetFontSize(JLabel label) {
+        Converter.super.resetFontSize(label); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonsLabel;
     private javax.swing.JPanel DisplayPanel;

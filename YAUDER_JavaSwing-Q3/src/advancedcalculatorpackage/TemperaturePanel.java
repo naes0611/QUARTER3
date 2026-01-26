@@ -4,80 +4,26 @@
  */
 package advancedcalculatorpackage;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.text.DecimalFormat;
+import advancedcalculatorpackage.Units.UnitOfTemperature;
+import advancedcalculatorpackage.interfaces.Converter;
 import javax.swing.JLabel;
 
 /**
- * Temperature Converter
+ * Temperature Converter Panel
  * @author seany
  */
-public class TemperaturePanel extends javax.swing.JPanel {
-    
-    // For Display
-    private final Font semiboldFont = new Font("Segoe UI Semibold", Font.PLAIN, 36);
-    private final Font semilightFont = new Font("Segoe UI Semilight", Font.PLAIN, 36);
-    
-    // Limits
-    private final int MAX_DIGIT_INPUT = 15;
-    
-    // For Conversion
-    private final DecimalFormat decimalFormat = new DecimalFormat("#,##0.############");;
+public final class TemperaturePanel extends javax.swing.JPanel implements Converter<UnitOfTemperature> {
     
     // Tracks Active Display (true = display1, false = display2)
     private static boolean activeDisplay = true;
-    
-    /*
-      Temperature units with conversion logic
-    */
-    private enum UnitOfTemperature{
-        Celsius{
-            @Override
-            public double toCelsius(double value) {
-                return value;
-            }
-
-            @Override
-            public double fromCelsius(double celsiusValue) {
-                return celsiusValue; 
-            }
-        },
-        Fahrenheit{
-            @Override
-            public double toCelsius(double value) {
-                return (value - 32) * 5.0/9.0;
-            }
-
-            @Override
-            public double fromCelsius(double celsiusValue) {
-                return celsiusValue * 9.0/5.0 + 32;
-            }
-        },
-        Kelvin{
-            @Override
-            public double toCelsius(double value) {
-                return value - 273.15;
-            }
-
-            @Override
-            public double fromCelsius(double celsiusValue) {
-                return celsiusValue + 273.15;
-            }
-        };
-        
-        public abstract double toCelsius(double value);
-        public abstract double fromCelsius(double celsiusValue);
-    };
-    
     
     /**
      * Creates new form TimePanel
      */
     public TemperaturePanel() {
         initComponents();
-        initLabelListeners();
-        updateConversion();
+        initActionListeners();
+        formatAndUpdate();
     }
     
     /**
@@ -354,27 +300,48 @@ public class TemperaturePanel extends javax.swing.JPanel {
         add(ButtonsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 340, 210));
     }// </editor-fold>//GEN-END:initComponents
 
-    /*
-        Initialize event listeners for unit combo boxes
-    */
-    private void initLabelListeners(){
+    /**
+     *   Initialize event listeners for unit combo boxes
+     */
+    private void initActionListeners(){
         unitComboBox1.addActionListener(e -> updateConversion());
         unitComboBox2.addActionListener(e -> updateConversion());
     }
     
-    /*
-        Convert temperature between units
-    */
-    private double convert(double value, UnitOfTemperature unitFrom, UnitOfTemperature unitTo) {
+    /**
+     * Counts the number of digits excluding formatting characters
+     * @param formattedNumber the formatted number
+     * @return the total amount of digits only
+     */
+    @Override
+    public int countDigits(String formattedNumber) {
+        String digitsOnly = formattedNumber.replace(",", "")
+                                           .replace(".", "")
+                                           .replace("-", "");
+        return digitsOnly.length();
+    }
+    
+    /**
+     * Convert value from one unit to another
+     * @param value the value to convert
+     * @param unitFrom source unit
+     * @param unitTo target unit
+     * @return converted value
+     */
+    @Override
+    public double convert(double value, UnitOfTemperature unitFrom, UnitOfTemperature unitTo) {
         double celsius = unitFrom.toCelsius(value);
         return unitTo.fromCelsius(celsius);
     }
     
-    /*
-        Format numbers with commas and remove unnecessary decimals
-    */
-    private String formatNumber(double value){
-        String formatted = decimalFormat.format(value);
+    /**
+     * Format number with commas and appropriate decimal places
+     * @param value the value to be formatted
+     * @return formatted String
+     */
+    @Override
+    public String formatNumber(double value){
+        String formatted = DECIMAL_FORMAT.format(value);
         
         // If it is a whole number, return without decimals
         if (value == Math.floor(value) && !Double.isInfinite(value)) {
@@ -384,10 +351,12 @@ public class TemperaturePanel extends javax.swing.JPanel {
         return formatted;
     }
     
-    /*
-        Parses number string 
-    */
-    private double parseDisplay() {
+    /**
+     * Parse display text to double value
+     * @return parsed number
+     */
+    @Override
+    public double parseDisplay() {
         try {
             // Removes commas before parsing
             String text = getActiveDisplay().getText().replace(",", "");
@@ -397,50 +366,22 @@ public class TemperaturePanel extends javax.swing.JPanel {
         }
     }
     
-    /*
-        Get current active display
-    */
-    private JLabel getActiveDisplay(){
-        return activeDisplay ? txtDisplay1 : txtDisplay2;
-    }
-    
-    /*
-        Get inactive display
-    */
-    private JLabel getInactiveDisplay(){
-        return activeDisplay ? txtDisplay2 : txtDisplay1;
-    }
-    
-    /*
-        Get unit for active display
-    */
-    private UnitOfTemperature getActiveUnit(){
-        int index = activeDisplay ? unitComboBox1.getSelectedIndex() : unitComboBox2.getSelectedIndex();
-        return UnitOfTemperature.values()[index];
-    }
-    
-    /*
-        Get unit for inactive display
-    */
-    private UnitOfTemperature getInactiveUnit(){
-        int index = activeDisplay ? unitComboBox2.getSelectedIndex() : unitComboBox1.getSelectedIndex();
-        return UnitOfTemperature.values()[index];
-    }
-    
-    /*
-        Updates conversion and displays result
-    */
-    private void updateConversion(){
+    /**
+     * Update conversion and display result
+     */
+    @Override
+    public void updateConversion(){
         double num = parseDisplay();
         double result = convert(num, getActiveUnit(), getInactiveUnit());
         getInactiveDisplay().setText(formatNumber(result));
         resizeLabel(getInactiveDisplay());
     }
     
-    /*
-        Format active label and update conversion
-    */
-    private void formatAndUpdate() {
+    /**
+     * Format active label and update conversion
+     */
+    @Override
+    public void formatAndUpdate() {
         JLabel currentDisplay = getActiveDisplay();
         String currentText = currentDisplay.getText().replace(",", "");
         
@@ -452,10 +393,12 @@ public class TemperaturePanel extends javax.swing.JPanel {
         updateConversion();
     }
     
-    /*
-        Append number to active display
-    */
-    private void appendNumber(String number) {
+    /**
+     * Append a number to the active display
+     * @param number the number string to append
+     */
+    @Override
+    public void appendNumber(String number) {
         JLabel currentDisplay = getActiveDisplay();
         String currentText = currentDisplay.getText().replace(",", "");
         
@@ -466,12 +409,7 @@ public class TemperaturePanel extends javax.swing.JPanel {
         
         }
         
-        // Checks text length without thousand separator, decimal, and minus
-        String textWithoutFormat = currentText.replace(".", "").replace("-", "");
-        
-        if (textWithoutFormat.length() >= MAX_DIGIT_INPUT) {
-            return;
-        }
+        if (countDigits(currentText) >= MAX_DIGIT_INPUT) return;
         
         if (currentText.contains(".") || !currentText.equals("0")) {
             currentDisplay.setText(currentText + number);
@@ -487,7 +425,6 @@ public class TemperaturePanel extends javax.swing.JPanel {
             String newText = currentText.substring(0, currentText.length() -1);
             currentDisplay.setText(newText);
         } else {
-            
             currentDisplay.setText("0");
         }
         formatAndUpdate();
@@ -495,19 +432,17 @@ public class TemperaturePanel extends javax.swing.JPanel {
     
     private void clearEntryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearEntryBtnActionPerformed
         getActiveDisplay().setText("0");
-        resetFontSize(getActiveDisplay());
         formatAndUpdate();
     }//GEN-LAST:event_clearEntryBtnActionPerformed
 
     private void decimalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decimalBtnActionPerformed
         JLabel currentDisplay = getActiveDisplay();
-        String currentText = currentDisplay.getText().replace(",", "");
+        String currentText = currentDisplay.getText();
          
         if (currentText.contains(".")) return;
         
         currentDisplay.setText(currentText + ".");
-        resizeLabel(currentDisplay);
-        updateConversion();
+        formatAndUpdate();
     }//GEN-LAST:event_decimalBtnActionPerformed
 
     private void zeroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zeroBtnActionPerformed
@@ -594,69 +529,82 @@ public class TemperaturePanel extends javax.swing.JPanel {
         formatAndUpdate();
     }//GEN-LAST:event_negateBtnActionPerformed
     
-    /*
-        Set which display is active
-    */
-    private void setActiveDisplay(boolean display1){
+    /**
+     * Set which display is currently active
+     * @param display1 true for display1, false for display2
+     */
+    @Override
+    public void setActiveDisplay(boolean display1) {
         if (activeDisplay == display1) return;
         
         activeDisplay = display1;
         
         if (activeDisplay){
-            txtDisplay1.setFont(semiboldFont);
-            txtDisplay2.setFont(semilightFont);
+            txtDisplay1.setFont(SEMIBOLD_FONT);
+            txtDisplay2.setFont(SEMILIGHT_FONT);
         } else {
-            txtDisplay2.setFont(semiboldFont);
-            txtDisplay1.setFont(semilightFont);
+            txtDisplay2.setFont(SEMIBOLD_FONT);
+            txtDisplay1.setFont(SEMILIGHT_FONT);
         }
-        resizeLabel(getActiveDisplay());
-        resizeLabel(getInactiveDisplay());
-        updateConversion();
+        formatAndUpdate();
     }
     
-    private void resizeLabel(JLabel label){
-        String text = label.getText();
-        if (text.isEmpty()) return;
-
-        int maxWidth = 320; // Maximum width for the label
-        int fontSize = 36; // Default Font Size
-        Font font = label.getFont().deriveFont((float) fontSize);
-        FontMetrics metrics = label.getFontMetrics(font);
-        int textWidth = metrics.stringWidth(text);
-
-        // If text fits at full size, set label width to text width
-        if (textWidth <= maxWidth) {
-            label.setSize(textWidth, label.getHeight());
-            label.setFont(font);
-        } else {
-            // Text doesn't fit, shrink font until it fits in maxWidth
-            label.setSize(maxWidth, label.getHeight());
-
-            while (metrics.stringWidth(text) > maxWidth && fontSize > 8) {
-                fontSize -= 1;
-                font = label.getFont().deriveFont((float) fontSize);
-                metrics = label.getFontMetrics(font);
-            }
-            label.setFont(font);
-        }
+    /**
+     * Get the currently active display label
+     * @return active JLabel
+     */
+    @Override
+    public JLabel getActiveDisplay() {
+        return activeDisplay ? txtDisplay1 : txtDisplay2;
     }
     
-    private void resetFontSize(JLabel label) {
-        Font font = label.getFont().deriveFont(36f);
-        label.setFont(font);
-        // Reset label to appropriate width
-        FontMetrics metrics = label.getFontMetrics(font);
-        String text = label.getText();
-        int textWidth = metrics.stringWidth(text);
-        int maxWidth = 320;
-
-        if (textWidth <= maxWidth) {
-            label.setSize(textWidth, label.getHeight());
-        } else {
-            label.setSize(maxWidth, label.getHeight());
-        }
+    /**
+     * Get the currently inactive display label
+     * @return inactive JLabel
+     */
+    @Override
+    public JLabel getInactiveDisplay() {
+        return activeDisplay ? txtDisplay2 : txtDisplay1;
+    }
+    
+    /**
+     * Get the unit for the active display
+     * @return active unit
+     */
+    @Override
+    public UnitOfTemperature getActiveUnit() {
+        int index = activeDisplay ? unitComboBox1.getSelectedIndex() : unitComboBox2.getSelectedIndex();
+        return UnitOfTemperature.values()[index];
+    }
+    
+    /**
+     * Get the unit for the inactive display
+     * @return inactive unit
+     */
+    @Override
+    public UnitOfTemperature getInactiveUnit() {
+        int index = activeDisplay ? unitComboBox2.getSelectedIndex() : unitComboBox1.getSelectedIndex();
+        return UnitOfTemperature.values()[index];
+    }
+    
+    /**
+     * Resizes label font to fit content within maximum width
+     * @param label the label to resize
+     */
+    @Override
+    public void resizeLabel(JLabel label) {
+        Converter.super.resizeLabel(label); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
 
+    /**
+     * Resets label font to default size
+     * @param label the label to reset
+     */
+    @Override
+    public void resetFontSize(JLabel label) {
+        Converter.super.resetFontSize(label); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonsLabel;
     private javax.swing.JPanel DisplayPanel;

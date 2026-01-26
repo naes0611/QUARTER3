@@ -26,8 +26,8 @@ public interface ConverterDisplay {
     JLabel getInactiveDisplay();
     
     /**
-     * Resize label based on text content
-     * @param label the label to size
+     * Resizes label font to fit content within maximum width
+     * @param label the label to resize
      */
     default void resizeLabel(JLabel label) {
         String text = label.getText();
@@ -57,8 +57,8 @@ public interface ConverterDisplay {
     }
     
     /**
-     * Reset font size of label to default
-     * @param label the label to size
+     * Resets label font to default size
+     * @param label the label to reset
      */
     default void resetFontSize(JLabel label) {
         Font font = label.getFont().deriveFont(36f);
