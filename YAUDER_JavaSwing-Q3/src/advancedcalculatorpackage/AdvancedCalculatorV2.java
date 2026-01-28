@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import performancetasks.*;
 /**
  *
@@ -48,7 +49,7 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
         initLabelListener();
         currentSelectedLabel = standardLabel;
         
-        mainPanel.add(new StandardPanel(), new org.netbeans.lib.awtextra.AbsoluteConstraints
+        mainPanel.add(new StandardPanel(), new AbsoluteConstraints
         (0, 0, mainPanel.getWidth(), mainPanel.getHeight()));
         
         setCalculatorMode(CalculatorModes.STANDARD);
@@ -291,7 +292,7 @@ public class AdvancedCalculatorV2 extends javax.swing.JFrame {
             }
         }
         
-        mainPanel.add(newPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints
+        mainPanel.add(newPanel, new AbsoluteConstraints
         (0, 0, mainPanel.getWidth(), mainPanel.getHeight()));
         
         mainPanel.revalidate();
